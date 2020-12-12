@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { IDefaultProps } from '../../styles/styles';
-import { Button, Checkbox, Collapse, FormControlLabel, Grid, TextField } from '@material-ui/core';
+import { Button, Grid, TextField } from '@material-ui/core';
 import { appStore } from '../../AppStore';
 import { IStocks } from '../../types';
 import Joi from 'joi';
@@ -8,7 +8,6 @@ import Joi from 'joi';
 export function ImportExport(props: IDefaultProps) {
     const [ transitionIn, setTransitionIn ] = useState(false);
     const [ textFieldValue, setTextFieldValue ] = useState('');
-    const [ editable, setEditable ] = useState(false);
 
     function stockExport() {
         setTextFieldValue(appStore.stocks.map(t => `${ t.id }, ${ t.quantity }`).join('\n'));
@@ -49,7 +48,6 @@ export function ImportExport(props: IDefaultProps) {
         </Grid>
 
         <Grid item>
-            <Collapse in={ transitionIn }>
                 <Grid container direction='column' spacing={ 1 }>
 
                     <Grid item container spacing={ 1 }>
@@ -60,31 +58,22 @@ export function ImportExport(props: IDefaultProps) {
                             </Button>
                         </Grid>
 
-                        <Grid item xs={ 5 }>
+                        <Grid item xs={ 6 }>
                             <Button fullWidth variant='outlined' onClick={ stockImport }>
                                 Import stocks
                             </Button>
-                        </Grid>
-
-                        <Grid item xs={ 1 }>
-                            <FormControlLabel
-                                control={ <Checkbox value={ editable } onChange={ () => setEditable(!editable) }/> }
-                                label="edit"
-                            />
                         </Grid>
 
                     </Grid>
 
                     <Grid item>
                         <TextField fullWidth variant='outlined' value={ textFieldValue } multiline
-                                   disabled={ !editable }
                                    onChange={ e => setTextFieldValue(e.target.value) }
                                    helperText='trades'
                         />
                     </Grid>
 
                 </Grid>
-            </Collapse>
         </Grid>
     </Grid>;
 }

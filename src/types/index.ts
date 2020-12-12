@@ -1,6 +1,6 @@
 export type IStocks = Array<{ id: number, quantity: number }>;
 
-export type IAPIOffer = {
+export type IOffer = {
     quantity: number,
     sellingItems: number[],
     sellingQuantities: number[],

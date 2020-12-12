@@ -12,7 +12,7 @@ interface IItemTableProps extends IDefaultProps {
 export function ItemTable(props: IItemTableProps) {
     const { styles } = props;
 
-    return <Grid container direction='column' spacing={ 3 }>
+    return <Grid container direction='column' spacing={ 3 } style={{maxHeight: 750}}>
         <Grid item container spacing={ 8 }>
             <Grid item xs style={ { maxWidth: 100 } }/>
             { Array.from({ length: props.data[0].length }, (_, k) => props.maxTier - props.data[0].length + k + 1).map(t =>

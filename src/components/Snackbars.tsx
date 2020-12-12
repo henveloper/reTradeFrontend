@@ -26,13 +26,13 @@ export const SnackBars = observer((props: IDefaultProps) => {
 
     return (
         <div style={ { width: '100%' } }>
-            <Snackbar open={ appStore.errorMessage !== '' } autoHideDuration={ 6000 } onClose={ handleCloseError }>
+            <Snackbar open={ appStore.errorMessage !== '' } autoHideDuration={ 1000 } onClose={ handleCloseError }>
                 <Alert onClose={ handleCloseError } severity="error">
                     { appStore.errorMessage }
                 </Alert>
             </Snackbar>
 
-            <Snackbar open={ appStore.successMessage !== '' } autoHideDuration={ 6000 } onClose={ handleCloseSuccess }>
+            <Snackbar open={ appStore.successMessage !== '' } autoHideDuration={ 1000 } onClose={ handleCloseSuccess }>
                 <Alert onClose={ handleCloseSuccess } severity="success">
                     { appStore.successMessage }
                 </Alert>

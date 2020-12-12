@@ -1,3 +1,7 @@
+export enum weaponIdIndex {
+    dagger, bow, staff, wand, sword, katana
+}
+
 export const weaponIds = [
     // dagger bow staff wand sword katanas
     [ 2697, 2698, 2815 ],
@@ -7,6 +11,13 @@ export const weaponIds = [
     [ 2692, 2631, 2827 ],
     [ 3150, 3151, 3152 ],
 ];
+
+export enum AbilityIdIndex {
+    cloak, quiver, spell, tome,
+    helm, shield, seal, posion,
+    skull, trap, orb, prism,
+    scepter, star, wakizashi, lute,
+}
 
 export const abilityIds = [
     // cloak, quiv, spell, tome
@@ -30,6 +41,10 @@ export const abilityIds = [
     [ 6831, 6832 ],
     [ 53238, 53239 ],
 ];
+
+export enum armorIdIndex {
+    light, heavy, robe
+}
 
 export const armorIds = [
     // light heavy robe
