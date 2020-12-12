@@ -87,16 +87,15 @@ export class OfferManager {
                 [ IWeaponIdIndex.sword, IArmorIdIndex.heavy ],
             ];
 
-            console.log('combination check');
             const weaponIdType = this.typeOfWeapon(weaponId);
-            console.log(weaponIdType);
             const armorIdType = this.typeOfArmor(armorId);
-            console.log(armorIdType);
-            combinations.forEach(c => {
+            console.log(combinations);
+            console.log(weaponIdType, armorIdType);
+            for (const c of combinations) {
                 if (c[0] === weaponIdType && c[1] === armorIdType) {
                     return true;
                 }
-            });
+            }
             return false;
         };
 
