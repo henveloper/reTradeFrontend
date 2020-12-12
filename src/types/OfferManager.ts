@@ -69,6 +69,28 @@ export class OfferManager {
     private computeTrashWeaponArmorOffers(): IOffer[] {
         const offers: IOffer[] = [];
 
+        const inCombinations = (weaponId: number, armorId: number) => {
+            const combinations: [ IWeaponIdIndex, IArmorIdIndex ][] = [
+                [ IWeaponIdIndex.bow, IArmorIdIndex.light ],
+                [ IWeaponIdIndex.bow, IArmorIdIndex.robe ],
+                [ IWeaponIdIndex.dagger, IArmorIdIndex.light ],
+                [ IWeaponIdIndex.katana, IArmorIdIndex.light ],
+                [ IWeaponIdIndex.katana, IArmorIdIndex.heavy ],
+                [ IWeaponIdIndex.staff, IArmorIdIndex.robe ],
+                [ IWeaponIdIndex.wand, IArmorIdIndex.robe ],
+                [ IWeaponIdIndex.sword, IArmorIdIndex.heavy ],
+            ];
+
+            const weaponIdType = this.typeOfWeapon(weaponId);
+            const armorIdType = this.typeOfArmor(armorId);
+            combinations.forEach(c => {
+                if (c[0] === weaponIdType && c[1] === armorIdType) {
+                    return true;
+                }
+            });
+            return false;
+        };
+
         const trashWeaponIds = [ ...this.t10WeaponIds, ...this.t11WeaponIds ];
         const trashArmorIds = [ ...this.t11ArmorIds, ...this.t12ArmorIds ];
         for (const trashWeaponId of trashWeaponIds) {
