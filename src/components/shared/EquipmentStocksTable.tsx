@@ -1,6 +1,6 @@
 import React from 'react';
 import { IDefaultProps } from '../../styles/styles';
-import { Button, Grid, Typography } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 import { Equipment, equipments, } from '../../data/equipments';
 import { EEquipmentSlot, TEquipment } from '../../types';
 import { appStore } from '../../AppStore';
@@ -34,7 +34,8 @@ export function EquipmentStocksTable(props: IItemTableProps) {
     const minTier = Math.min(...tiers);
     const maxTier = Math.max(...tiers);
 
-    return <Grid container direction='column' spacing={ 3 } style={ { maxHeight: 750 } }>
+    return <Grid container direction='column' spacing={ 3 }
+                 style={ { maxHeight: 750, overflowY: 'scroll', flexWrap: 'nowrap' } }>
         { filteredEquipments.map(e => <Grid item container>
             <Grid item xs={ 2 }>
                 { e.className }

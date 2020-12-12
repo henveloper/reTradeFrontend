@@ -32,7 +32,7 @@ export function RootView(props: IDefaultProps) {
 			<ImportExport styles={ styles }/>
 		</Grid>
 
-		<Grid item container>
+		<Grid item container spacing={ 2 }>
 			<Grid item xs={ 6 }>
 				<EquipmentStocks styles={ styles } variant='weapon'/>
 			</Grid>
