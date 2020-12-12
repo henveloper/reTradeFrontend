@@ -4,7 +4,7 @@
   "description": "",
   "main": "build/index.js",
   "scripts": {
-    "start": "ts-node src/index.ts",
+    "run": "ts-node src/index.ts",
     "npm update all": "npm update --save/--save-dev"
   },
   "typings": "typings/nhentai-api.d.ts",
