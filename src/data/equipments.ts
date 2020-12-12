@@ -1,4 +1,6 @@
-export const equipments = [
+import { EAbilitySlot, EArmorSlot, EWeaponSlot, IEquipment } from '../types';
+
+export const equipments: Array<IEquipment> = [
     { 'id': 2692, 'tier': 10, 'slotType': 1, 'name': 'Archon Sword' },
     { 'id': 2631, 'tier': 11, 'slotType': 1, 'name': 'Skysplitter Sword' },
     { 'id': 2827, 'tier': 12, 'slotType': 1, 'name': 'Sword of Acclaim' },
@@ -60,3 +62,68 @@ export const equipments = [
     { 'id': 2812, 'tier': 13, 'slotType': 7, 'name': 'Acropolis Armor' },
 ];
 
+export const weaponSlotSorting: EWeaponSlot[] = [ EWeaponSlot.sword, EWeaponSlot.katana, EWeaponSlot.dagger, EWeaponSlot.bow, EWeaponSlot.staff, EWeaponSlot.wand ];
+export const abilitySlotSorting: EAbilitySlot[] = [
+    EAbilitySlot.cloak, EAbilitySlot.quiver, EAbilitySlot.spell, EAbilitySlot.tome,
+    EAbilitySlot.helmet, EAbilitySlot.shield, EAbilitySlot.seal, EAbilitySlot.poison,
+    EAbilitySlot.skull, EAbilitySlot.trap, EAbilitySlot.orb, EAbilitySlot.prism,
+    EAbilitySlot.scepter, EAbilitySlot.star, EAbilitySlot.wakizashi, EAbilitySlot.lute,
+];
+export const armorSlotSorting: EArmorSlot[] = [ EArmorSlot.robe, EArmorSlot.light, EArmorSlot.heavy, ];
+
+export function getEquipmentName(id: EWeaponSlot | EAbilitySlot | EArmorSlot) {
+    switch (id) {
+        case EWeaponSlot.sword:
+            return 'sword';
+        case EWeaponSlot.katana:
+            return 'katana';
+        case EWeaponSlot.dagger:
+            return 'dagger';
+        case EWeaponSlot.bow:
+            return 'bow';
+        case EWeaponSlot.staff:
+            return 'staff';
+        case EWeaponSlot.wand:
+            return 'wand';
+        case EAbilitySlot.cloak:
+            return 'cloak';
+        case EAbilitySlot.quiver:
+            return 'quiver';
+        case EAbilitySlot.spell:
+            return 'spell';
+        case EAbilitySlot.tome:
+            return 'tome';
+        case EAbilitySlot.helmet:
+            return 'helmet';
+        case EAbilitySlot.shield:
+            return 'shield';
+        case EAbilitySlot.seal:
+            return 'seal';
+        case EAbilitySlot.poison:
+            return 'poison';
+        case EAbilitySlot.skull:
+            return 'skull';
+        case EAbilitySlot.trap:
+            return 'trap';
+        case EAbilitySlot.orb:
+            return 'orb';
+        case EAbilitySlot.prism:
+            return 'prism';
+        case EAbilitySlot.scepter:
+            return 'scepter';
+        case EAbilitySlot.star:
+            return 'star';
+        case EAbilitySlot.wakizashi:
+            return 'wakizashi';
+        case EAbilitySlot.lute:
+            return 'lute';
+        case EArmorSlot.robe:
+            return 'robe';
+        case EArmorSlot.light:
+            return 'light';
+        case EArmorSlot.heavy:
+            return 'heavy';
+        default:
+            return 'penis';
+    }
+}
