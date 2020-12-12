@@ -18,15 +18,15 @@ export function Calculator(props: IDefaultProps) {
             </Grid>
             { trades && <Grid item xs>
                 <CopyToClipboard text={ trades }>
-                    <Button fullWidth variant='contained' onClick={() => appStore.successMessage = 'copied'}>
+                    <Button fullWidth variant='contained' onClick={ () => appStore.successMessage = 'copied' }>
                         copy
                     </Button>
                 </CopyToClipboard>
             </Grid> }
         </Grid>
 
-        { trades && <Grid item container>
-            <TextField fullWidth multiline value={ trades } variant='outlined'/>
+        { trades && <Grid item container style={ { overflowY: 'scroll', maxHeight: 150 } }>
+            < TextField fullWidth multiline value={ trades } variant='outlined'/>
         </Grid> }
     </Grid>;
 }
