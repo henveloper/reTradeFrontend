@@ -27,7 +27,6 @@ export class AppStore {
 
     // region stock
     public addStocksQuantity(id: number) {
-        console.log(id);
         const found = this.stocks.find(t => t.id === id);
         if (found) {
             found.quantity += 1;

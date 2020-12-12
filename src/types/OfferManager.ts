@@ -14,21 +14,27 @@ export class OfferManager {
     public t13ArmorIds: number[] = [];
 
     private typeOfWeapon(id: number): IWeaponIdIndex {
-        weaponIds.forEach((v, i) => {
-            if (v.includes(id)) {
-                return i;
+        let counter = 0;
+        for (const weaponId of weaponIds) {
+            if (weaponId.includes(id)) {
+                console.log('MATCH!!!!');
+                return counter;
             }
-        });
+            counter += 1;
+        }
         appStore.errorMessage = `derive type of weapon failed, id: ${ id }`;
         return -1;
     }
 
     private typeOfArmor(id: number): IArmorIdIndex {
-        armorIds.forEach((v, i) => {
-            if (v.includes(id)) {
-                return i;
+        let counter = 0;
+        for (const weaponId of armorIds) {
+            if (weaponId.includes(id)) {
+                console.log('MATCH!!!!');
+                return counter;
             }
-        });
+            counter += 1;
+        }
         appStore.errorMessage = `derive type of armor failed, id: ${ id }`;
         return -1;
     }
@@ -81,8 +87,11 @@ export class OfferManager {
                 [ IWeaponIdIndex.sword, IArmorIdIndex.heavy ],
             ];
 
+            console.log('combination check');
             const weaponIdType = this.typeOfWeapon(weaponId);
+            console.log(weaponIdType);
             const armorIdType = this.typeOfArmor(armorId);
+            console.log(armorIdType);
             combinations.forEach(c => {
                 if (c[0] === weaponIdType && c[1] === armorIdType) {
                     return true;
@@ -95,14 +104,17 @@ export class OfferManager {
         const trashArmorIds = [ ...this.t11ArmorIds, ...this.t12ArmorIds ];
         for (const trashWeaponId of trashWeaponIds) {
             for (const trashArmorId of trashArmorIds) {
-                offers.push({
-                    quantity: 1,
-                    sellingItems: [ trashWeaponId, trashArmorId ],
-                    sellingQuantities: [ 1, 1 ],
-                    buyingItems: [ (this.t12ArmorIds.includes(trashArmorId) && this.t11WeaponIds.includes(trashWeaponId)) ? potionIds.wis : potionIds.spd ],
-                    buyingQuantities: [ 1 ],
-                    suspended: false,
-                });
+                console.log('weaponArmorLoop');
+                if (inCombinations(trashWeaponId, trashArmorId)) {
+                    offers.push({
+                        quantity: 1,
+                        sellingItems: [ trashWeaponId, trashArmorId ],
+                        sellingQuantities: [ 1, 1 ],
+                        buyingItems: [ (this.t12ArmorIds.includes(trashArmorId) && this.t11WeaponIds.includes(trashWeaponId)) ? potionIds.wis : potionIds.spd ],
+                        buyingQuantities: [ 1 ],
+                        suspended: false,
+                    });
+                }
             }
         }
 
@@ -113,7 +125,7 @@ export class OfferManager {
         const t5AbilityOffers = this.computeT5AbilityOffers();
         const trashWeaponArmorOffers = this.computeTrashWeaponArmorOffers();
 
-        const allOffers = [ ...t5AbilityOffers, trashWeaponArmorOffers ];
+        const allOffers = [ ...t5AbilityOffers, ...trashWeaponArmorOffers ];
         return JSON.stringify(allOffers);
     }
 }

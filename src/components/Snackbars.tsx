@@ -6,7 +6,6 @@ import { appStore } from '../AppStore';
 import { observer } from 'mobx-react';
 
 export const SnackBars = observer((props: IDefaultProps) => {
-    console.log(appStore.errorMessage);
 
     const handleCloseError = (event?: React.SyntheticEvent, reason?: string) => {
         if (reason === 'clickaway') {
@@ -21,7 +20,6 @@ export const SnackBars = observer((props: IDefaultProps) => {
         }
         appStore.successMessage = '';
     };
-    console.log(appStore.errorMessage, appStore.successMessage);
 
 
     return (
