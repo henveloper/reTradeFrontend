@@ -1,4 +1,4 @@
-export enum weaponIdIndex {
+export enum IWeaponIdIndex {
     dagger, bow, staff, wand, sword, katana
 }
 
@@ -42,7 +42,7 @@ export const abilityIds = [
     [ 53238, 53239 ],
 ];
 
-export enum armorIdIndex {
+export enum IArmorIdIndex {
     light, heavy, robe
 }
 

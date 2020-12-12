@@ -3,7 +3,7 @@ import axios from 'axios';
 import { IStocks } from './types';
 import { makeAutoObservable } from 'mobx';
 import { abilityIds, armorIds, weaponIds } from './data/objectIds';
-import { TempOfferManager } from './types/TempOfferManager';
+import { OfferManager } from './types/OfferManager';
 
 export class AppStore {
     constructor(public history: History) {
@@ -116,7 +116,7 @@ export class AppStore {
     // region offers
     public computeTradesString() {
 
-        const offerManager = new TempOfferManager();
+        const offerManager = new OfferManager();
         offerManager.t10WeaponIds = this.t10WeaponStockIds;
         offerManager.t11WeaponIds = this.t11WeaponStockIds;
         offerManager.t12WeaponIds = this.t12WeaponStockIds;

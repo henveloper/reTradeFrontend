@@ -10,10 +10,11 @@ interface IItemProps extends IDefaultProps {
 }
 
 export const Item = observer((props: IItemProps) => {
+    const value = appStore.stocks.find(t => t.id === props.id)?.quantity || 0;
     return <Grid container alignItems='center'>
         <Grid item xs={ 8 }>
-            <Typography variant='body2'>
-                { appStore.stocks.find(t => t.id === props.id)?.quantity || 0 }
+            <Typography variant={ value ? 'h6' : 'body2' }>
+                { value }
             </Typography>
         </Grid>
 
