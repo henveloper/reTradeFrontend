@@ -15,7 +15,7 @@ export function ItemTable(props: IItemTableProps) {
     return <Grid container direction='column' spacing={ 3 }>
         <Grid item container spacing={ 8 }>
             <Grid item xs style={ { maxWidth: 100 } }/>
-            { Array.from({ length: props.data[0].length }, (_, k) => props.maxTier - props.data[0].length + k).map(t =>
+            { Array.from({ length: props.data[0].length }, (_, k) => props.maxTier - props.data[0].length + k + 1).map(t =>
                 <Grid item xs style={ { maxWidth: 100, textAlign: 'center' } }>
                     T{ t }
                 </Grid>) }

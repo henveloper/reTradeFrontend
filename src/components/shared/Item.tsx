@@ -3,14 +3,13 @@ import { IDefaultProps } from '../../styles/styles';
 import { Grid, IconButton, Typography } from '@material-ui/core';
 import { appStore } from '../../AppStore';
 import { ExposureNeg1, PlusOne } from '@material-ui/icons';
+import { observer } from 'mobx-react';
 
 interface IItemProps extends IDefaultProps {
     id: number,
 }
 
-
-export function Item(props: IItemProps) {
-
+export const Item = observer((props: IItemProps) => {
     return <Grid container alignItems='center'>
         <Grid item xs={ 8 }>
             <Typography variant='body2'>
@@ -26,10 +25,10 @@ export function Item(props: IItemProps) {
             </Grid>
 
             <Grid item>
-                <IconButton size='small'  onClick={ () => appStore.deductStocksQuantity(props.id) }>
+                <IconButton size='small' onClick={ () => appStore.deductStocksQuantity(props.id) }>
                     <ExposureNeg1/>
                 </IconButton>
             </Grid>
         </Grid>
     </Grid>;
-}
+});

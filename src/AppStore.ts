@@ -9,6 +9,7 @@ import * as querystring from 'querystring';
 export class AppStore {
     constructor(public history: History) {
         makeAutoObservable(this);
+        axios.defaults.withCredentials = true
     }
 
     async asyncInits() {
@@ -21,6 +22,7 @@ export class AppStore {
     public stocks: IStocks = [];
 
     public addStocksQuantity(id: number) {
+        console.log(id);
         const found = this.stocks.find(t => t.id === t.id);
         if (found) {
             found.quantity += 1;
@@ -106,37 +108,9 @@ export class AppStore {
                 suspended: false,
             });
         }
-
-        try {
-            await axios.get('https://www.realmeye.com/player/SaintBen');
-        } catch (err) {
-            console.log(err);
-            console.log((err as AxiosError).message)
-            console.log((err as AxiosError).request)
-            console.log((err as AxiosError).response)
-        }
-
-        try {
-            const req = await axios.post('https://www.realmeye.com/save-player-offers-service', querystring.stringify({
-                player: 'SaintBen',
-                trades: '[]',
-                session: token,
-            }), {
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-            });
-        } catch (err) {
-            console.log((err as AxiosError).message)
-            console.log((err as AxiosError).request)
-            console.log((err as AxiosError).response)
-            this.errorMessage = 'Request Error.';
-            return;
-        }
-
-        this.successMessage = 'Success';
-        return;
+        console.log(JSON.stringify(bulkOffers));
     }
+
 }
 
 export const appStore = new AppStore(createBrowserHistory());
