@@ -1,0 +1,35 @@
+import React from 'react';
+import { IDefaultProps } from '../../styles/styles';
+import { Grid, IconButton, Typography } from '@material-ui/core';
+import { appStore } from '../../AppStore';
+import { ExposureNeg1, PlusOne } from '@material-ui/icons';
+import { observer } from 'mobx-react';
+
+interface IItemProps extends IDefaultProps {
+    id: number,
+}
+
+export const Item = observer((props: IItemProps) => {
+    const value = appStore.stocks.find(t => t.id === props.id)?.quantity || 0;
+    return <Grid container alignItems='center'>
+        <Grid item xs={ 8 }>
+            <Typography variant={ value ? 'h6' : 'body2' }>
+                { value }
+            </Typography>
+        </Grid>
+
+        <Grid item container xs={ 4 } direction='column'>
+            <Grid item>
+                <IconButton size='small' onClick={ () => appStore.addStocksQuantity(props.id) }>
+                    <PlusOne/>
+                </IconButton>
+            </Grid>
+
+            <Grid item>
+                <IconButton size='small' onClick={ () => appStore.deductStocksQuantity(props.id) }>
+                    <ExposureNeg1/>
+                </IconButton>
+            </Grid>
+        </Grid>
+    </Grid>;
+});
