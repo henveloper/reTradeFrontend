@@ -1,72 +1,42 @@
-import { IOffer } from './index';
+import { EAbilitySlot, EArmorSlot, EWeaponSlot, IEquipment, IOffer } from './index';
 import { potionIds } from '../data/potionIds';
-import { AbilityIdIndex, abilityIds, armorIds, IArmorIdIndex, IWeaponIdIndex, weaponIds } from '../data/objectIds';
-import { appStore } from '../AppStore';
 
 export class OfferManager {
-    public t10WeaponIds: number[] = [];
-    public t11WeaponIds: number[] = [];
-    public t12WeaponIds: number[] = [];
-    public t5AbilityIds: number[] = [];
-    public t6AbilityIds: number[] = [];
-    public t11ArmorIds: number[] = [];
-    public t12ArmorIds: number[] = [];
-    public t13ArmorIds: number[] = [];
-
-    private typeOfWeapon(id: number): IWeaponIdIndex {
-        let counter = 0;
-        for (const weaponId of weaponIds) {
-            if (weaponId.includes(id)) {
-                console.log('MATCH!!!!');
-                return counter;
-            }
-            counter += 1;
-        }
-        appStore.errorMessage = `derive type of weapon failed, id: ${ id }`;
-        return -1;
-    }
-
-    private typeOfArmor(id: number): IArmorIdIndex {
-        let counter = 0;
-        for (const weaponId of armorIds) {
-            if (weaponId.includes(id)) {
-                console.log('MATCH!!!!');
-                return counter;
-            }
-            counter += 1;
-        }
-        appStore.errorMessage = `derive type of armor failed, id: ${ id }`;
-        return -1;
-    }
-
+    public t10Weapons: IEquipment<10, EWeaponSlot>[] = [];
+    public t11Weapons: IEquipment<11, EWeaponSlot>[] = [];
+    public t12Weapons: IEquipment<12, EWeaponSlot>[] = [];
+    public t5Abilities: IEquipment<5, EAbilitySlot>[] = [];
+    public t6Abilities: IEquipment<6, EAbilitySlot>[] = [];
+    public t11Armors: IEquipment<11, EArmorSlot>[] = [];
+    public t12Armors: IEquipment<12, EArmorSlot>[] = [];
+    public t13Armors: IEquipment<13, EArmorSlot>[] = [];
 
     private computeT5AbilityOffers(): IOffer[] {
-        function computeValueOfT5Ability(id: number) {
-            const index = abilityIds.map(t => t[0]).indexOf(id);
-            const primary: AbilityIdIndex[] = [
-                AbilityIdIndex.helm,
-                AbilityIdIndex.shield,
-                AbilityIdIndex.seal,
-                AbilityIdIndex.spell
+        function computeValueOfT5Ability(e: IEquipment<5, EAbilitySlot>) {
+            const primary: EAbilitySlot[] = [
+                EAbilitySlot.helmet,
+                EAbilitySlot.shield,
+                EAbilitySlot.seal,
+                EAbilitySlot.spell
             ];
-            const secondary: AbilityIdIndex[] = [
-                AbilityIdIndex.cloak,
-                AbilityIdIndex.lute,
-                AbilityIdIndex.quiver,
+            const secondary: EAbilitySlot[] = [
+                EAbilitySlot.cloak,
+                EAbilitySlot.lute,
+                EAbilitySlot.quiver,
             ];
-            if (primary.includes(index)) {
+            if (primary.includes(e.slotType)) {
                 return potionIds.def;
-            } else if (secondary.includes(index)) {
+            } else if (secondary.includes(e.slotType)) {
                 return potionIds.wis;
             }
             return potionIds.spd;
         }
 
-        return this.t5AbilityIds.map(id => ({
+        return this.t5Abilities.map(e => ({
             quantity: 1,
-            sellingItems: [ id ],
+            sellingItems: [ e.id ],
             sellingQuantities: [ 1 ],
-            buyingItems: [ computeValueOfT5Ability(id) ],
+            buyingItems: [ computeValueOfT5Ability(e) ],
             buyingQuantities: [ 1 ],
             suspended: false,
         }));
@@ -75,41 +45,37 @@ export class OfferManager {
     private computeTrashWeaponArmorOffers(): IOffer[] {
         const offers: IOffer[] = [];
 
-        const inCombinations = (weaponId: number, armorId: number) => {
-            const combinations: [ IWeaponIdIndex, IArmorIdIndex ][] = [
-                [ IWeaponIdIndex.bow, IArmorIdIndex.light ],
-                [ IWeaponIdIndex.bow, IArmorIdIndex.robe ],
-                [ IWeaponIdIndex.dagger, IArmorIdIndex.light ],
-                [ IWeaponIdIndex.katana, IArmorIdIndex.light ],
-                [ IWeaponIdIndex.katana, IArmorIdIndex.heavy ],
-                [ IWeaponIdIndex.staff, IArmorIdIndex.robe ],
-                [ IWeaponIdIndex.wand, IArmorIdIndex.robe ],
-                [ IWeaponIdIndex.sword, IArmorIdIndex.heavy ],
+        const inCombinations = (weapon: IEquipment, armor: IEquipment) => {
+            const combinations: [ EWeaponSlot, EArmorSlot ][] = [
+                [ EWeaponSlot.bow, EArmorSlot.light ],
+                [ EWeaponSlot.bow, EArmorSlot.robe ],
+                [ EWeaponSlot.dagger, EArmorSlot.light ],
+                [ EWeaponSlot.katana, EArmorSlot.light ],
+                [ EWeaponSlot.katana, EArmorSlot.heavy ],
+                [ EWeaponSlot.staff, EArmorSlot.robe ],
+                [ EWeaponSlot.wand, EArmorSlot.robe ],
+                [ EWeaponSlot.sword, EArmorSlot.heavy ],
             ];
 
-            const weaponIdType = this.typeOfWeapon(weaponId);
-            const armorIdType = this.typeOfArmor(armorId);
-            console.log(combinations);
-            console.log(weaponIdType, armorIdType);
             for (const c of combinations) {
-                if (c[0] === weaponIdType && c[1] === armorIdType) {
+                if (c[0] === weapon.slotType && c[1] === armor.slotType) {
                     return true;
                 }
             }
             return false;
         };
 
-        const trashWeaponIds = [ ...this.t10WeaponIds, ...this.t11WeaponIds ];
-        const trashArmorIds = [ ...this.t11ArmorIds, ...this.t12ArmorIds ];
-        for (const trashWeaponId of trashWeaponIds) {
-            for (const trashArmorId of trashArmorIds) {
-                console.log('weaponArmorLoop');
-                if (inCombinations(trashWeaponId, trashArmorId)) {
+        const trashWeapons = [ ...this.t10Weapons, ...this.t11Weapons ];
+        const trashArmors = [ ...this.t11Armors, ...this.t12Armors ];
+        for (const trashWeapon of trashWeapons) {
+            for (const trashArmor of trashArmors) {
+                if (inCombinations(trashWeapon, trashArmor)) {
+                    const isSlightBetter = trashWeapon.tier === 11 && trashArmor.tier === 12;
                     offers.push({
                         quantity: 1,
-                        sellingItems: [ trashWeaponId, trashArmorId ],
+                        sellingItems: [ trashWeapon.id, trashWeapon.id ],
                         sellingQuantities: [ 1, 1 ],
-                        buyingItems: [ (this.t12ArmorIds.includes(trashArmorId) && this.t11WeaponIds.includes(trashWeaponId)) ? potionIds.wis : potionIds.spd ],
+                        buyingItems: [ isSlightBetter ? potionIds.wis : potionIds.spd ],
                         buyingQuantities: [ 1 ],
                         suspended: false,
                     });

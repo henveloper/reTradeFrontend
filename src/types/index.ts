@@ -1,4 +1,7 @@
-export type IStocks = Array<{ id: number, quantity: number }>;
+export interface IStock {
+    id: number;
+    quantity: number;
+};
 
 export type IOffer = {
     quantity: number,
@@ -30,8 +33,10 @@ interface IGameItem {
     id: number;
 }
 
-export interface IEquipment extends IGameItem {
-    tier: number,
-    slotType: EEquipmentSlot,
+export interface IEquipment<T = number, S = EEquipmentSlot> extends IGameItem {
+    tier: T,
+    slotType: S,
     name: string,
 }
+
+export type TEquipment = 'weapon' | 'ability' | 'armor';

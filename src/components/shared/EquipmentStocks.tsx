@@ -2,27 +2,25 @@ import React from 'react';
 import { IDefaultProps } from '../../styles/styles';
 import { Grid, Typography } from '@material-ui/core';
 import { EquipmentStocksTable } from './EquipmentStocksTable';
+import { TEquipment } from '../../types';
 
 interface IEquipmentStocks extends IDefaultProps {
-    data: number[][];
-    types: string[];
-    maxTier: number;
-    type: string;
+    variant: TEquipment;
 }
 
 export function EquipmentStocks(props: IEquipmentStocks) {
-    const { styles } = props;
+    const { styles, variant } = props;
 
     return <Grid container direction='column'>
 
         <Grid item>
             <Typography variant='h6'>
-                {props.type}
+                { props.variant }
             </Typography>
         </Grid>
 
         <Grid item container>
-            <EquipmentStocksTable data={ props.data } styles={ styles } types={ props.types } maxTier={ props.maxTier }/>
+            <EquipmentStocksTable styles={ styles } variant={ variant }/>
         </Grid>
     </Grid>;
 }

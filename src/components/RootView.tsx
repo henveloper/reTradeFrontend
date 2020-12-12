@@ -3,7 +3,6 @@ import { IDefaultProps } from '../styles/styles';
 import { Grid, Link } from '@material-ui/core';
 import { EquipmentStocks } from './shared/EquipmentStocks';
 import { ImportExport } from './views/ImportExport';
-import { abilityIds, armorIds, weaponIds } from '../../data/objectIds';
 import { Calculator } from './utils/Calculator';
 
 export function RootView(props: IDefaultProps) {
@@ -35,25 +34,22 @@ export function RootView(props: IDefaultProps) {
 
 		<Grid item container>
 			<Grid item xs={ 6 }>
-				<EquipmentStocks type='weapons' styles={ styles } data={ weaponIds } maxTier={ 12 }
-								 types={ weaponTypes }/>
+				<EquipmentStocks styles={ styles } variant='weapon'/>
 			</Grid>
-			{/*<Grid item container direction='column' xs={ 6 } spacing={ 5 }>*/}
-			{/*	<Grid item>*/}
-			{/*		<EquipmentStocks type='armors' styles={ styles } data={ armorIds } max*/}
-			{/*						 types={ armorTypes }/>*/}
-			{/*	</Grid>*/}
+			<Grid item container direction='column' xs={ 6 } spacing={ 5 }>
+				<Grid item>
+					<EquipmentStocks styles={ styles } variant='armor'/>
+				</Grid>
 
-			{/*	<Grid item>*/}
-			{/*		<Calculator styles={ styles }/>*/}
-			{/*	</Grid>*/}
-			{/*</Grid>*/}
+				<Grid item>
+					<Calculator styles={ styles }/>
+				</Grid>
+			</Grid>
 		</Grid>
 
-		{/*<Grid item xs={ 6 }>*/}
-		{/*	<EquipmentStocks type='abilities' styles={ styles } data={ abilityIds } maxTier={ 6 }*/}
-		{/*					 types={ abilityTypes }/>*/}
-		{/*</Grid>*/}
+		<Grid item xs={ 6 }>
+			<EquipmentStocks styles={ styles } variant='ability'/>
+		</Grid>
 
 	</Grid>;
 }

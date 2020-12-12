@@ -1,12 +1,12 @@
 import React from 'react';
 import { IDefaultProps } from '../../styles/styles';
-import { Grid } from '@material-ui/core';
-import { Item } from './Item';
-import { abilitySlotSorting, armorSlotSorting, equipments, weaponSlotSorting } from '../../data/equipments';
-import { EEquipmentSlot } from '../../types';
+import { Button, Grid, Typography } from '@material-ui/core';
+import { Equipment, equipments, } from '../../data/equipments';
+import { EEquipmentSlot, TEquipment } from '../../types';
+import { appStore } from '../../AppStore';
 
 interface IItemTableProps extends IDefaultProps {
-    variant: 'weapon' | 'ability' | 'armor';
+    variant: TEquipment;
 }
 
 export function EquipmentStocksTable(props: IItemTableProps) {
@@ -15,11 +15,11 @@ export function EquipmentStocksTable(props: IItemTableProps) {
     const enumArray: EEquipmentSlot[] = (() => {
         switch (variant) {
             case 'weapon':
-                return weaponSlotSorting;
+                return Equipment.weaponSlotTypes;
             case 'ability':
-                return abilitySlotSorting;
+                return Equipment.abilitySlotTypes;
             case 'armor':
-                return armorSlotSorting;
+                return Equipment.armorSlotTypes;
             default:
                 return [];
         }
@@ -30,26 +30,34 @@ export function EquipmentStocksTable(props: IItemTableProps) {
     filteredEquipments.sort((a, b) => enumArray.indexOf(a.slotType) - enumArray.indexOf(b.slotType));
 
     // tier range
-    const tiers = filteredEquipments.map(e => e.tier)
+    const tiers = filteredEquipments.map(e => e.tier);
     const minTier = Math.min(...tiers);
     const maxTier = Math.max(...tiers);
 
     return <Grid container direction='column' spacing={ 3 } style={ { maxHeight: 750 } }>
-        <Grid item container spacing={ 8 }>
-            <Grid item xs style={ { maxWidth: 100 } }/>
-            { Array.from({ length: props.data[0].length }, (_, k) => props.maxTier - props.data[0].length + k + 1).map(t =>
-                <Grid item xs style={ { maxWidth: 100, textAlign: 'center' } }>
-                    T{ t }
-                </Grid>) }
-        </Grid>
-
-        { props.data.map((typeIds, i0) => <Grid item container alignItems='center' spacing={ 8 }>
-            <Grid item xs style={ { maxWidth: 100 } }>
-                { props.types[i0] }
+        { filteredEquipments.map(e => <Grid item container>
+            <Grid item xs={ 2 }>
+                { e.className }
             </Grid>
-            { typeIds.map(tierId => <Grid item xs style={ { maxWidth: 100 } }>
-                <Item id={ tierId } styles={ styles }/>
-            </Grid>) }
+            <Grid item xs={ 1 }>
+                T{ e.tier }
+            </Grid>
+            <Grid item xs={ 3 }>
+                { e.name }
+            </Grid>
+            <Grid item xs={ 2 }>
+                <Button fullWidth variant='outlined'>
+                    +
+                </Button>
+            </Grid>
+            <Grid item xs={ 2 }>
+                { appStore.stocks.find(s => s.id === e.id)?.quantity }
+            </Grid>
+            <Grid item xs={ 2 }>
+                <Button fullWidth variant='outlined'>
+                    -
+                </Button>
+            </Grid>
         </Grid>) }
     </Grid>;
 }
