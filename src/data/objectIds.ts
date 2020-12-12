@@ -1,4 +1,4 @@
-export const weapons = [
+export const weaponIds = [
     // dagger bow staff wand sword katanas
     [ 2697, 2698, 2815 ],
     [ 2700, 2701, 2818 ],
@@ -8,7 +8,7 @@ export const weapons = [
     [ 3150, 3151, 3152 ],
 ];
 
-export const abilities = [
+export const abilityIds = [
     // cloak, quiv, spell, tome
     // helms, shield, seal, poison
     // skulls, traps, orbs, prisms
@@ -31,7 +31,7 @@ export const abilities = [
     [ 53238, 53239 ],
 ];
 
-export const armors = [
+export const armorIds = [
     // light heavy robe
     [ 2703, 2704, 2809 ],
     [ 2706, 2707, 2812 ],

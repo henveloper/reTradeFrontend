@@ -26,7 +26,7 @@ export function Item(props: IItemProps) {
             </Grid>
 
             <Grid item>
-                <IconButton size='small'  onClick={ () => appStore.addStocksQuantity(props.id) }>
+                <IconButton size='small'  onClick={ () => appStore.deductStocksQuantity(props.id) }>
                     <ExposureNeg1/>
                 </IconButton>
             </Grid>
