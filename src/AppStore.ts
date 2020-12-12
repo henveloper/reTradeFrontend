@@ -1,9 +1,10 @@
 import { createBrowserHistory, History } from 'history';
 import { ITrades } from './types';
+import { makeAutoObservable } from 'mobx';
 
 export class AppStore {
 	constructor(public history: History) {
-		// makeAutoObservable(this);
+		makeAutoObservable(this);
 	}
 
 	async asyncInits() {

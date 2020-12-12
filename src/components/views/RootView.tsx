@@ -18,8 +18,5 @@ export function RootView(props: IDefaultProps) {
 			<ImportExport styles={ styles }/>
 		</Grid>
 
-		<Grid item style={ { backgroundColor: 'blue' } }>
-			<SnackBars styles={ styles }/>
-		</Grid>
 	</Grid>;
 }

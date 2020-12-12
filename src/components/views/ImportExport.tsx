@@ -1,32 +1,42 @@
 import React, { useState } from 'react';
 import { IDefaultProps } from '../../styles/styles';
-import { Button, Collapse, Grid, TextField } from '@material-ui/core';
+import { Button, Checkbox, Collapse, FormControlLabel, Grid, TextField } from '@material-ui/core';
 import { appStore } from '../../AppStore';
+import { ITrades } from '../../types';
+import Joi from 'joi';
 
 export function ImportExport(props: IDefaultProps) {
     const [ transitionIn, setTransitionIn ] = useState(false);
     const [ textFieldValue, setTextFieldValue ] = useState('');
+    const [ editable, setEditable ] = useState(false);
 
     function tradeExport() {
         setTextFieldValue(appStore.trades.map(t => `${ t.id }, ${ t.quantity }`).join('\n'));
+        appStore.successMessage = 'Trade exported.';
     }
 
     function tradeImport() {
         if (textFieldValue === '') {
-            console.log(123);
             appStore.errorMessage = 'I believe you did not meant to do this.';
-            console.log(234);
             return;
         }
-        console.log(345);
+
+        const trades: ITrades = [];
         for (const trade of textFieldValue.split('\n')) {
-            const [ id, quant ] = trade.split(', ');
-            if (!id || !quant) {
-                appStore.errorMessage = `Error importing, line: "${ trade }"`;
+            const [ id, quantity ] = trade.split(', ');
+            const schema = Joi.object({
+                id: Joi.number().integer().min(1).required(),
+                quantity: Joi.number().integer().min(1).max(99).required(),
+            });
+            const validation = schema.validate({ id, quantity });
+            if (validation.error) {
+                appStore.errorMessage = validation.error.message;
                 return;
             }
-            const [] = [];
+            const { value } = validation;
+            trades.push({ id: +value.id, quantity: +value.quantity });
         }
+        appStore.successMessage = 'Trade imported.';
     }
 
 
@@ -50,17 +60,27 @@ export function ImportExport(props: IDefaultProps) {
                             </Button>
                         </Grid>
 
-                        <Grid item xs={ 6 }>
+                        <Grid item xs={ 5 }>
                             <Button fullWidth variant='outlined' onClick={ tradeImport }>
                                 Import trades
                             </Button>
                         </Grid>
 
+                        <Grid item xs={ 1 }>
+                            <FormControlLabel
+                                control={ <Checkbox value={ editable } onChange={ () => setEditable(!editable) }/> }
+                                label="edit"
+                            />
+                        </Grid>
+
                     </Grid>
 
                     <Grid item>
-                        <TextField fullWidth variant='outlined' value={ textFieldValue }
-                                   onChange={ e => setTextFieldValue(e.target.value) }/>
+                        <TextField fullWidth variant='outlined' value={ textFieldValue } multiline
+                                   disabled={ !editable }
+                                   onChange={ e => setTextFieldValue(e.target.value) }
+                                   helperText='trades'
+                        />
                     </Grid>
 
                 </Grid>

@@ -26,7 +26,6 @@ export const SnackBars = observer((props: IDefaultProps) => {
 
     return (
         <div style={ { width: '100%' } }>
-            { appStore.errorMessage }
             <Snackbar open={ appStore.errorMessage !== '' } autoHideDuration={ 6000 } onClose={ handleCloseError }>
                 <Alert onClose={ handleCloseError } severity="error">
                     { appStore.errorMessage }
