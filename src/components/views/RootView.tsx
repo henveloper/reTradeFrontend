@@ -1,24 +1,20 @@
-import { Route, Router, Switch } from "react-router";
-import React from "react";
-import { IDefaultProps } from "../../styles/styles";
-import { Button, Grid, Typography } from "@material-ui/core";
-import { appStore } from "../../AppStore";
+import React from 'react';
+import { IDefaultProps } from '../../styles/styles';
+import { Grid } from '@material-ui/core';
+import { Armors } from './Armors';
 
 export function RootView(props: IDefaultProps) {
-	const {styles} = props;
+	const { styles } = props;
 
 	return <Grid container direction='column'>
-		<Grid item container>
-			<Typography variant='h6' >
-				this is some text
-			</Typography>
+		<Grid item>
+			<Armors styles={ styles }/>
 		</Grid>
-
-		<Grid item container>
-			{[0,1].map((t, i) => <Grid item container xs={6}>
-				<img className={styles.fullWidth} alt={i.toString()} src='https://media0.giphy.com/media/g7GKcSzwQfugw/giphy.gif'/>
-			</Grid>)}
-		</Grid>
-
-	</Grid>
+		{/*<Grid item>*/ }
+		{/*	<Abilities/>*/ }
+		{/*</Grid>*/ }
+		{/*<Grid item>*/ }
+		{/*	<Armors/>*/ }
+		{/*</Grid>*/ }
+	</Grid>;
 }

@@ -8,11 +8,6 @@ import { Main } from "./Main";
 export function App() {
 
 	useEffect(() => {
-		document.body.style.backgroundImage = "url('https://i.ytimg.com/vi/hkMTD41s7Ts/maxresdefault.jpg')";
-		document.body.style.backgroundPosition = 'top center';
-		document.body.style.backgroundRepeat = 'no-repeat';
-		document.body.style.backgroundColor = 'white';
-		document.body.style.backgroundAttachment = 'fixed';
 
 		appStore.asyncInits().catch(console.log);
 	}, []);

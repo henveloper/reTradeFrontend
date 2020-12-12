@@ -1,5 +1,5 @@
 import { createBrowserHistory, History } from 'history';
-// import { ApiService } from './services/ApiService';
+import xml from './data/Objects.xml'
 
 export class AppStore {
 	constructor(public history: History) {
@@ -8,6 +8,11 @@ export class AppStore {
 
 	async asyncInits() {
 		//
+	}
+
+	public parse() {
+		const xmlData = ('src/data/Objects.xml');
+		console.log(xmlData.toString());
 	}
 
 }
