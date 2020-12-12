@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/reTrade.iml" filepath="$PROJECT_DIR$/.idea/reTrade.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/reTradeFrontend.iml" filepath="$PROJECT_DIR$/.idea/reTradeFrontend.iml" />
     </modules>
   </component>
 </project>

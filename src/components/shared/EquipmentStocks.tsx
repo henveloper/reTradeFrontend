@@ -1,7 +1,7 @@
 import React from 'react';
 import { IDefaultProps } from '../../styles/styles';
 import { Grid, Typography } from '@material-ui/core';
-import { ItemTable } from '../shared/ItemTable';
+import { EquipmentStocksTable } from './EquipmentStocksTable';
 
 interface IEquipmentStocks extends IDefaultProps {
     data: number[][];
@@ -22,7 +22,7 @@ export function EquipmentStocks(props: IEquipmentStocks) {
         </Grid>
 
         <Grid item container>
-            <ItemTable data={ props.data } styles={ styles } types={ props.types } maxTier={ props.maxTier }/>
+            <EquipmentStocksTable data={ props.data } styles={ styles } types={ props.types } maxTier={ props.maxTier }/>
         </Grid>
     </Grid>;
 }

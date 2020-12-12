@@ -1,10 +1,10 @@
 import React from 'react';
-import { IDefaultProps } from '../../styles/styles';
+import { IDefaultProps } from '../styles/styles';
 import { Grid, Link } from '@material-ui/core';
-import { EquipmentStocks } from './EquipmentStocks';
-import { ImportExport } from './ImportExport';
+import { EquipmentStocks } from './shared/EquipmentStocks';
+import { ImportExport } from './views/ImportExport';
 import { abilityIds, armorIds, weaponIds } from '../../data/objectIds';
-import { Calculator } from '../shared/Calculator';
+import { Calculator } from './utils/Calculator';
 
 export function RootView(props: IDefaultProps) {
 	const { styles } = props;
