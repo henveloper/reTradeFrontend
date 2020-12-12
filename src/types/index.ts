@@ -1,1 +1,1 @@
-export type ITrades = Array<{ id: number, quantity: number }>;
+export type IStocks = Array<{ id: number, quantity: number }>;

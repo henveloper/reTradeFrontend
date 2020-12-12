@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { IDefaultProps } from '../../styles/styles';
 import { Button, Checkbox, Collapse, FormControlLabel, Grid, TextField } from '@material-ui/core';
 import { appStore } from '../../AppStore';
-import { ITrades } from '../../types';
+import { IStocks } from '../../types';
 import Joi from 'joi';
 
 export function ImportExport(props: IDefaultProps) {
@@ -10,18 +10,18 @@ export function ImportExport(props: IDefaultProps) {
     const [ textFieldValue, setTextFieldValue ] = useState('');
     const [ editable, setEditable ] = useState(false);
 
-    function tradeExport() {
-        setTextFieldValue(appStore.trades.map(t => `${ t.id }, ${ t.quantity }`).join('\n'));
+    function stockExport() {
+        setTextFieldValue(appStore.stocks.map(t => `${ t.id }, ${ t.quantity }`).join('\n'));
         appStore.successMessage = 'Trade exported.';
     }
 
-    function tradeImport() {
+    function stockImport() {
         if (textFieldValue === '') {
             appStore.errorMessage = 'I believe you did not meant to do this.';
             return;
         }
 
-        const trades: ITrades = [];
+        const stocks: IStocks = [];
         for (const trade of textFieldValue.split('\n')) {
             const [ id, quantity ] = trade.split(', ');
             const schema = Joi.object({
@@ -34,7 +34,7 @@ export function ImportExport(props: IDefaultProps) {
                 return;
             }
             const { value } = validation;
-            trades.push({ id: +value.id, quantity: +value.quantity });
+            stocks.push({ id: +value.id, quantity: +value.quantity });
         }
         appStore.successMessage = 'Trade imported.';
     }
@@ -55,14 +55,14 @@ export function ImportExport(props: IDefaultProps) {
                     <Grid item container spacing={ 1 }>
 
                         <Grid item xs={ 6 }>
-                            <Button fullWidth variant='outlined' onClick={ tradeExport }>
-                                Export trades
+                            <Button fullWidth variant='outlined' onClick={ stockExport }>
+                                Export stocks
                             </Button>
                         </Grid>
 
                         <Grid item xs={ 5 }>
-                            <Button fullWidth variant='outlined' onClick={ tradeImport }>
-                                Import trades
+                            <Button fullWidth variant='outlined' onClick={ stockImport }>
+                                Import stocks
                             </Button>
                         </Grid>
 
