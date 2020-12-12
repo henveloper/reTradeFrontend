@@ -23,7 +23,7 @@ export class AppStore {
 
     public addStocksQuantity(id: number) {
         console.log(id);
-        const found = this.stocks.find(t => t.id === t.id);
+        const found = this.stocks.find(t => t.id === id);
         if (found) {
             found.quantity += 1;
         } else {
@@ -32,7 +32,7 @@ export class AppStore {
     }
 
     public deductStocksQuantity(id: number) {
-        const found = this.stocks.find(t => t.id === t.id);
+        const found = this.stocks.find(t => t.id === id);
         if (found) {
             found.quantity -= 1;
             if (found.quantity === 0) {
@@ -41,7 +41,7 @@ export class AppStore {
         }
     }
 
-    public async sendOffer(token: string) {
+    public computeTrades() {
 
         const { stocks } = this;
         const offers: IAPIOffer[] = [];
@@ -82,7 +82,7 @@ export class AppStore {
             for (const weaponId of weaponIds[weaponIndex].slice(0, armorIds[armorIndex].length - 1)) {
                 for (const abilityId of abilityIds[abilityIndex].slice(0, armorIds[armorIndex].length - 1)) {
                     for (const armorId of armorIds[armorIndex].slice(0, armorIds[armorIndex].length - 1)) {
-                        const weaponStock = stocks.find(t => t.id === armorId);
+                        const weaponStock = stocks.find(t => t.id === weaponId);
                         const abilityStock = stocks.find(t => t.id === abilityId);
                         const armorStock = stocks.find(t => t.id === armorId);
                         if (weaponStock && abilityStock && armorStock) {
@@ -108,7 +108,8 @@ export class AppStore {
                 suspended: false,
             });
         }
-        console.log(JSON.stringify(bulkOffers));
+
+        return JSON.stringify(bulkOffers);
     }
 
 }

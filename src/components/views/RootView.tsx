@@ -4,7 +4,7 @@ import { Grid } from '@material-ui/core';
 import { EquipmentStocks } from './EquipmentStocks';
 import { ImportExport } from './ImportExport';
 import { abilityIds, armorIds, weaponIds } from '../../data/objectIds';
-import { Requester } from '../shared/Requester';
+import { Calculator } from '../shared/Calculator';
 
 export function RootView(props: IDefaultProps) {
 	const { styles } = props;
@@ -41,7 +41,7 @@ export function RootView(props: IDefaultProps) {
 			</Grid>
 
 			<Grid item>
-				<Requester styles={ styles }/>
+				<Calculator styles={ styles }/>
 			</Grid>
 		</Grid>
 
