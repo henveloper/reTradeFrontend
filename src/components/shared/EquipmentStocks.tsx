@@ -2,10 +2,10 @@ import React from 'react';
 import { IDefaultProps } from '../../styles/styles';
 import { Grid, Typography } from '@material-ui/core';
 import { EquipmentStocksTable } from './EquipmentStocksTable';
-import { TEquipment } from '../../types';
+import { TEquipmentTypes } from '../../types';
 
 interface IEquipmentStocks extends IDefaultProps {
-    variant: TEquipment;
+    variant: TEquipmentTypes;
 }
 
 export function EquipmentStocks(props: IEquipmentStocks) {

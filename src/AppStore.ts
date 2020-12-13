@@ -1,5 +1,5 @@
 import { createBrowserHistory, History } from 'history';
-import { IStock, TEquipment, } from './types';
+import { IStock, TEquipmentTypes, } from './types';
 import { makeAutoObservable } from 'mobx';
 import { OfferManager } from './types/OfferManager';
 import { Equipment, equipments } from './data/equipments';
@@ -38,7 +38,7 @@ export class AppStore {
         }
     }
 
-    public getStocksEquipment(type: TEquipment, tier: number): Equipment[] {
+    public getStocksEquipment(type: TEquipmentTypes, tier: number): Equipment[] {
         return this.stocks
             .filter(stock => equipments.filter(e => e.type === type && e.tier === tier).find(e => e.id === stock.id))
             .map(s => equipments.find(e => e.id === s.id)!);

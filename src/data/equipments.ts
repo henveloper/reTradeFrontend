@@ -1,4 +1,12 @@
-import { EAbilitySlot, EArmorSlot, EEquipmentSlot, EWeaponSlot, IEquipment, TEquipment } from '../types';
+import {
+    EAbilitySlot,
+    EArmorSlot,
+    EEquipmentSlot,
+    EWeaponSlot,
+    IEquipment,
+    TEquipments,
+    TEquipmentTypes
+} from '../types';
 
 export class Equipment {
     public id: number;
@@ -22,7 +30,7 @@ export class Equipment {
         this.name = info.name;
     }
 
-    public get type(): TEquipment{
+    public get type(): TEquipmentTypes{
         if (Equipment.weaponSlotTypes.includes(+this.slotType)) {
             return 'weapon';
         } else if (Equipment.abilitySlotTypes.includes(+this.slotType)) {
@@ -32,7 +40,7 @@ export class Equipment {
         }
     }
 
-    public get className() {
+    public get className(): TEquipments {
         switch (this.slotType) {
             case EWeaponSlot.sword:
                 return 'sword';
@@ -85,7 +93,7 @@ export class Equipment {
             case EArmorSlot.heavy:
                 return 'heavy';
             default:
-                return 'penis';
+                return 'robe';
         }
     }
 

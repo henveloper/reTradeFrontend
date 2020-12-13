@@ -8,7 +8,6 @@ import { Main } from "./Main";
 export function App() {
 
 	useEffect(() => {
-
 		appStore.asyncInits().catch(console.log);
 	}, []);
 

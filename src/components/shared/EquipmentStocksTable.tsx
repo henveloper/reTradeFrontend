@@ -2,12 +2,13 @@ import React from 'react';
 import { IDefaultProps } from '../../styles/styles';
 import { Button, Grid } from '@material-ui/core';
 import { Equipment, equipments, } from '../../data/equipments';
-import { EEquipmentSlot, TEquipment } from '../../types';
+import { EEquipmentSlot, TEquipmentTypes } from '../../types';
 import { appStore } from '../../AppStore';
 import { observer } from 'mobx-react';
+import { images } from '../../data/images';
 
 interface IItemTableProps extends IDefaultProps {
-    variant: TEquipment;
+    variant: TEquipmentTypes;
 }
 
 export const EquipmentStocksTable = observer((props: IItemTableProps) => {
@@ -35,7 +36,7 @@ export const EquipmentStocksTable = observer((props: IItemTableProps) => {
                  style={ { maxHeight: 750, overflowY: 'scroll', flexWrap: 'nowrap' } }>
         { filteredEquipments.map(e => <Grid item container>
             <Grid item xs={ 2 }>
-                { e.className }
+                <img style={ { width: '100%' } } alt={ e.className } src={ images.equipment[e.className] }/>
             </Grid>
             <Grid item xs={ 1 }>
                 T{ e.tier }

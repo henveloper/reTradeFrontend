@@ -5,10 +5,10 @@ export const defaultTheme = responsiveFontSizes(
     createMuiTheme({
         palette: {
             primary: {
-                main: blueGrey['800']
+                main: grey['800']
             },
             secondary: {
-                main: grey['800']
+                main: blueGrey['800']
             },
         }
     })
