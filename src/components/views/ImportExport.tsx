@@ -20,7 +20,7 @@ export const ImportExport = observer((props: IDefaultProps) => {
             </Grid>
 
             <Grid item xs>
-                <TextField fullWidth value={ importField } onChange={ e => setImportField(e.target.value) }/>
+                <TextField fullWidth multiline value={ importField } onChange={ e => setImportField(e.target.value) }/>
             </Grid>
 
         </Grid>

@@ -73,12 +73,13 @@ export class StockManager {
 
         const stocks: IStock[] = [];
         for (const trade of s.split('\n')) {
-            const [ id, quantity ] = trade.split(', ');
+            const [ id, quantity ] = trade.split(',');
             const schema = Joi.object({
                 id: Joi.number().integer().min(1).required(),
                 quantity: Joi.number().integer().min(1).max(99).required(),
             });
             const validation = schema.validate({ id, quantity });
+            console.log(validation);
             if (validation.error) {
                 appStore.errorMessage = validation.error.message;
                 return;
