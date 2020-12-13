@@ -3,6 +3,7 @@ import { IStock, TEquipmentTypes, } from './types';
 import { makeAutoObservable } from 'mobx';
 import { OfferManager } from './types/OfferManager';
 import { Equipment, equipments } from './data/equipments';
+import Joi from 'joi';
 
 export class AppStore {
     constructor(public history: History) {
@@ -35,6 +36,22 @@ export class AppStore {
             if (found.quantity === 0) {
                 this.stocks = this.stocks.filter(t => t.quantity > 0);
             }
+        }
+    }
+
+    public changeStocksQuantity(id: number, quantity: string) {
+        const rule = Joi.number().integer().min(1).required();
+        const { error, value } = rule.validate(quantity, { convert: true });
+        if (error) {
+            this.errorMessage = `invalid stock quantity ${ id } ${ quantity }`;
+            return;
+        }
+
+        const found = this.stocks.find(t => t.id === id);
+        if (found) {
+            found.quantity = value;
+        } else {
+            this.stocks.push({ id, quantity: value });
         }
     }
 

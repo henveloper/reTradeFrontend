@@ -11,7 +11,7 @@ interface IItemTableProps extends IDefaultProps {
     variant: TEquipmentTypes;
 }
 
-export const EquipmentStocksTable = observer((props: IItemTableProps) => {
+export const EquipmentTable = observer((props: IItemTableProps) => {
     const { styles, variant } = props;
 
     const enumArray: EEquipmentSlot[] = (() => {
