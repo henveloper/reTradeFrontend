@@ -11,10 +11,10 @@ interface IEquipmentStocks extends IDefaultProps {
 export function EquipmentStocks(props: IEquipmentStocks) {
     const { styles, variant } = props;
 
-    return <Grid container direction='column'>
+    return <Grid container direction='column' spacing={ 3 }>
 
         <Grid item>
-            <Typography variant='h6'>
+            <Typography variant='h4'>
                 { props.variant }
             </Typography>
         </Grid>

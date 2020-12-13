@@ -34,7 +34,7 @@ export const EquipmentStocksTable = observer((props: IItemTableProps) => {
 
     return <Grid container direction='column' spacing={ 3 }
                  style={ { maxHeight: 750, overflowY: 'scroll', flexWrap: 'nowrap' } }>
-        { filteredEquipments.map(e => <Grid item container>
+        { filteredEquipments.map(e => <Grid item container alignItems='center'>
             <Grid item xs={ 2 }>
                 <img style={ { width: '100%' } } alt={ e.className } src={ images.equipment[e.className] }/>
             </Grid>
@@ -45,16 +45,16 @@ export const EquipmentStocksTable = observer((props: IItemTableProps) => {
                 { e.name }
             </Grid>
             <Grid item xs={ 2 }>
-                <Button fullWidth variant='outlined' onClick={ () => appStore.addStocksQuantity(e.id) }>
-                    +
+                <Button fullWidth variant='outlined' onClick={ () => appStore.deductStocksQuantity(e.id) }>
+                    -
                 </Button>
             </Grid>
             <Grid item xs={ 2 } style={ { textAlign: 'center' } }>
                 { appStore.stocks.find(s => s.id === e.id)?.quantity }
             </Grid>
             <Grid item xs={ 2 }>
-                <Button fullWidth variant='outlined' onClick={ () => appStore.deductStocksQuantity(e.id) }>
-                    -
+                <Button fullWidth variant='outlined' onClick={ () => appStore.addStocksQuantity(e.id) }>
+                    +
                 </Button>
             </Grid>
         </Grid>) }

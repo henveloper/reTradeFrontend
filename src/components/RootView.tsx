@@ -22,34 +22,35 @@ export function RootView(props: IDefaultProps) {
 			<img src='https://i.ytimg.com/vi/if-2M3K1tqk/maxresdefault.jpg' style={ { width: '100%' } }/>
 		</Grid>
 
-		<Grid item container justify='center'>
-			<Link href='https://www.realmeye.com/edit-offers-by/SaintBen'>
-				myRealmEyePage
-			</Link>
-		</Grid>
 
-		<Grid item>
-			<ImportExport styles={ styles }/>
+		<Grid item container spacing={ 2 }>
+			<Grid item xs>
+				<EquipmentStocks styles={ styles } variant='weapon'/>
+			</Grid>
+			<Grid item xs>
+				<EquipmentStocks styles={ styles } variant='armor'/>
+			</Grid>
 		</Grid>
 
 		<Grid item container spacing={ 2 }>
-			<Grid item xs={ 6 }>
-				<EquipmentStocks styles={ styles } variant='weapon'/>
+			<Grid item xs>
+				<EquipmentStocks styles={ styles } variant='ability'/>
 			</Grid>
-			<Grid item container direction='column' xs={ 6 } spacing={ 5 }>
-				<Grid item>
-					<EquipmentStocks styles={ styles } variant='armor'/>
+			<Grid item container direction='column' xs spacing={ 3 }>
+				<Grid item container justify='center'>
+					<Link href='https://www.realmeye.com/edit-offers-by/SaintBen'>
+						RealmEye
+					</Link>
 				</Grid>
-
 				<Grid item>
 					<Calculator styles={ styles }/>
 				</Grid>
+				<Grid item>
+					<ImportExport styles={ styles }/>
+				</Grid>
 			</Grid>
 		</Grid>
 
-		<Grid item xs={ 6 }>
-			<EquipmentStocks styles={ styles } variant='ability'/>
-		</Grid>
 
 	</Grid>;
 }
