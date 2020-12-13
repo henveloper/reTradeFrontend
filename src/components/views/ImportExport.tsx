@@ -19,7 +19,7 @@ export function ImportExport(props: IDefaultProps) {
             </Grid>
 
             <Grid item xs>
-                <TextField multiline fullWidth value={ importField } onChange={ e => setImportField(e.target.value) }/>
+                <TextField fullWidth value={ importField } onChange={ e => setImportField(e.target.value) }/>
             </Grid>
 
         </Grid>

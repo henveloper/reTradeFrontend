@@ -3,14 +3,17 @@ import { appStore } from '../AppStore';
 import { Equipment, equipments } from '../data/equipments';
 import { OfferManager } from './OfferManager';
 import { IStock, TEquipmentTypes } from './index';
+import { action, computed, makeAutoObservable } from 'mobx';
 
 export class StockManager {
     constructor() {
+        makeAutoObservable(this);
         this.stocks = [];
     }
 
-    public stocks: IStock[];
+    private stocks: IStock[];
 
+    @action
     public addStocksQuantity(id: number) {
         const found = this.stocks.find(t => t.id === id);
         if (found) {
@@ -20,6 +23,7 @@ export class StockManager {
         }
     }
 
+    @action
     public deductStocksQuantity(id: number) {
         const found = this.stocks.find(t => t.id === id);
         if (found) {
@@ -30,6 +34,7 @@ export class StockManager {
         }
     }
 
+    @action
     public changeStocksQuantity(id: number, quantity: string) {
         const rule = Joi.number().integer().min(1).required();
         const { error, value } = rule.validate(quantity, { convert: true });
@@ -47,16 +52,19 @@ export class StockManager {
         }
     }
 
+    @computed
     public getStocksEquipment(type: TEquipmentTypes, tier: number): Equipment[] {
         return this.stocks
             .filter(stock => equipments.filter(e => e.type === type && e.tier === tier).find(e => e.id === stock.id))
             .map(s => equipments.find(e => e.id === s.id)!);
     }
 
+    @computed
     public getStockQuantity(id: number): number {
-        return this.stocks.find(s => s.id === id)?.id ?? 0;
+        return this.stocks.find(s => s.id === id)?.quantity ?? 0;
     }
 
+    @action
     public importTradeString(s: string) {
         if (!s) {
             appStore.errorMessage = 'I believe you did not meant to empty the trades right?';
@@ -82,10 +90,12 @@ export class StockManager {
         appStore.successMessage = 'Trades imported.';
     }
 
+    @computed
     public get exportString() {
         return this.stocks.map(s => `${ s.id },${ s.quantity }`).join('\n');
     }
 
+    @computed
     public get tradeString() {
         const offerManager = new OfferManager();
         offerManager.t10Weapons = this.getStocksEquipment('weapon', 10) as any;
