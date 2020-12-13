@@ -49,9 +49,9 @@ const equipment: Record<TEquipments, Record<number, string>> = {
     wakizashi: { 5: 'https://i.imgur.com/YittzJR.png', 6: 'https://i.imgur.com/ycLPRDX.png' },
     lute: { 5: 'https://i.imgur.com/xKXYSaD.png', 6: 'https://i.imgur.com/7QhzvyK.png' },
 
-    robe: 'https://i.imgur.com/Oup28jC.png',
-    light: 'https://i.imgur.com/Wvu0LU7.png',
-    heavy: 'https://i.imgur.com/8PWmkCU.png',
+    robe:{11: 'https://i.imgur.com/pKZpj6a.png', 12: 'https://i.imgur.com/qvD85dq.png', 13: 'https://i.imgur.com/Oup28jC.png'},
+    light:{11: 'https://i.imgur.com/yFHXsnA.png', 12: 'https://i.imgur.com/5lKzW3e.png', 13: 'https://i.imgur.com/Wvu0LU7.png'},
+    heavy:{11: 'https://i.imgur.com/lqywZKs.png', 12: 'https://i.imgur.com/doHDO0P.png', 13: 'https://i.imgur.com/8PWmkCU.png'},
 };
 
 export const images = {
