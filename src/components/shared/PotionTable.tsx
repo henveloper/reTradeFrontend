@@ -6,11 +6,11 @@ import { potionIds } from '../../data/potionIds';
 import { appStore } from '../../AppStore';
 
 export const PotionTable = observer((props: IDefaultProps) => {
-    const { styles } = props;
+    const { stockManager } = appStore;
 
     const rowInfo: { type: string, src: string, id: potionIds }[] = [
         { type: 'atk', src: 'https://i.imgur.com/kiIMjr9.png', id: potionIds.atk },
-        { type: 'def', src: 'https://i.imgur.com/xSXLjme.png', id: potionIds.atk },
+        { type: 'def', src: 'https://i.imgur.com/xSXLjme.png', id: potionIds.def },
         { type: 'spd', src: 'https://i.imgur.com/R2U76AH.png', id: potionIds.spd },
         { type: 'dex', src: 'https://i.imgur.com/7kXmM0O.png', id: potionIds.dex },
         { type: 'vit', src: 'https://i.imgur.com/1iHlYrD.png', id: potionIds.vit },
@@ -25,8 +25,8 @@ export const PotionTable = observer((props: IDefaultProps) => {
             </Grid>
             <Grid item xs={ 10 }>
                 <TextField fullWidth size='small' variant='outlined'
-                           onChange={ e => appStore.changeStocksQuantity(i.id, e.target.value) }
-                           value={ appStore.stocks.find(s => s.id === i.id) }/>
+                           onChange={ e => stockManager.changeStocksQuantity(i.id, e.target.value) }
+                           value={ stockManager.getStockQuantity(i.id) }/>
             </Grid>
         </Grid>) }
     </Grid>;

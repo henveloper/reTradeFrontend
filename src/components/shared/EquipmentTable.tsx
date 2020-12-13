@@ -45,15 +45,16 @@ export const EquipmentTable = observer((props: IItemTableProps) => {
                 { e.name }
             </Grid>
             <Grid item xs={ 2 }>
-                <Button fullWidth variant='outlined' onClick={ () => appStore.deductStocksQuantity(e.id) }>
+                <Button fullWidth variant='outlined'
+                        onClick={ () => appStore.stockManager.deductStocksQuantity(e.id) }>
                     -
                 </Button>
             </Grid>
             <Grid item xs={ 2 } style={ { textAlign: 'center' } }>
-                { appStore.stocks.find(s => s.id === e.id)?.quantity }
+                { appStore.stockManager.getStockQuantity(e.id) }
             </Grid>
             <Grid item xs={ 2 }>
-                <Button fullWidth variant='outlined' onClick={ () => appStore.addStocksQuantity(e.id) }>
+                <Button fullWidth variant='outlined' onClick={ () => appStore.stockManager.addStocksQuantity(e.id) }>
                     +
                 </Button>
             </Grid>

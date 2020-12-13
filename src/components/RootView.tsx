@@ -3,21 +3,11 @@ import { IDefaultProps } from '../styles/styles';
 import { Grid, Link } from '@material-ui/core';
 import { ItemStocks } from './shared/ItemStocks';
 import { ImportExport } from './views/ImportExport';
-import { Calculator } from './utils/Calculator';
 import { EquipmentTable } from './shared/EquipmentTable';
 import { PotionTable } from './shared/PotionTable';
 
 export function RootView(props: IDefaultProps) {
 	const { styles } = props;
-
-	const weaponTypes = [ 'dagger', 'bow', 'staff', 'wand', 'sword', 'katanas' ];
-	// const abilityTypes = [
-	// 	'cloak', 'quiv', 'spell', 'tome',
-	// 	'helms', 'shield', 'seal', 'poison',
-	// 	'skulls', 'traps', 'orbs', 'prisms',
-	// 	'scepters', 'stars', 'waki', 'lutes',
-	// ];
-	// const armorTypes = [ 'light', 'heavy', 'robe' ];
 
 	return <Grid container direction='column' spacing={ 3 }>
 		<Grid item>
@@ -28,15 +18,6 @@ export function RootView(props: IDefaultProps) {
 			<ImportExport styles={ styles }/>
 		</Grid>
 
-		<Grid item container justify='center'>
-			<Link href='https://www.realmeye.com/edit-offers-by/SaintBen'>
-				RealmEye
-			</Link>
-		</Grid>
-
-		<Grid item>
-			<Calculator styles={ styles }/>
-		</Grid>
 
 		<Grid item container spacing={ 2 }>
 

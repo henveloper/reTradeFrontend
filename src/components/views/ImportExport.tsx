@@ -1,80 +1,65 @@
 import React, { useState } from 'react';
 import { IDefaultProps } from '../../styles/styles';
-import { Button, Grid, TextField } from '@material-ui/core';
+import { Button, Grid, Link, TextField } from '@material-ui/core';
 import { appStore } from '../../AppStore';
-import Joi from 'joi';
-import { IStock } from '../../types';
+import CopyToClipboard from 'react-copy-to-clipboard';
 
 export function ImportExport(props: IDefaultProps) {
-    const [ transitionIn, setTransitionIn ] = useState(false);
-    const [ textFieldValue, setTextFieldValue ] = useState('');
-
-    function stockExport() {
-        setTextFieldValue(appStore.stocks.map(t => `${ t.id }, ${ t.quantity }`).join('\n'));
-        appStore.successMessage = 'Trade exported.';
-    }
-
-    function stockImport() {
-        if (textFieldValue === '') {
-            appStore.errorMessage = 'I believe you did not meant to do this.';
-            return;
-        }
-
-        const stocks: IStock[] = [];
-        for (const trade of textFieldValue.split('\n')) {
-            const [ id, quantity ] = trade.split(', ');
-            const schema = Joi.object({
-                id: Joi.number().integer().min(1).required(),
-                quantity: Joi.number().integer().min(1).max(99).required(),
-            });
-            const validation = schema.validate({ id, quantity });
-            if (validation.error) {
-                appStore.errorMessage = validation.error.message;
-                return;
-            }
-            const { value } = validation;
-            stocks.push({ id: +value.id, quantity: +value.quantity });
-        }
-        appStore.stocks = stocks;
-        appStore.successMessage = 'Trade imported.';
-    }
-
+    const { stockManager } = appStore;
+    const [ importField, setImportField ] = useState('');
 
     return <Grid container direction='column' spacing={ 1 }>
 
-        <Grid item>
-            <Button fullWidth variant='contained' onClick={ () => setTransitionIn(!transitionIn) }>
-                Import / Export
-            </Button>
+        <Grid item container spacing={ 1 }>
+
+            <Grid item>
+                <Button fullWidth variant='contained' onClick={ () => stockManager.importTradeString(importField) }>
+                    Stocks Import
+                </Button>
+            </Grid>
+
+            <Grid item xs>
+                <TextField multiline fullWidth value={ importField } onChange={ e => setImportField(e.target.value) }/>
+            </Grid>
+
         </Grid>
 
-        <Grid item>
-                <Grid container direction='column' spacing={ 1 }>
+        <Grid item container spacing={ 1 }>
 
-                    <Grid item container spacing={ 1 }>
+            <Grid item>
+                <CopyToClipboard text={ stockManager.exportString }>
+                    <Button fullWidth variant='contained' onClick={ () => appStore.successMessage = 'copied' }>
+                        Copy Stocks Export
+                    </Button>
+                </CopyToClipboard>
+            </Grid>
 
-                        <Grid item xs={ 6 }>
-                            <Button fullWidth variant='outlined' onClick={ stockExport }>
-                                Export stocks
-                            </Button>
-                        </Grid>
+            <Grid item xs>
+                <TextField fullWidth multiline value={ stockManager.exportString }/>
+            </Grid>
 
-                        <Grid item xs={ 6 }>
-                            <Button fullWidth variant='outlined' onClick={ stockImport }>
-                                Import stocks
-                            </Button>
-                        </Grid>
+        </Grid>
 
-                    </Grid>
+        <Grid item container spacing={ 1 } alignItems='center'>
 
-                    <Grid item>
-                        <TextField fullWidth variant='outlined' value={ textFieldValue } multiline
-                                   onChange={ e => setTextFieldValue(e.target.value) }
-                                   helperText='trades'
-                        />
-                    </Grid>
+            <Grid item>
+                <Link href='https://www.realmeye.com/edit-offers-by/SaintBen' variant='button'>
+                    RealmEye
+                </Link>
+            </Grid>
 
-                </Grid>
+            <Grid item>
+                <CopyToClipboard text={ stockManager.tradeString }>
+                    <Button fullWidth variant='contained' onClick={ () => appStore.successMessage = 'copied' }>
+                        Copy Trades String
+                    </Button>
+                </CopyToClipboard>
+            </Grid>
+
+            <Grid item xs>
+                < TextField fullWidth multiline value={ stockManager.tradeString }/>
+            </Grid>
+
         </Grid>
     </Grid>;
 }
