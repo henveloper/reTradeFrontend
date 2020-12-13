@@ -1,15 +1,17 @@
 import { createBrowserHistory, History } from 'history';
-import { action } from 'mobx';
+import { action, makeAutoObservable, observable } from 'mobx';
 import { StockManager } from './types/StockManager';
 
 export class AppStore {
     constructor(public history: History) {
+        makeAutoObservable(this);
     }
 
     async asyncInits() {
         //
     }
 
+    @observable
     public errorMessage: string = '';
 
     @action

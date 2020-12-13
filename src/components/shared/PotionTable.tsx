@@ -25,7 +25,7 @@ export const PotionTable = observer((props: IDefaultProps) => {
             </Grid>
             <Grid item xs={ 10 }>
                 <TextField fullWidth size='small' variant='outlined'
-                           onChange={ e => stockManager.changeStocksQuantity(i.id, e.target.value) }
+                           onChange={ e => stockManager.changeStocksQuantity(i.id, e.target.value || '0') }
                            value={ stockManager.getStockQuantity(i.id) }/>
             </Grid>
         </Grid>) }

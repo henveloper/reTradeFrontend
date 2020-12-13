@@ -36,10 +36,10 @@ export class StockManager {
 
     @action
     public changeStocksQuantity(id: number, quantity: string) {
-        const rule = Joi.number().integer().min(1).required();
+        const rule = Joi.number().integer().min(0).required();
         const { error, value } = rule.validate(quantity, { convert: true });
         if (error) {
-            appStore.errorMessage = `invalid stock quantity ${ id } ${ quantity }`;
+            appStore.setError(`invalid stock quantity ${ id } ${ quantity }`);
             return;
         }
 
@@ -48,7 +48,6 @@ export class StockManager {
             found.quantity = value;
         } else {
             this.stocks.push({ id, quantity: value });
-            console.log(this.stocks);
         }
     }
 
@@ -79,7 +78,6 @@ export class StockManager {
                 quantity: Joi.number().integer().min(1).max(99).required(),
             });
             const validation = schema.validate({ id, quantity });
-            console.log(validation);
             if (validation.error) {
                 appStore.errorMessage = validation.error.message;
                 return;
