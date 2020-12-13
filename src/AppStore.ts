@@ -1,5 +1,4 @@
 import { createBrowserHistory, History } from 'history';
-import axios from 'axios';
 import { IStock, TEquipment, } from './types';
 import { makeAutoObservable } from 'mobx';
 import { OfferManager } from './types/OfferManager';
@@ -8,7 +7,6 @@ import { Equipment, equipments } from './data/equipments';
 export class AppStore {
     constructor(public history: History) {
         makeAutoObservable(this);
-        axios.defaults.withCredentials = true;
     }
 
     async asyncInits() {

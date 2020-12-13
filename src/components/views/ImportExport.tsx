@@ -35,6 +35,7 @@ export function ImportExport(props: IDefaultProps) {
             const { value } = validation;
             stocks.push({ id: +value.id, quantity: +value.quantity });
         }
+        appStore.stocks = stocks;
         appStore.successMessage = 'Trade imported.';
     }
 

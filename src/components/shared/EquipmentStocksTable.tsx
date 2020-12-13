@@ -4,12 +4,13 @@ import { Button, Grid } from '@material-ui/core';
 import { Equipment, equipments, } from '../../data/equipments';
 import { EEquipmentSlot, TEquipment } from '../../types';
 import { appStore } from '../../AppStore';
+import { observer } from 'mobx-react';
 
 interface IItemTableProps extends IDefaultProps {
     variant: TEquipment;
 }
 
-export function EquipmentStocksTable(props: IItemTableProps) {
+export const EquipmentStocksTable = observer((props: IItemTableProps) => {
     const { styles, variant } = props;
 
     const enumArray: EEquipmentSlot[] = (() => {
@@ -29,10 +30,6 @@ export function EquipmentStocksTable(props: IItemTableProps) {
     const filteredEquipments = equipments.filter(e => enumArray.includes(e.slotType));
     filteredEquipments.sort((a, b) => enumArray.indexOf(a.slotType) - enumArray.indexOf(b.slotType));
 
-    // tier range
-    const tiers = filteredEquipments.map(e => e.tier);
-    const minTier = Math.min(...tiers);
-    const maxTier = Math.max(...tiers);
 
     return <Grid container direction='column' spacing={ 3 }
                  style={ { maxHeight: 750, overflowY: 'scroll', flexWrap: 'nowrap' } }>
@@ -47,18 +44,18 @@ export function EquipmentStocksTable(props: IItemTableProps) {
                 { e.name }
             </Grid>
             <Grid item xs={ 2 }>
-                <Button fullWidth variant='outlined'>
+                <Button fullWidth variant='outlined' onClick={ () => appStore.addStocksQuantity(e.id) }>
                     +
                 </Button>
             </Grid>
-            <Grid item xs={ 2 }>
+            <Grid item xs={ 2 } style={ { textAlign: 'center' } }>
                 { appStore.stocks.find(s => s.id === e.id)?.quantity }
             </Grid>
             <Grid item xs={ 2 }>
-                <Button fullWidth variant='outlined'>
+                <Button fullWidth variant='outlined' onClick={ () => appStore.deductStocksQuantity(e.id) }>
                     -
                 </Button>
             </Grid>
         </Grid>) }
     </Grid>;
-}
+});

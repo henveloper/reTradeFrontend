@@ -73,7 +73,7 @@ export class OfferManager {
                     const isSlightBetter = trashWeapon.tier === 11 && trashArmor.tier === 12;
                     offers.push({
                         quantity: 1,
-                        sellingItems: [ trashWeapon.id, trashWeapon.id ],
+                        sellingItems: [ trashWeapon.id, trashArmor.id ],
                         sellingQuantities: [ 1, 1 ],
                         buyingItems: [ isSlightBetter ? potionIds.wis : potionIds.spd ],
                         buyingQuantities: [ 1 ],
