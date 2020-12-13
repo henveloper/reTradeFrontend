@@ -1,12 +1,36 @@
-import { TEquipments, TEquipmentTypes } from '../types';
+import { TEquipments } from '../types';
 
-const equipment: Record<TEquipments, string> = {
-    sword: 'https://i.imgur.com/QNbjO5z.png',
-    katana: 'https://i.imgur.com/Km8Rg1Z.png',
-    dagger: 'https://i.imgur.com/BaLWiQC.png',
-    bow: 'https://i.imgur.com/rWc6UAy.png',
-    staff: 'https://i.imgur.com/cnKvKxT.png',
-    wand: 'https://i.imgur.com/YdwFDes.png',
+const equipment: Record<TEquipments, Record<number, string>> = {
+    sword: {
+        10: 'https://i.imgur.com/0fQEDum.png',
+        11: 'https://i.imgur.com/qK9nqSz.png',
+        12: 'https://i.imgur.com/QNbjO5z.png',
+    },
+    katana: {
+        10: 'https://i.imgur.com/M6jwTgW.png',
+        11: 'https://i.imgur.com/3QfXSgt.png',
+        12: 'https://i.imgur.com/Km8Rg1Z.png',
+    },
+    dagger: {
+        10: 'https://i.imgur.com/XqxfYSJ.png',
+        11: 'https://i.imgur.com/ds9wJeI.png',
+        12: 'https://i.imgur.com/BaLWiQC.png',
+    },
+    bow: {
+        10: 'https://i.imgur.com/Z4GssoO.png',
+        11: 'https://i.imgur.com/4FEOoNA.png',
+        12: 'https://i.imgur.com/rWc6UAy.png',
+    },
+    staff: {
+        10: 'https://i.imgur.com/nHBniQs.png',
+        11: 'https://i.imgur.com/uVcGAae.png',
+        12: 'https://i.imgur.com/cnKvKxT.png',
+    },
+    wand: {
+        10: 'https://i.imgur.com/ViSiggA.png',
+        11: 'https://i.imgur.com/2idkCvn.png',
+        12: 'https://i.imgur.com/YdwFDes.png',
+    },
 
     cloak: 'https://i.imgur.com/vvDokyq.png',
     quiver: 'https://i.imgur.com/JVpRuPl.png',

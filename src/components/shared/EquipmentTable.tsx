@@ -36,7 +36,7 @@ export const EquipmentTable = observer((props: IItemTableProps) => {
                  style={ { maxHeight: 750, overflowY: 'scroll', flexWrap: 'nowrap' } }>
         { filteredEquipments.map(e => <Grid item container alignItems='center'>
             <Grid item xs={ 2 }>
-                <img style={ { width: '100%' } } alt={ e.className } src={ images.equipment[e.className] }/>
+                <img style={ { width: '100%' } } alt={ e.className } src={ images.equipment[e.className][e.tier] }/>
             </Grid>
             <Grid item xs={ 1 }>
                 T{ e.tier }
