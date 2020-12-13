@@ -1,5 +1,5 @@
-import { EAbilitySlot, EArmorSlot, EWeaponSlot, IEquipment, IOffer } from './index';
-import { potionIds } from '../data/potionIds';
+import { EAbilitySlot, EArmorSlot, EWeaponSlot, IEquipment, IOffer, IStock } from './index';
+import { EPotionId } from '../data/EPotionId';
 
 export class OfferManager {
     public t10Weapons: IEquipment<10, EWeaponSlot>[] = [];
@@ -10,6 +10,7 @@ export class OfferManager {
     public t11Armors: IEquipment<11, EArmorSlot>[] = [];
     public t12Armors: IEquipment<12, EArmorSlot>[] = [];
     public t13Armors: IEquipment<13, EArmorSlot>[] = [];
+    public potionStocks: IStock[] = [];
 
     private computeT5AbilityOffers(): IOffer[] {
         function computeValueOfT5Ability(e: IEquipment<5, EAbilitySlot>) {
@@ -25,11 +26,11 @@ export class OfferManager {
                 EAbilitySlot.quiver,
             ];
             if (primary.includes(e.slotType)) {
-                return potionIds.def;
+                return EPotionId.def;
             } else if (secondary.includes(e.slotType)) {
-                return potionIds.wis;
+                return EPotionId.wis;
             }
-            return potionIds.spd;
+            return EPotionId.spd;
         }
 
         return this.t5Abilities.map(e => ({
@@ -70,12 +71,13 @@ export class OfferManager {
         for (const trashWeapon of trashWeapons) {
             for (const trashArmor of trashArmors) {
                 if (inCombinations(trashWeapon, trashArmor)) {
-                    const isSlightBetter = trashWeapon.tier === 11 && trashArmor.tier === 12;
+                    const isBetter = trashWeapon.tier === 11 && trashArmor.tier === 12;
+                    const isSlightlyBetter = trashWeapon.tier === 11 || trashArmor.tier === 12;
                     offers.push({
                         quantity: 1,
                         sellingItems: [ trashWeapon.id, trashArmor.id ],
                         sellingQuantities: [ 1, 1 ],
-                        buyingItems: [ isSlightBetter ? potionIds.wis : potionIds.spd ],
+                        buyingItems: [ isBetter ? EPotionId.def : (isSlightlyBetter ? EPotionId.wis : EPotionId.spd) ],
                         buyingQuantities: [ 1 ],
                         suspended: false,
                     });
@@ -86,11 +88,39 @@ export class OfferManager {
         return offers;
     }
 
-    public computeTradesString() {
-        const t5AbilityOffers = this.computeT5AbilityOffers();
-        const trashWeaponArmorOffers = this.computeTrashWeaponArmorOffers();
+    public computePotionOffers(): IOffer[] {
+        const offers: IOffer[] = [];
+        const ratios: Partial<Record<EPotionId, number>> = {
+            [EPotionId.atk]: 6,
+            [EPotionId.def]: 4,
+            [EPotionId.dex]: 8,
+            [EPotionId.spd]: 8,
+            [EPotionId.vit]: 4,
+            [EPotionId.wis]: 6,
+        };
 
-        const allOffers = [ ...t5AbilityOffers, ...trashWeaponArmorOffers ];
+        for (const potionStock of this.potionStocks) {
+            if (ratios[potionStock.id as EPotionId]) {
+                offers.push({
+                    sellingItems: [ potionStock.id ],
+                    sellingQuantities: [],
+                    quantity: 1,
+                    buyingItems: [ EPotionId.glife ],
+                    buyingQuantities: [],
+                    suspended: false,
+                });
+            }
+        }
+
+        return offers;
+    }
+
+    public computeTradesString() {
+        const allOffers = [
+            ...this.computePotionOffers(),
+            ...this.computeTrashWeaponArmorOffers(),
+            ...this.computeT5AbilityOffers()
+        ];
         return JSON.stringify(allOffers);
     }
 }

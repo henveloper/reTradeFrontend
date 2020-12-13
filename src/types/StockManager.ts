@@ -4,6 +4,7 @@ import { Equipment, equipments } from '../data/equipments';
 import { OfferManager } from './OfferManager';
 import { IStock, TEquipmentTypes } from './index';
 import { action, computed, makeAutoObservable } from 'mobx';
+import { EPotionId } from '../data/EPotionId';
 
 export class StockManager {
     constructor() {
@@ -59,6 +60,11 @@ export class StockManager {
     }
 
     @computed
+    public getPotionStocks(): IStock[] {
+        return this.stocks.filter(stock => Object.values(EPotionId).includes(stock.id));
+    }
+
+    @computed
     public getStockQuantity(id: number): number {
         return this.stocks.find(s => s.id === id)?.quantity ?? 0;
     }
@@ -105,6 +111,7 @@ export class StockManager {
         offerManager.t11Armors = this.getStocksEquipment('armor', 11) as any;
         offerManager.t12Armors = this.getStocksEquipment('armor', 12) as any;
         offerManager.t13Armors = this.getStocksEquipment('armor', 13) as any;
+        offerManager.potionStocks = this.getPotionStocks();
         return offerManager.computeTradesString();
     }
 }

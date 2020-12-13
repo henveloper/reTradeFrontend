@@ -29,7 +29,7 @@ export enum EArmorSlot {
 
 export type EEquipmentSlot = EWeaponSlot | EAbilitySlot | EArmorSlot;
 
-interface IGameItem {
+export interface IGameItem {
     id: number;
 }
 

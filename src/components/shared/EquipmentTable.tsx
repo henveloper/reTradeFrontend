@@ -35,13 +35,13 @@ export const EquipmentTable = observer((props: IItemTableProps) => {
     return <Grid container direction='column' spacing={ 3 }
                  style={ { maxHeight: 750, overflowY: 'scroll', flexWrap: 'nowrap' } }>
         { filteredEquipments.map(e => <Grid item container alignItems='center'>
-            <Grid item xs={ 2 }>
+            <Grid item xs={ 1 }>
                 <img style={ { width: '100%' } } alt={ e.className } src={ images.equipment[e.className][e.tier] }/>
             </Grid>
             <Grid item xs={ 1 }>
                 T{ e.tier }
             </Grid>
-            <Grid item xs={ 3 }>
+            <Grid item xs={ 4 }>
                 { e.name }
             </Grid>
             <Grid item xs={ 2 }>
