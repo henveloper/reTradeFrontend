@@ -3,8 +3,9 @@ import { IDefaultProps } from '../../styles/styles';
 import { Button, Grid, Link, TextField } from '@material-ui/core';
 import { appStore } from '../../AppStore';
 import CopyToClipboard from 'react-copy-to-clipboard';
+import { observer } from 'mobx-react';
 
-export function ImportExport(props: IDefaultProps) {
+export const ImportExport = observer((props: IDefaultProps) => {
     const { stockManager } = appStore;
     const [ importField, setImportField ] = useState('');
 
@@ -62,4 +63,4 @@ export function ImportExport(props: IDefaultProps) {
 
         </Grid>
     </Grid>;
-}
+});
