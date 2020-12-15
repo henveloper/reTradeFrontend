@@ -69,12 +69,57 @@ export class TrashGearBroker extends Broker {
             });
         }
 
-        // equipments
-        
+        // abilities
+        for (const ability of abilities) {
+            const value: EPotionIds = (() => {
+                switch (ability.className) {
+                    case 'shield':
+                    case 'seal':
+                    case 'spell':
+                        return PotionGenerator.randomPot(1);
+                    case 'cloak':
+                    case 'lute':
+                    case 'quiver':
+                        return PotionGenerator.randomPot(2);
+                    default:
+                        return PotionGenerator.randomPot(3);
+                }
+            })();
+
+            offers.push({
+                sellingItems: [ ability.id ],
+                sellingQuantities: [ 1 ],
+                buyingItems: [ value ],
+                buyingQuantities: [ 1 ],
+                quantity: 1,
+                suspended: false,
+            });
+        }
 
         // armors
+        for (const armor of armors) {
+            const value: EPotionIds = (() => {
+                switch (armor.tier) {
+                    case 11:
+                        return PotionGenerator.randomPot(3);
+                    case 12:
+                        return PotionGenerator.randomPot(2);
+                    default:
+                        return EPotionIds.glife;
+                }
+            })();
 
-        return [];
+            offers.push({
+                sellingItems: [ armor.id ],
+                sellingQuantities: [ 1 ],
+                buyingItems: [ value ],
+                buyingQuantities: [ 1 ],
+                quantity: 1,
+                suspended: false,
+            });
+        }
+
+        return offers;
     }
 
 }
