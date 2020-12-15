@@ -1,6 +1,7 @@
 import React from 'react';
 import { IDefaultProps } from '../../styles/styles';
-import { Button, Grid } from '@material-ui/core';
+import { Grid, IconButton, Typography } from '@material-ui/core';
+import { Add, Remove } from '@material-ui/icons';
 import { Equipment, equipments, } from '../../data/equipments';
 import { EEquipmentSlot, TEquipmentTypes } from '../../types';
 import { appStore } from '../../AppStore';
@@ -32,32 +33,32 @@ export const EquipmentTable = observer((props: IItemTableProps) => {
     filteredEquipments.sort((a, b) => enumArray.indexOf(a.slotType) - enumArray.indexOf(b.slotType));
 
 
-    return <Grid container direction='column' spacing={ 3 }
-                 style={ { maxHeight: 750, overflowY: 'scroll', flexWrap: 'nowrap' } }>
-        { filteredEquipments.map(e => <Grid item container alignItems='center'>
-            <Grid item xs={ 1 }>
-                <img style={ { width: '100%' } } alt={ e.className } src={ images.equipment[e.className][e.tier] }/>
+    return <Grid container spacing={ 3 }>
+        { filteredEquipments.map(e => <Grid item container xs={ 2 } alignItems='center'>
+
+            <Grid item xs>
+                <img alt='item' src={images.equipment[e.className][e.tier]}/>
             </Grid>
-            <Grid item xs={ 1 }>
-                T{ e.tier }
+
+            <Grid item xs>
+                <IconButton size='small'
+                            onClick={ () => appStore.stockManager.deductStocksQuantity(e.id) }>
+                    <Remove/>
+                </IconButton>
             </Grid>
-            <Grid item xs={ 4 }>
-                { e.name }
+
+            <Grid item xs>
+                <Typography variant='h6' align='center'>
+                    { appStore.stockManager.getStockQuantity(e.id) }
+                </Typography>
             </Grid>
-            <Grid item xs={ 2 }>
-                <Button fullWidth variant='outlined'
-                        onClick={ () => appStore.stockManager.deductStocksQuantity(e.id) }>
-                    -
-                </Button>
+
+            <Grid item xs>
+                <IconButton size='small' onClick={ () => appStore.stockManager.addStocksQuantity(e.id) }>
+                    <Add/>
+                </IconButton>
             </Grid>
-            <Grid item xs={ 2 } style={ { textAlign: 'center' } }>
-                { appStore.stockManager.getStockQuantity(e.id) }
-            </Grid>
-            <Grid item xs={ 2 }>
-                <Button fullWidth variant='outlined' onClick={ () => appStore.stockManager.addStocksQuantity(e.id) }>
-                    +
-                </Button>
-            </Grid>
+
         </Grid>) }
     </Grid>;
 });

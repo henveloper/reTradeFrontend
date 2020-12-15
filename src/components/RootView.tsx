@@ -1,6 +1,6 @@
 import React from 'react';
 import { IDefaultProps } from '../styles/styles';
-import { Grid, Link } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { ItemStocks } from './shared/ItemStocks';
 import { ImportExport } from './views/ImportExport';
 import { EquipmentTable } from './shared/EquipmentTable';
@@ -10,6 +10,7 @@ export function RootView(props: IDefaultProps) {
 	const { styles } = props;
 
 	return <Grid container direction='column' spacing={ 3 }>
+
 		<Grid item>
 			<img src='https://i.ytimg.com/vi/if-2M3K1tqk/maxresdefault.jpg' style={ { width: '100%' } }/>
 		</Grid>
@@ -19,20 +20,17 @@ export function RootView(props: IDefaultProps) {
 		</Grid>
 
 
-		<Grid item container spacing={ 2 }>
+		<Grid item>
+			<ItemStocks styles={ styles } header='Weapon'>
+				<EquipmentTable variant='weapon' styles={ styles }/>
+			</ItemStocks>
+		</Grid>
 
-			<Grid item xs>
-				<ItemStocks styles={ styles } header='Weapon'>
-					<EquipmentTable variant='weapon' styles={ styles }/>
-				</ItemStocks>
-			</Grid>
+		<Grid item>
 
-			<Grid item xs>
-				<ItemStocks styles={ styles } header='Armor'>
-					<EquipmentTable variant='armor' styles={ styles }/>
-				</ItemStocks>
-			</Grid>
-
+			<ItemStocks styles={ styles } header='Armor'>
+				<EquipmentTable variant='armor' styles={ styles }/>
+			</ItemStocks>
 		</Grid>
 
 		<Grid item container spacing={ 2 }>
