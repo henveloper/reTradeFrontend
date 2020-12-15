@@ -1,4 +1,4 @@
-export enum EPotionId {
+export enum EPotionIds {
     def = 2592,
     atk = 2591,
     spd = 2593,

@@ -1,4 +1,4 @@
-import { TEquipments } from '../types';
+import { TEquipments } from '../shareHolders';
 
 const equipment: Record<TEquipments, Record<number, string>> = {
     sword: {

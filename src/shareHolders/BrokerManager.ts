@@ -1,5 +1,5 @@
 import { EAbilitySlot, EArmorSlot, EWeaponSlot, IEquipment, IOffer, IStock } from './index';
-import { EPotionId } from '../data/EPotionId';
+import { EPotionIds } from '../data/itemIds';
 import { PotionBroker } from './PotionBroker';
 
 export class BrokerManager {
@@ -29,11 +29,11 @@ export class BrokerManager {
                 EAbilitySlot.quiver,
             ];
             if (primary.includes(e.slotType)) {
-                return EPotionId.def;
+                return EPotionIds.def;
             } else if (secondary.includes(e.slotType)) {
-                return EPotionId.wis;
+                return EPotionIds.wis;
             }
-            return EPotionId.spd;
+            return EPotionIds.spd;
         }
 
         return this.t5Abilities.map(e => ({
@@ -80,7 +80,7 @@ export class BrokerManager {
                         quantity: 1,
                         sellingItems: [ trashWeapon.id, trashArmor.id ],
                         sellingQuantities: [ 1, 1 ],
-                        buyingItems: [ isBetter ? EPotionId.def : (isSlightlyBetter ? EPotionId.wis : EPotionId.spd) ],
+                        buyingItems: [ isBetter ? EPotionIds.def : (isSlightlyBetter ? EPotionIds.wis : EPotionIds.spd) ],
                         buyingQuantities: [ 1 ],
                         suspended: false,
                     });
@@ -93,22 +93,22 @@ export class BrokerManager {
 
     public computePotionOffers(): IOffer[] {
         const offers: IOffer[] = [];
-        const ratios: Partial<Record<EPotionId, number>> = {
-            [EPotionId.atk]: 6,
-            [EPotionId.def]: 4,
-            [EPotionId.dex]: 8,
-            [EPotionId.spd]: 8,
-            [EPotionId.vit]: 4,
-            [EPotionId.wis]: 6,
+        const ratios: Partial<Record<EPotionIds, number>> = {
+            [EPotionIds.atk]: 6,
+            [EPotionIds.def]: 4,
+            [EPotionIds.dex]: 8,
+            [EPotionIds.spd]: 8,
+            [EPotionIds.vit]: 4,
+            [EPotionIds.wis]: 6,
         };
 
         for (const potionStock of this.potionStocks) {
-            if (ratios[potionStock.id as EPotionId]) {
+            if (ratios[potionStock.id as EPotionIds]) {
                 offers.push({
                     sellingItems: [ potionStock.id ],
                     sellingQuantities: [],
                     quantity: 1,
-                    buyingItems: [ EPotionId.glife ],
+                    buyingItems: [ EPotionIds.glife ],
                     buyingQuantities: [],
                     suspended: false,
                 });

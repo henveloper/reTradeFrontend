@@ -1,13 +1,13 @@
 import { Broker } from './Broker';
 import { IOffer, IStock } from './index';
-import { EPotionId } from '../data/EPotionId';
+import { EPotionIds } from '../data/itemIds';
 
 export class PotionBroker extends Broker {
     constructor() {
         super();
     }
 
-    public stocks: IStock<EPotionId>[] = [];
+    public stocks: IStock<EPotionIds>[] = [];
 
     public get offers(): IOffer[] {
         const offer: IOffer[] = [];
@@ -16,14 +16,14 @@ export class PotionBroker extends Broker {
         for (const stock of this.stocks) {
             const ratio = (() => {
                 switch (stock.id) {
-                    case EPotionId.dex:
-                    case EPotionId.spd:
+                    case EPotionIds.dex:
+                    case EPotionIds.spd:
                         return 8;
-                    case EPotionId.wis:
-                    case EPotionId.atk:
+                    case EPotionIds.wis:
+                    case EPotionIds.atk:
                         return 6;
-                    case EPotionId.def:
-                    case EPotionId.vit:
+                    case EPotionIds.def:
+                    case EPotionIds.vit:
                         return 4;
                     default:
                         return Number.MAX_SAFE_INTEGER;
@@ -36,7 +36,7 @@ export class PotionBroker extends Broker {
             offer.push({
                 sellingItems: [stock.id],
                 sellingQuantities: [batchCount * ratio],
-                buyingItems: [EPotionId.glife],
+                buyingItems: [EPotionIds.glife],
                 buyingQuantities: [batchCount],
                 quantity: 1,
                 suspended: false,

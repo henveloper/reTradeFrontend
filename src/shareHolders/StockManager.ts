@@ -4,7 +4,7 @@ import { Equipment, equipments } from '../data/equipments';
 import { BrokerManager } from './BrokerManager';
 import { IStock, TEquipmentTypes } from './index';
 import { action, computed, makeAutoObservable } from 'mobx';
-import { EPotionId } from '../data/EPotionId';
+import { EPotionIds } from '../data/itemIds';
 
 export class StockManager {
     constructor() {
@@ -61,7 +61,7 @@ export class StockManager {
 
     @computed
     public getPotionStocks(): IStock[] {
-        return this.stocks.filter(stock => Object.values(EPotionId).includes(stock.id));
+        return this.stocks.filter(stock => Object.values(EPotionIds).includes(stock.id));
     }
 
     @computed

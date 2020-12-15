@@ -2,19 +2,19 @@ import React from 'react';
 import { IDefaultProps } from '../../styles/styles';
 import { Grid, TextField } from '@material-ui/core';
 import { observer } from 'mobx-react';
-import { EPotionId } from '../../data/EPotionId';
+import { EPotionIds } from '../../data/itemIds';
 import { appStore } from '../../AppStore';
 
 export const PotionTable = observer((props: IDefaultProps) => {
     const { stockManager } = appStore;
 
-    const rowInfo: { type: string, src: string, id: EPotionId }[] = [
-        { type: 'atk', src: 'https://i.imgur.com/kiIMjr9.png', id: EPotionId.atk },
-        { type: 'def', src: 'https://i.imgur.com/xSXLjme.png', id: EPotionId.def },
-        { type: 'spd', src: 'https://i.imgur.com/R2U76AH.png', id: EPotionId.spd },
-        { type: 'dex', src: 'https://i.imgur.com/7kXmM0O.png', id: EPotionId.dex },
-        { type: 'vit', src: 'https://i.imgur.com/1iHlYrD.png', id: EPotionId.vit },
-        { type: 'wis', src: 'https://i.imgur.com/WLjcwoA.png', id: EPotionId.wis },
+    const rowInfo: { type: string, src: string, id: EPotionIds }[] = [
+        { type: 'atk', src: 'https://i.imgur.com/kiIMjr9.png', id: EPotionIds.atk },
+        { type: 'def', src: 'https://i.imgur.com/xSXLjme.png', id: EPotionIds.def },
+        { type: 'spd', src: 'https://i.imgur.com/R2U76AH.png', id: EPotionIds.spd },
+        { type: 'dex', src: 'https://i.imgur.com/7kXmM0O.png', id: EPotionIds.dex },
+        { type: 'vit', src: 'https://i.imgur.com/1iHlYrD.png', id: EPotionIds.vit },
+        { type: 'wis', src: 'https://i.imgur.com/WLjcwoA.png', id: EPotionIds.wis },
     ];
 
     // equipments

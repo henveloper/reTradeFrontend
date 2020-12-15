@@ -6,7 +6,7 @@ import {
     IEquipment,
     TEquipments,
     TEquipmentTypes
-} from '../types';
+} from '../shareHolders';
 
 export class Equipment {
     public id: number;

@@ -1,6 +1,6 @@
 import { createBrowserHistory, History } from 'history';
 import { action, makeAutoObservable, observable } from 'mobx';
-import { StockManager } from './types/StockManager';
+import { StockManager } from './shareHolders/StockManager';
 
 export class AppStore {
     constructor(public history: History) {

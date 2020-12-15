@@ -39,15 +39,30 @@ export interface IEquipment<T = number, S = EEquipmentSlot> extends IGameItem {
     name: string,
 }
 
+/**
+ * @deprecated
+ */
 export type TEquipmentTypes = 'weapon' | 'ability' | 'armor';
 
+/**
+ * @deprecated
+ */
 export type TWeapons = 'dagger' | 'bow' | 'staff' | 'wand' | 'sword' | 'katana';
 
+/**
+ * @deprecated
+ */
 export type TAbilities = 'cloak' | 'quiver' | 'spell' | 'tome' |
     'helmet' | 'shield' | 'seal' | 'poison' |
     'skull' | 'trap' | 'orb' | 'prism' |
     'scepter' | 'star' | 'wakizashi' | 'lute';
 
+/**
+ * @deprecated
+ */
 export type TArmors = 'robe' | 'light' | 'heavy';
 
+/**
+ * @deprecated
+ */
 export type TEquipments = TWeapons | TAbilities | TArmors;

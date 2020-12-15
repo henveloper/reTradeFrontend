@@ -3,7 +3,7 @@ import { IDefaultProps } from '../../styles/styles';
 import { Grid, IconButton, Typography } from '@material-ui/core';
 import { Add, Remove } from '@material-ui/icons';
 import { Equipment, equipments, } from '../../data/equipments';
-import { EEquipmentSlot, TEquipmentTypes } from '../../types';
+import { EEquipmentSlot, TEquipmentTypes } from '../../shareHolders';
 import { appStore } from '../../AppStore';
 import { observer } from 'mobx-react';
 import { images } from '../../data/images';
