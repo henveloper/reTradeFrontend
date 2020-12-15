@@ -1,10 +1,7 @@
 import Joi from 'joi';
 import { appStore } from '../AppStore';
-import { Equipment, equipments } from '../data/equipments';
-import { BrokerManager } from './BrokerManager';
-import { IStock, TEquipmentTypes } from './index';
+import { IStock } from './index';
 import { action, computed, makeAutoObservable } from 'mobx';
-import { EPotionIds } from '../data/itemIds';
 
 export class StockManager {
     constructor() {
@@ -12,7 +9,7 @@ export class StockManager {
         this.stocks = [];
     }
 
-    private stocks: IStock[];
+    public stocks: IStock[];
 
     @action
     public addStocksQuantity(id: number) {
@@ -53,18 +50,6 @@ export class StockManager {
     }
 
     @computed
-    public getStocksEquipment(type: TEquipmentTypes, tier: number): Equipment[] {
-        return this.stocks
-            .filter(stock => equipments.filter(e => e.type === type && e.tier === tier).find(e => e.id === stock.id))
-            .map(s => equipments.find(e => e.id === s.id)!);
-    }
-
-    @computed
-    public getPotionStocks(): IStock[] {
-        return this.stocks.filter(stock => Object.values(EPotionIds).includes(stock.id));
-    }
-
-    @computed
     public getStockQuantity(id: number): number {
         return this.stocks.find(s => s.id === id)?.quantity ?? 0;
     }
@@ -98,21 +83,6 @@ export class StockManager {
     @computed
     public get exportString() {
         return this.stocks.map(s => `${ s.id },${ s.quantity }`).join('\n');
-    }
-
-    @computed
-    public get tradeString() {
-        const offerManager = new BrokerManager();
-        offerManager.t10Weapons = this.getStocksEquipment('weapon', 10) as any;
-        offerManager.t11Weapons = this.getStocksEquipment('weapon', 11) as any;
-        offerManager.t12Weapons = this.getStocksEquipment('weapon', 12) as any;
-        offerManager.t5Abilities = this.getStocksEquipment('ability', 5) as any;
-        offerManager.t6Abilities = this.getStocksEquipment('ability', 6) as any;
-        offerManager.t11Armors = this.getStocksEquipment('armor', 11) as any;
-        offerManager.t12Armors = this.getStocksEquipment('armor', 12) as any;
-        offerManager.t13Armors = this.getStocksEquipment('armor', 13) as any;
-        offerManager.potionStocks = this.getPotionStocks();
-        return offerManager.computeTradesString();
     }
 }
 

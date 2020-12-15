@@ -1,19 +1,21 @@
 import { Broker } from './Broker';
 import { IOffer, IStock } from './index';
 import { EPotionIds } from '../data/itemIds';
+import { appStore } from '../AppStore';
 
 export class PotionBroker extends Broker {
     constructor() {
         super();
     }
 
-    public stocks: IStock<EPotionIds>[] = [];
-
     public get offers(): IOffer[] {
+        const potionIds = Object.values(EPotionIds);
+        const stocks = appStore.stockManager.stocks.filter(s => potionIds.includes(s.id));
+
         const offer: IOffer[] = [];
 
         // convert to glife
-        for (const stock of this.stocks) {
+        for (const stock of stocks) {
             const ratio = (() => {
                 switch (stock.id) {
                     case EPotionIds.dex:
