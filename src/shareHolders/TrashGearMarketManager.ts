@@ -1,15 +1,14 @@
-import { Broker } from './Broker';
+import { RegionalMarketManager } from './RegionalMarketManager';
 import { EArmorSlot, EWeaponSlot, IEquipment, IOffer, IStock } from './index';
 import { Equipment, equipments } from '../data/equipments';
 import { EPotionIds } from '../data/itemIds';
 import { PotionGenerator } from './PotionGenerator';
+import { appStore } from '../AppStore';
 
-export class TrashGearBroker extends Broker {
+export class TrashGearMarketManager extends RegionalMarketManager {
     constructor() {
         super();
     }
-
-    stocks: IStock<number>[] = [];
 
     // todo: implement combo offer logic
     // private computeTrashWeaponArmorOffers(): IOffer[] {
@@ -58,6 +57,7 @@ export class TrashGearBroker extends Broker {
     // }
 
     get offers(): IOffer[] {
+        const stock: IStock = appStore.stockManager.stocks.filter()
         const offers: IOffer[] = [];
 
         const weapons = this.stocks.reduce<Equipment[]>((p, c) => {

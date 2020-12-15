@@ -1,16 +1,15 @@
-import { Broker } from './Broker';
-import { IOffer, IStock } from './index';
+import { RegionalMarketManager } from './RegionalMarketManager';
+import { IOffer } from './index';
 import { EPotionIds } from '../data/itemIds';
-import { appStore } from '../AppStore';
 
-export class PotionBroker extends Broker {
+export class PotionMarketManager extends RegionalMarketManager {
     constructor() {
         super();
     }
 
     public get offers(): IOffer[] {
         const potionIds = Object.values(EPotionIds);
-        const stocks = appStore.stockManager.stocks.filter(s => potionIds.includes(s.id));
+        const stocks = this.stocks.filter(s => potionIds.includes(s.id));
 
         const offer: IOffer[] = [];
 

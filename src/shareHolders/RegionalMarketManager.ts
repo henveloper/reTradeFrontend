@@ -1,10 +1,10 @@
+import { IOffer, IStock } from './index';
+import { action, computed, makeAutoObservable } from 'mobx';
 import Joi from 'joi';
 import { appStore } from '../AppStore';
-import { IStock } from './index';
-import { action, computed, makeAutoObservable } from 'mobx';
 
-export class StockManager {
-    constructor() {
+export abstract class RegionalMarketManager {
+    protected constructor() {
         makeAutoObservable(this);
         this.stocks = [];
     }
@@ -54,35 +54,5 @@ export class StockManager {
         return this.stocks.find(s => s.id === id)?.quantity ?? 0;
     }
 
-    @action
-    public importTradeString(s: string) {
-        if (!s) {
-            appStore.errorMessage = 'I believe you did not meant to empty the trades right?';
-            return;
-        }
-
-        const stocks: IStock[] = [];
-        for (const trade of s.split('\n')) {
-            const [ id, quantity ] = trade.split(',');
-            const schema = Joi.object({
-                id: Joi.number().integer().min(1).required(),
-                quantity: Joi.number().integer().min(1).max(99).required(),
-            });
-            const validation = schema.validate({ id, quantity });
-            if (validation.error) {
-                appStore.errorMessage = validation.error.message;
-                return;
-            }
-            const { value } = validation;
-            stocks.push({ id: +value.id, quantity: +value.quantity });
-        }
-        this.stocks = stocks;
-        appStore.successMessage = 'Trades imported.';
-    }
-
-    @computed
-    public get exportString() {
-        return this.stocks.map(s => `${ s.id },${ s.quantity }`).join('\n');
-    }
+    public abstract get offers(): IOffer[];
 }
-

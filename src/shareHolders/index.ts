@@ -1,7 +1,4 @@
-export interface IStock<T = number> {
-    id: T;
-    quantity: number;
-};
+export type IStock<T extends number = number> = Record<T, number>;
 
 export type IOffer = {
     quantity: number,
