@@ -1,4 +1,4 @@
-export type IStock<T extends number = number> = Record<T, number>;
+export type IStocks<T extends number = number> = Record<T, number>;
 
 export type IOffer = {
     quantity: number,

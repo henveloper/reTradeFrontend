@@ -1,6 +1,5 @@
 import { createBrowserHistory, History } from 'history';
 import { action, makeAutoObservable, observable } from 'mobx';
-import { StockManager } from './shareHolders/StockManager';
 import { MarketManager } from './shareHolders/MarketManager';
 
 export class AppStore {
@@ -27,9 +26,7 @@ export class AppStore {
         this.successMessage = msg;
     }
 
-    public stockManager = new StockManager();
-
-    public brokerManager = new MarketManager();
+    public marketManager = new MarketManager();
 }
 
 export const appStore = new AppStore(createBrowserHistory());

@@ -1,4 +1,4 @@
-import { IOffer, IStock } from './index';
+import { IOffer, IStocks } from './index';
 import { action, computed, makeAutoObservable } from 'mobx';
 import Joi from 'joi';
 import { appStore } from '../AppStore';
@@ -6,28 +6,29 @@ import { appStore } from '../AppStore';
 export abstract class RegionalMarketManager {
     protected constructor() {
         makeAutoObservable(this);
-        this.stocks = [];
+        this.stocks = {};
     }
 
-    public stocks: IStock[];
+    public stocks: IStocks;
 
     @action
     public addStocksQuantity(id: number) {
-        const found = this.stocks.find(t => t.id === id);
+        const found = this.stocks[id];
         if (found) {
-            found.quantity += 1;
+            this.stocks[id] += 1;
         } else {
-            this.stocks.push({ id, quantity: 1 });
+            this.stocks[id] = 1;
         }
+
     }
 
     @action
     public deductStocksQuantity(id: number) {
-        const found = this.stocks.find(t => t.id === id);
+        const found = this.stocks[id];
         if (found) {
-            found.quantity -= 1;
-            if (found.quantity === 0) {
-                this.stocks = this.stocks.filter(t => t.quantity > 0);
+            this.stocks[id] -= 1;
+            if (this.stocks[id] === 0) {
+                delete this.stocks[id];
             }
         }
     }
@@ -41,17 +42,12 @@ export abstract class RegionalMarketManager {
             return;
         }
 
-        const found = this.stocks.find(t => t.id === id);
-        if (found) {
-            found.quantity = value;
-        } else {
-            this.stocks.push({ id, quantity: value });
-        }
+        this.stocks[id] = value;
     }
 
     @computed
     public getStockQuantity(id: number): number {
-        return this.stocks.find(s => s.id === id)?.quantity ?? 0;
+        return this.stocks[id] ?? 0;
     }
 
     public abstract get offers(): IOffer[];

@@ -1,5 +1,5 @@
 import { RegionalMarketManager } from './RegionalMarketManager';
-import { EArmorSlot, EWeaponSlot, IEquipment, IOffer, IStock } from './index';
+import { EArmorSlot, EWeaponSlot, IEquipment, IOffer, IStocks } from './index';
 import { Equipment, equipments } from '../data/equipments';
 import { EPotionIds } from '../data/itemIds';
 import { PotionGenerator } from './PotionGenerator';
@@ -57,7 +57,7 @@ export class TrashGearMarketManager extends RegionalMarketManager {
     // }
 
     get offers(): IOffer[] {
-        const stock: IStock = appStore.stockManager.stocks.filter()
+        const stock: IStocks = appStore.stockManager.stocks.filter()
         const offers: IOffer[] = [];
 
         const weapons = this.stocks.reduce<Equipment[]>((p, c) => {
