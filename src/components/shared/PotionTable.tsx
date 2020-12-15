@@ -18,16 +18,18 @@ export const PotionTable = observer((props: IDefaultProps) => {
     ];
 
     // equipments
-    return <Grid container direction='column' spacing={ 3 }>
-        { rowInfo.map(i => <Grid item container alignItems='center'>
-            <Grid item xs={ 1 }>
+    return <Grid container spacing={ 6 }>
+        { rowInfo.map(i => <Grid item container xs alignItems='center'>
+            <Grid item xs>
                 <img style={ { width: '100%' } } alt={ i.type } src={ i.src }/>
             </Grid>
-            <Grid item xs={ 11 }>
-                <TextField fullWidth size='small' variant='outlined'
+            <Grid item xs>
+                <TextField fullWidth size='small' variant='standard'
                            onChange={ e => stockManager.changeStocksQuantity(i.id, e.target.value || '0') }
                            value={ stockManager.getStockQuantity(i.id) }/>
             </Grid>
         </Grid>) }
+
+
     </Grid>;
 });

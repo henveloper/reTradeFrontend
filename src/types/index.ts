@@ -1,5 +1,5 @@
-export interface IStock {
-    id: number;
+export interface IStock<T = number> {
+    id: T;
     quantity: number;
 };
 

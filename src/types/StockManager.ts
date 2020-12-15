@@ -1,7 +1,7 @@
 import Joi from 'joi';
 import { appStore } from '../AppStore';
 import { Equipment, equipments } from '../data/equipments';
-import { OfferManager } from './OfferManager';
+import { BrokerManager } from './BrokerManager';
 import { IStock, TEquipmentTypes } from './index';
 import { action, computed, makeAutoObservable } from 'mobx';
 import { EPotionId } from '../data/EPotionId';
@@ -102,7 +102,7 @@ export class StockManager {
 
     @computed
     public get tradeString() {
-        const offerManager = new OfferManager();
+        const offerManager = new BrokerManager();
         offerManager.t10Weapons = this.getStocksEquipment('weapon', 10) as any;
         offerManager.t11Weapons = this.getStocksEquipment('weapon', 11) as any;
         offerManager.t12Weapons = this.getStocksEquipment('weapon', 12) as any;

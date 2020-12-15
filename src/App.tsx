@@ -4,6 +4,7 @@ import { Provider } from 'mobx-react';
 import { appStore } from './AppStore';
 import { defaultTheme } from './styles/theme';
 import { Main } from './Main';
+import './App.css'
 
 export function App() {
 

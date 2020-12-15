@@ -1,7 +1,8 @@
 import { EAbilitySlot, EArmorSlot, EWeaponSlot, IEquipment, IOffer, IStock } from './index';
 import { EPotionId } from '../data/EPotionId';
+import { PotionBroker } from './PotionBroker';
 
-export class OfferManager {
+export class BrokerManager {
     public t10Weapons: IEquipment<10, EWeaponSlot>[] = [];
     public t11Weapons: IEquipment<11, EWeaponSlot>[] = [];
     public t12Weapons: IEquipment<12, EWeaponSlot>[] = [];
@@ -11,6 +12,8 @@ export class OfferManager {
     public t12Armors: IEquipment<12, EArmorSlot>[] = [];
     public t13Armors: IEquipment<13, EArmorSlot>[] = [];
     public potionStocks: IStock[] = [];
+
+    public potionBroker = new PotionBroker();
 
     private computeT5AbilityOffers(): IOffer[] {
         function computeValueOfT5Ability(e: IEquipment<5, EAbilitySlot>) {
@@ -119,7 +122,8 @@ export class OfferManager {
         const allOffers = [
             ...this.computePotionOffers(),
             ...this.computeTrashWeaponArmorOffers(),
-            ...this.computeT5AbilityOffers()
+            ...this.computeT5AbilityOffers(),
+            ...this.potionBroker.offers,
         ];
         return JSON.stringify(allOffers);
     }
