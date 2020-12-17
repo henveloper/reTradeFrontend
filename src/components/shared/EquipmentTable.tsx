@@ -2,7 +2,7 @@ import React from 'react';
 import { IDefaultProps } from '../../styles/styles';
 import { Grid, IconButton, Typography } from '@material-ui/core';
 import { Add, Remove } from '@material-ui/icons';
-import { Equipment, equipments, } from '../../data/equipments';
+import { Equipment, equipments } from '../../data/equipments';
 import { EEquipmentSlot, TEquipmentTypes } from '../../shareHolders';
 import { appStore } from '../../AppStore';
 import { observer } from 'mobx-react';
@@ -13,7 +13,8 @@ interface IItemTableProps extends IDefaultProps {
 }
 
 export const EquipmentTable = observer((props: IItemTableProps) => {
-    const { styles, variant } = props;
+    const { variant } = props;
+    const { trashGearMarketManager } = appStore.marketManager;
 
     const enumArray: EEquipmentSlot[] = (() => {
         switch (variant) {
@@ -37,24 +38,24 @@ export const EquipmentTable = observer((props: IItemTableProps) => {
         { filteredEquipments.map(e => <Grid item container xs={ 2 } alignItems='center'>
 
             <Grid item xs>
-                <img alt='item' src={images.equipment[e.className][e.tier]}/>
+                <img alt='item' src={ images.equipment[e.className][e.tier] }/>
             </Grid>
 
             <Grid item xs>
                 <IconButton size='small'
-                            onClick={ () => appStore.stockManager.deductStocksQuantity(e.id) }>
+                            onClick={ () => trashGearMarketManager.deductStocksQuantity(e.id) }>
                     <Remove/>
                 </IconButton>
             </Grid>
 
             <Grid item xs>
                 <Typography variant='h6' align='center'>
-                    { appStore.stockManager.getStockQuantity(e.id) }
+                    { trashGearMarketManager.getStockQuantity(e.id) }
                 </Typography>
             </Grid>
 
             <Grid item xs>
-                <IconButton size='small' onClick={ () => appStore.stockManager.addStocksQuantity(e.id) }>
+                <IconButton size='small' onClick={ () => trashGearMarketManager.addStocksQuantity(e.id) }>
                     <Add/>
                 </IconButton>
             </Grid>

@@ -11,21 +11,21 @@ export class MarketManager {
         makeAutoObservable(this);
     }
 
-    public potionBroker = new PotionMarketManager();
+    public potionMarketManager = new PotionMarketManager();
 
-    public trashGearBroker = new TrashGearMarketManager();
+    public trashGearMarketManager = new TrashGearMarketManager();
 
     public get exportString() {
         return JSON.stringify({
-            potionStocks: this.potionBroker.stocks,
-            trashGearStocks: this.trashGearBroker.stocks,
+            potionStocks: this.potionMarketManager.stocks,
+            trashGearStocks: this.trashGearMarketManager.stocks,
         })
     }
 
     public get tradeString() {
         const allOffers = [
-            ...this.potionBroker.offers,
-            ...this.trashGearBroker.offers,
+            ...this.potionMarketManager.offers,
+            ...this.trashGearMarketManager.offers,
         ];
         return JSON.stringify(allOffers);
     }
@@ -42,8 +42,8 @@ export class MarketManager {
             appStore.setError(error.message);
             return;
         }
-        this.potionBroker.stocks = value.potionStocks;
-        this.trashGearBroker.stocks = value.trashGearStocks;
+        this.potionMarketManager.stocks = value.potionStocks;
+        this.trashGearMarketManager.stocks = value.trashGearStocks;
 
         appStore.successMessage = 'Trades imported.';
     }

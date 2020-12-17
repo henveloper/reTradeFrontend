@@ -1,9 +1,8 @@
 import { RegionalMarketManager } from './RegionalMarketManager';
-import { EArmorSlot, EWeaponSlot, IEquipment, IOffer, IStocks } from './index';
+import { IOffer, IStocks } from './index';
 import { Equipment, equipments } from '../data/equipments';
 import { EPotionIds } from '../data/itemIds';
 import { PotionGenerator } from './PotionGenerator';
-import { appStore } from '../AppStore';
 
 export class TrashGearMarketManager extends RegionalMarketManager {
     constructor() {
@@ -57,33 +56,23 @@ export class TrashGearMarketManager extends RegionalMarketManager {
     // }
 
     get offers(): IOffer[] {
-        const stock: IStocks = appStore.stockManager.stocks.filter()
         const offers: IOffer[] = [];
 
-        const weapons = this.stocks.reduce<Equipment[]>((p, c) => {
-            const equipment = equipments.find(e => e.id === c.id && e.type === 'weapon');
-            if (equipment) {
-                p.push(equipment);
-            }
-            return p;
-        }, []);
+        const filterStocks = (variant: string) => {
+            return Object.entries(this.stocks).reduce<IStocks>((p, [k, v]) => {
+                const equipment = equipments.find(e => e.id === c.id && e.type === 'weapon');
+                if (equipment) {
+                    p[+k] = v;
+                }
+                return p;
+            }, {});
 
-        const abilities = this.stocks.reduce<Equipment[]>((p, c) => {
-            const equipment = equipments.find(e => e.id === c.id && e.type === 'ability');
-            if (equipment) {
-                p.push(equipment);
-            }
-            return p;
-        }, []);
+        }
 
-        const armors = this.stocks.reduce<Equipment[]>((p, c) => {
-            const equipment = equipments.find(e => e.id === c.id && e.type === 'armor');
-            if (equipment) {
-                p.push(equipment);
-            }
-            return p;
-        }, []);
-
+        const weapons = filterStocks('weapon');
+        const abilities = filterStocks('ability');
+        const armors = filterStocks('armor');
+        
         // weapons
         for (const weapon of weapons) {
             const value: EPotionIds = (() => {
@@ -106,10 +95,10 @@ export class TrashGearMarketManager extends RegionalMarketManager {
             })();
 
             offers.push({
-                sellingItems: [ weapon.id ],
-                sellingQuantities: [ 1 ],
-                buyingItems: [ value ],
-                buyingQuantities: [ 1 ],
+                sellingItems: [weapon.id],
+                sellingQuantities: [1],
+                buyingItems: [value],
+                buyingQuantities: [1],
                 quantity: 1,
                 suspended: false,
             });
@@ -133,10 +122,10 @@ export class TrashGearMarketManager extends RegionalMarketManager {
             })();
 
             offers.push({
-                sellingItems: [ ability.id ],
-                sellingQuantities: [ 1 ],
-                buyingItems: [ value ],
-                buyingQuantities: [ 1 ],
+                sellingItems: [ability.id],
+                sellingQuantities: [1],
+                buyingItems: [value],
+                buyingQuantities: [1],
                 quantity: 1,
                 suspended: false,
             });
@@ -156,10 +145,10 @@ export class TrashGearMarketManager extends RegionalMarketManager {
             })();
 
             offers.push({
-                sellingItems: [ armor.id ],
-                sellingQuantities: [ 1 ],
-                buyingItems: [ value ],
-                buyingQuantities: [ 1 ],
+                sellingItems: [armor.id],
+                sellingQuantities: [1],
+                buyingItems: [value],
+                buyingQuantities: [1],
                 quantity: 1,
                 suspended: false,
             });

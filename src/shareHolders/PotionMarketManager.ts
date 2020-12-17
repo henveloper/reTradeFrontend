@@ -9,14 +9,13 @@ export class PotionMarketManager extends RegionalMarketManager {
 
     public get offers(): IOffer[] {
         const potionIds = Object.values(EPotionIds);
-        const stocks = this.stocks.filter(s => potionIds.includes(s.id));
 
         const offer: IOffer[] = [];
 
         // convert to glife
-        for (const stock of stocks) {
+        for (const potionId of potionIds) {
             const ratio = (() => {
-                switch (stock.id) {
+                switch (potionId) {
                     case EPotionIds.dex:
                     case EPotionIds.spd:
                         return 8;
@@ -30,12 +29,12 @@ export class PotionMarketManager extends RegionalMarketManager {
                         return Number.MAX_SAFE_INTEGER;
                 }
             })();
-            const batchCount = Math.floor(stock.quantity / ratio);
+            const batchCount = Math.floor((this.stocks[+potionId] ?? 0) / ratio);
             if (batchCount === 0) {
                 continue;
             }
             offer.push({
-                sellingItems: [stock.id],
+                sellingItems: [+potionId],
                 sellingQuantities: [batchCount * ratio],
                 buyingItems: [EPotionIds.glife],
                 buyingQuantities: [batchCount],
