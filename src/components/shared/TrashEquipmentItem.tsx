@@ -9,11 +9,11 @@ interface IItemProps extends IDefaultProps {
     id: number,
 }
 
-export const Item = observer((props: IItemProps) => {
-    const { stockManager } = appStore;
+export const TrashEquipmentItem = observer((props: IItemProps) => {
+    const { marketManager: { trashEquipmentManager } } = appStore;
     const { id } = props;
 
-    const quantity = stockManager.getStockQuantity(id)
+    const quantity = trashEquipmentManager.getStockQuantity(id);
     return <Grid container alignItems='center'>
         <Grid item xs={ 8 }>
             <Typography variant={ quantity ? 'h6' : 'body2' }>
@@ -23,13 +23,13 @@ export const Item = observer((props: IItemProps) => {
 
         <Grid item container xs={ 4 } direction='column'>
             <Grid item>
-                <IconButton size='small' onClick={ () => stockManager.addStocksQuantity(props.id) }>
+                <IconButton size='small' onClick={ () => trashEquipmentManager.addStocksQuantity(props.id) }>
                     <PlusOne/>
                 </IconButton>
             </Grid>
 
             <Grid item>
-                <IconButton size='small' onClick={ () => stockManager.deductStocksQuantity(props.id) }>
+                <IconButton size='small' onClick={ () => trashEquipmentManager.deductStocksQuantity(props.id) }>
                     <ExposureNeg1/>
                 </IconButton>
             </Grid>

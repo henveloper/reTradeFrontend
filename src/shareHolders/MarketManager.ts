@@ -13,7 +13,7 @@ export class MarketManager {
 
     public potionBroker = new PotionMarketManager();
 
-    public trashGearBroker = new TrashGearMarketManager();
+    public trashEquipmentManager = new TrashGearMarketManager();
 
     @action
     public importStocksString(s: string) {
@@ -28,7 +28,7 @@ export class MarketManager {
             return;
         }
         this.potionBroker.stocks = value.potionStocks;
-        this.trashGearBroker.stocks = value.trashGearStocks;
+        this.trashEquipmentManager.stocks = value.trashGearStocks;
 
         appStore.successMessage = 'Trades imported.';
     }
@@ -37,14 +37,14 @@ export class MarketManager {
     public get exportString() {
         return JSON.stringify({
             potionStocks: this.potionBroker.stocks,
-            trashGearStocks: this.trashGearBroker.stocks,
+            trashGearStocks: this.trashEquipmentManager.stocks,
         })
     }
 
     public get tradeString() {
         const allOffers = [
             ...this.potionBroker.offers,
-            ...this.trashGearBroker.offers,
+            ...this.trashEquipmentManager.offers,
         ];
         return JSON.stringify(allOffers);
     }

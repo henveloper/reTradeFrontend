@@ -36,9 +36,6 @@ export interface IEquipment<T = number, S = EEquipmentSlot> extends IGameItem {
     name: string,
 }
 
-/**
- * @deprecated
- */
 export type TEquipmentTypes = 'weapon' | 'ability' | 'armor';
 
 /**

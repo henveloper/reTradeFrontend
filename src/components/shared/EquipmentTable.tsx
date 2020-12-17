@@ -42,19 +42,19 @@ export const EquipmentTable = observer((props: IItemTableProps) => {
 
             <Grid item xs>
                 <IconButton size='small'
-                            onClick={ () => appStore.stockManager.deductStocksQuantity(e.id) }>
+                            onClick={ () => appStore.marketManager.trashEquipmentManager.deductStocksQuantity(e.id) }>
                     <Remove/>
                 </IconButton>
             </Grid>
 
             <Grid item xs>
                 <Typography variant='h6' align='center'>
-                    { appStore.stockManager.getStockQuantity(e.id) }
+                    { appStore.marketManager.trashEquipmentManager.getStockQuantity(e.id) }
                 </Typography>
             </Grid>
 
             <Grid item xs>
-                <IconButton size='small' onClick={ () => appStore.stockManager.addStocksQuantity(e.id) }>
+                <IconButton size='small' onClick={ () => appStore.marketManager.trashEquipmentManager.addStocksQuantity(e.id) }>
                     <Add/>
                 </IconButton>
             </Grid>

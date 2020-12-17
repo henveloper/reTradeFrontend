@@ -57,13 +57,12 @@ export class TrashGearMarketManager extends RegionalMarketManager {
     // }
 
     get offers(): IOffer[] {
-        const stock: IStocks = appStore.stockManager.stocks.filter()
         const offers: IOffer[] = [];
 
-        const weapons = this.stocks.reduce<Equipment[]>((p, c) => {
+        const weaponStocks = Object.entries(this.stocks).reduce<IStocks>((p, c) => {
             const equipment = equipments.find(e => e.id === c.id && e.type === 'weapon');
             if (equipment) {
-                p.push(equipment);
+                p[c[0]!] =
             }
             return p;
         }, []);
@@ -85,7 +84,7 @@ export class TrashGearMarketManager extends RegionalMarketManager {
         }, []);
 
         // weapons
-        for (const weapon of weapons) {
+        for (const weapon of weaponStocks) {
             const value: EPotionIds = (() => {
                 if (weapon.tier === 10) {
                     return PotionGenerator.randomPot(3);
