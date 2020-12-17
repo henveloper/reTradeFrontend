@@ -15,6 +15,21 @@ export class MarketManager {
 
     public trashGearBroker = new TrashGearMarketManager();
 
+    public get exportString() {
+        return JSON.stringify({
+            potionStocks: this.potionBroker.stocks,
+            trashGearStocks: this.trashGearBroker.stocks,
+        })
+    }
+
+    public get tradeString() {
+        const allOffers = [
+            ...this.potionBroker.offers,
+            ...this.trashGearBroker.offers,
+        ];
+        return JSON.stringify(allOffers);
+    }
+
     @action
     public importStocksString(s: string) {
         const schema = Joi.object().keys({
@@ -31,21 +46,5 @@ export class MarketManager {
         this.trashGearBroker.stocks = value.trashGearStocks;
 
         appStore.successMessage = 'Trades imported.';
-    }
-
-    @computed
-    public get exportString() {
-        return JSON.stringify({
-            potionStocks: this.potionBroker.stocks,
-            trashGearStocks: this.trashGearBroker.stocks,
-        })
-    }
-
-    public get tradeString() {
-        const allOffers = [
-            ...this.potionBroker.offers,
-            ...this.trashGearBroker.offers,
-        ];
-        return JSON.stringify(allOffers);
     }
 }

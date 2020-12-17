@@ -1,5 +1,5 @@
 import { IOffer, IStocks } from './index';
-import { action, computed, makeAutoObservable } from 'mobx';
+import { action, makeAutoObservable } from 'mobx';
 import Joi from 'joi';
 import { appStore } from '../AppStore';
 
@@ -10,6 +10,12 @@ export abstract class RegionalMarketManager {
     }
 
     public stocks: IStocks;
+
+    public abstract get offers(): IOffer[];
+
+    public getStockQuantity(id: number): number {
+        return this.stocks[id] ?? 0;
+    }
 
     @action
     public addStocksQuantity(id: number) {
@@ -44,11 +50,4 @@ export abstract class RegionalMarketManager {
 
         this.stocks[id] = value;
     }
-
-    @computed
-    public getStockQuantity(id: number): number {
-        return this.stocks[id] ?? 0;
-    }
-
-    public abstract get offers(): IOffer[];
 }
