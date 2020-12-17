@@ -72,7 +72,7 @@ export class TrashGearMarketManager extends RegionalMarketManager {
         const weapons = filterStocks('weapon');
         const abilities = filterStocks('ability');
         const armors = filterStocks('armor');
-        
+
         // weapons
         for (const weapon of weapons) {
             const value: EPotionIds = (() => {
@@ -105,7 +105,7 @@ export class TrashGearMarketManager extends RegionalMarketManager {
         }
 
         // abilities
-        for (const ability of abilities) {
+        for (const [id, v] of Object.entries(abilities)) {
             const value: EPotionIds = (() => {
                 switch (ability.className) {
                     case 'shield':
