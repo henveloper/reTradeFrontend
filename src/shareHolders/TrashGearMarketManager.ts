@@ -7,52 +7,6 @@ export class TrashGearMarketManager extends RegionalMarketManager {
         super();
     }
 
-    // todo: implement combo offer logic
-    // private computeTrashWeaponArmorOffers(): IOffer[] {
-    //     const offers: IOffer[] = [];
-    //
-    //     const inCombinations = (weapon: IEquipment, armor: IEquipment) => {
-    //         const combinations: [ EWeaponSlot, EArmorSlot ][] = [
-    //             [ EWeaponSlot.bow, EArmorSlot.light ],
-    //             [ EWeaponSlot.bow, EArmorSlot.robe ],
-    //             [ EWeaponSlot.dagger, EArmorSlot.light ],
-    //             [ EWeaponSlot.katana, EArmorSlot.light ],
-    //             [ EWeaponSlot.katana, EArmorSlot.heavy ],
-    //             [ EWeaponSlot.staff, EArmorSlot.robe ],
-    //             [ EWeaponSlot.wand, EArmorSlot.robe ],
-    //             [ EWeaponSlot.sword, EArmorSlot.heavy ],
-    //         ];
-    //
-    //         for (const c of combinations) {
-    //             if (c[0] === weapon.slotType && c[1] === armor.slotType) {
-    //                 return true;
-    //             }
-    //         }
-    //         return false;
-    //     };
-    //
-    //     const trashWeapons = [ ...this.t10Weapons, ...this.t11Weapons ];
-    //     const trashArmors = [ ...this.t11Armors, ...this.t12Armors ];
-    //     for (const trashWeapon of trashWeapons) {
-    //         for (const trashArmor of trashArmors) {
-    //             if (inCombinations(trashWeapon, trashArmor)) {
-    //                 const isBetter = trashWeapon.tier === 11 && trashArmor.tier === 12;
-    //                 const isSlightlyBetter = trashWeapon.tier === 11 || trashArmor.tier === 12;
-    //                 offers.push({
-    //                     quantity: 1,
-    //                     sellingItems: [ trashWeapon.id, trashArmor.id ],
-    //                     sellingQuantities: [ 1, 1 ],
-    //                     buyingItems: [ isBetter ? EPotionIds.def : (isSlightlyBetter ? EPotionIds.wis : EPotionIds.spd) ],
-    //                     buyingQuantities: [ 1 ],
-    //                     suspended: false,
-    //                 });
-    //             }
-    //         }
-    //     }
-    //
-    //     return offers;
-    // }
-
     get offers(): IOffer[] {
         const offers: IOffer[] = [];
 

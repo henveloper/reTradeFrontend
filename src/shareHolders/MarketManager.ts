@@ -8,7 +8,6 @@ import Joi from 'joi';
 export class MarketManager {
 
     constructor() {
-        makeAutoObservable(this);
     }
 
     public potionMarketManager = new PotionMarketManager();

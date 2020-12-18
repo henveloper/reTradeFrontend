@@ -6,10 +6,9 @@ import { appStore } from '../AppStore';
 export abstract class RegionalMarketManager {
     protected constructor() {
         makeAutoObservable(this);
-        this.stocks = {};
     }
 
-    public stocks: IStocks;
+    public stocks: IStocks = {};
 
     public abstract get offers(): IOffer[];
 
