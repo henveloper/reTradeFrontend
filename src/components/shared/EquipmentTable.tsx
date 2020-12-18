@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { IDefaultProps } from '../../styles/styles';
 import { Grid, IconButton, Typography } from '@material-ui/core';
 import { Add, Remove } from '@material-ui/icons';
-import { Equipment, equipments } from '../../data/equipments';
-import { EEquipmentSlot, TEquipmentTypes } from '../../shareHolders';
+import { TEquipmentTypes } from '../../shareHolders';
 import { appStore } from '../../AppStore';
 import { observer } from 'mobx-react';
-import { images } from '../../data/images';
+import { equipmentManager } from '../../shareHolders/EquipmentManager';
 
 interface IItemTableProps extends IDefaultProps {
     variant: TEquipmentTypes;
@@ -16,29 +15,19 @@ export const EquipmentTable = observer((props: IItemTableProps) => {
     const { variant } = props;
     const { trashGearMarketManager } = appStore.marketManager;
 
-    const enumArray: EEquipmentSlot[] = (() => {
-        switch (variant) {
-            case 'weapon':
-                return Equipment.weaponSlotTypes;
-            case 'ability':
-                return Equipment.abilitySlotTypes;
-            case 'armor':
-                return Equipment.armorSlotTypes;
-            default:
-                return [];
-        }
-    })();
-
     // equipments
-    const filteredEquipments = equipments.filter(e => enumArray.includes(e.slotType));
-    filteredEquipments.sort((a, b) => enumArray.indexOf(a.slotType) - enumArray.indexOf(b.slotType));
+    const filteredEquipments = equipmentManager.equipments.filter(e => e.type === variant);
+
+    useEffect(() => {
+        filteredEquipments.sort((a, b) => a.className);
+    }, []);
 
 
     return <Grid container spacing={ 3 }>
         { filteredEquipments.map(e => <Grid item container xs={ 2 } alignItems='center'>
 
             <Grid item xs>
-                <img alt='item' src={ images.equipment[e.className][e.tier] }/>
+                <img alt='item' src={ e.image }/>
             </Grid>
 
             <Grid item xs>

@@ -1,9 +1,6 @@
 import { RegionalMarketManager } from './RegionalMarketManager';
 import { IOffer, IStocks } from './index';
-import { EPotionIds } from '../data/itemIds';
-import { PotionGenerator } from './PotionGenerator';
 import { equipmentManager } from './EquipmentManager';
-import { appStore } from '../AppStore';
 
 export class TrashGearMarketManager extends RegionalMarketManager {
     constructor() {
@@ -59,51 +56,37 @@ export class TrashGearMarketManager extends RegionalMarketManager {
     get offers(): IOffer[] {
         const offers: IOffer[] = [];
 
-        const filterEquipmentStocks = (variant: string) => {
+        const filterEquipmentStocks = (variant: string, maxTier?: number) => {
             return Object.entries(this.stocks).reduce<IStocks>((p, [ k, v ]) => {
-                equipmentManager.getEquipmentById(k)?.type === variant && (p[k] = v);
+                const equipment = equipmentManager.getEquipmentById(k);
+                if (equipment?.type === variant && (maxTier === undefined || equipment.tier <= maxTier)) {
+                    p[k] = v;
+                }
                 return p;
             }, {});
         };
 
         const weapons = filterEquipmentStocks('weapon');
+        const trashWeapons = filterEquipmentStocks('weapon', 11);
         const abilities = filterEquipmentStocks('ability');
+        const trashAbilities = filterEquipmentStocks('ability', 5);
         const armors = filterEquipmentStocks('armor');
+        const trashArmors = filterEquipmentStocks('armor', 12);
+
+        function value2pot(v: number) {
+            return;
+        }
 
         // weapons
-        for (const weaponId of Object.keys(weapons)) {
-            const equipment = equipmentManager.getEquipmentById(+weaponId);
+        for (const id of Object.keys(weapons)) {
+            const equipment = equipmentManager.getEquipmentById(id);
             if (!equipment) {
                 continue;
             }
-
-            const value: EPotionIds = (() => {
-                if (equipment.tier === 10) {
-                    return PotionGenerator.randomPot(3);
-                }
-                switch (equipment.className) {
-                    case 'sword':
-                    case 'dagger':
-                    case 'staff':
-                        return PotionGenerator.randomPot(1);
-                    case 'katana':
-                    case 'bow':
-                        return PotionGenerator.randomPot(2);
-                    case 'wand':
-                        return PotionGenerator.randomPot(3);
-                    default:
-                        return EPotionIds.glife;
-                }
-            })();
-
-            offers.push({
-                sellingItems: [ weaponId ],
-                sellingQuantities: [ 1 ],
-                buyingItems: [ value ],
-                buyingQuantities: [ 1 ],
-                quantity: 1,
-                suspended: false,
-            });
+            const setOffer = equipmentManager.generateSetOffer({ weapon: equipment });
+            if (setOffer) {
+                offers.push(setOffer);
+            }
         }
 
         // abilities
@@ -112,30 +95,10 @@ export class TrashGearMarketManager extends RegionalMarketManager {
             if (!equipment) {
                 continue;
             }
-
-            const value: EPotionIds = (() => {
-                switch (equipment.className) {
-                    case 'shield':
-                    case 'seal':
-                    case 'spell':
-                        return PotionGenerator.randomPot(1);
-                    case 'cloak':
-                    case 'lute':
-                    case 'quiver':
-                        return PotionGenerator.randomPot(2);
-                    default:
-                        return PotionGenerator.randomPot(3);
-                }
-            })();
-
-            offers.push({
-                sellingItems: [ id ],
-                sellingQuantities: [ 1 ],
-                buyingItems: [ value ],
-                buyingQuantities: [ 1 ],
-                quantity: 1,
-                suspended: false,
-            });
+            const setOffer = equipmentManager.generateSetOffer({ ability: equipment });
+            if (setOffer) {
+                offers.push(setOffer);
+            }
         }
 
         // armors
@@ -144,26 +107,73 @@ export class TrashGearMarketManager extends RegionalMarketManager {
             if (!equipment) {
                 continue;
             }
+            const setOffer = equipmentManager.generateSetOffer({ armor: equipment });
+            if (setOffer) {
+                offers.push(setOffer);
+            }
+        }
 
-            const value: EPotionIds = (() => {
-                switch (equipment.tier) {
-                    case 11:
-                        return PotionGenerator.randomPot(3);
-                    case 12:
-                        return PotionGenerator.randomPot(2);
-                    default:
-                        return EPotionIds.glife;
+        // weapon and ability
+        for (const weaponId of Object.keys(trashWeapons)) {
+            const weapon = equipmentManager.getEquipmentById(weaponId);
+            for (const abilityId of Object.keys(trashAbilities)) {
+                const ability = equipmentManager.getEquipmentById(abilityId);
+                if (!weapon || !ability) {
+                    continue;
                 }
-            })();
+                const setOffer = equipmentManager.generateSetOffer({ weapon, ability });
+                if (setOffer) {
+                    offers.push(setOffer);
+                }
+            }
+        }
 
-            offers.push({
-                sellingItems: [ id ],
-                sellingQuantities: [ 1 ],
-                buyingItems: [ value ],
-                buyingQuantities: [ 1 ],
-                quantity: 1,
-                suspended: false,
-            });
+        // weapon and armor
+        for (const weaponId of Object.keys(trashWeapons)) {
+            const weapon = equipmentManager.getEquipmentById(weaponId);
+            for (const armorId of Object.keys(trashArmors)) {
+                const armor = equipmentManager.getEquipmentById(armorId);
+                if (!weapon || !armor) {
+                    continue;
+                }
+                const setOffer = equipmentManager.generateSetOffer({ weapon, armor });
+                if (setOffer) {
+                    offers.push(setOffer);
+                }
+            }
+        }
+
+        // ability and armor
+        for (const abilityId of Object.keys(trashAbilities)) {
+            const ability = equipmentManager.getEquipmentById(abilityId);
+            for (const armorId of Object.keys(trashArmors)) {
+                const armor = equipmentManager.getEquipmentById(armorId);
+                if (!ability || !armor) {
+                    continue;
+                }
+                const setOffer = equipmentManager.generateSetOffer({ ability, armor });
+                if (setOffer) {
+                    offers.push(setOffer);
+                }
+            }
+        }
+
+        // all three
+        for (const weaponId of Object.keys(trashWeapons)) {
+            const weapon = equipmentManager.getEquipmentById(weaponId);
+            for (const abilityId of Object.keys(trashAbilities)) {
+                const ability = equipmentManager.getEquipmentById(abilityId);
+                for (const armorId of Object.keys(trashArmors)) {
+                    const armor = equipmentManager.getEquipmentById(armorId);
+                    if (!ability || !armor || !weapon) {
+                        continue;
+                    }
+                    const setOffer = equipmentManager.generateSetOffer({ weapon, ability, armor });
+                    if (setOffer) {
+                        offers.push(setOffer);
+                    }
+                }
+            }
         }
 
         return offers;
