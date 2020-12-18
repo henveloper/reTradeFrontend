@@ -1,11 +1,11 @@
-export type IStocks<T extends number = number> = Record<T, number>;
+export type IStocks = Record<string, number>;
 
 export type IOffer = {
-    quantity: number,
-    sellingItems: number[],
+    sellingItems: (string | number)[],
     sellingQuantities: number[],
-    buyingItems: number[],
+    buyingItems: (string | number)[],
     buyingQuantities: number[],
+    quantity: number,
     suspended: boolean,
 }
 

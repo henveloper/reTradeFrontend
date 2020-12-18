@@ -1,1 +1,0 @@
-/// <reference shareHolders="react-scripts" />

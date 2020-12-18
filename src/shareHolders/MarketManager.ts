@@ -11,9 +11,24 @@ export class MarketManager {
         makeAutoObservable(this);
     }
 
-    public potionBroker = new PotionMarketManager();
+    public potionMarketManager = new PotionMarketManager();
 
-    public trashEquipmentManager = new TrashGearMarketManager();
+    public trashGearMarketManager = new TrashGearMarketManager();
+
+    public get exportString() {
+        return JSON.stringify({
+            potionStocks: this.potionMarketManager.stocks,
+            trashGearStocks: this.trashGearMarketManager.stocks,
+        })
+    }
+
+    public get tradeString() {
+        const allOffers = [
+            ...this.potionMarketManager.offers,
+            ...this.trashGearMarketManager.offers,
+        ];
+        return JSON.stringify(allOffers);
+    }
 
     @action
     public importStocksString(s: string) {
@@ -27,25 +42,9 @@ export class MarketManager {
             appStore.setError(error.message);
             return;
         }
-        this.potionBroker.stocks = value.potionStocks;
-        this.trashEquipmentManager.stocks = value.trashGearStocks;
+        this.potionMarketManager.stocks = value.potionStocks;
+        this.trashGearMarketManager.stocks = value.trashGearStocks;
 
         appStore.successMessage = 'Trades imported.';
-    }
-
-    @computed
-    public get exportString() {
-        return JSON.stringify({
-            potionStocks: this.potionBroker.stocks,
-            trashGearStocks: this.trashEquipmentManager.stocks,
-        })
-    }
-
-    public get tradeString() {
-        const allOffers = [
-            ...this.potionBroker.offers,
-            ...this.trashEquipmentManager.offers,
-        ];
-        return JSON.stringify(allOffers);
     }
 }

@@ -1,8 +1,8 @@
 import { RegionalMarketManager } from './RegionalMarketManager';
-import { EArmorSlot, EWeaponSlot, IEquipment, IOffer, IStocks } from './index';
-import { Equipment, equipments } from '../data/equipments';
+import { IOffer, IStocks } from './index';
 import { EPotionIds } from '../data/itemIds';
 import { PotionGenerator } from './PotionGenerator';
+import { equipmentManager } from './EquipmentManager';
 import { appStore } from '../AppStore';
 
 export class TrashGearMarketManager extends RegionalMarketManager {
@@ -59,37 +59,29 @@ export class TrashGearMarketManager extends RegionalMarketManager {
     get offers(): IOffer[] {
         const offers: IOffer[] = [];
 
-        const weaponStocks = Object.entries(this.stocks).reduce<IStocks>((p, c) => {
-            const equipment = equipments.find(e => e.id === c.id && e.type === 'weapon');
-            if (equipment) {
-                p[c[0]!] =
-            }
-            return p;
-        }, []);
+        const filterEquipmentStocks = (variant: string) => {
+            return Object.entries(this.stocks).reduce<IStocks>((p, [ k, v ]) => {
+                equipmentManager.getEquipmentById(k)?.type === variant && (p[k] = v);
+                return p;
+            }, {});
+        };
 
-        const abilities = this.stocks.reduce<Equipment[]>((p, c) => {
-            const equipment = equipments.find(e => e.id === c.id && e.type === 'ability');
-            if (equipment) {
-                p.push(equipment);
-            }
-            return p;
-        }, []);
-
-        const armors = this.stocks.reduce<Equipment[]>((p, c) => {
-            const equipment = equipments.find(e => e.id === c.id && e.type === 'armor');
-            if (equipment) {
-                p.push(equipment);
-            }
-            return p;
-        }, []);
+        const weapons = filterEquipmentStocks('weapon');
+        const abilities = filterEquipmentStocks('ability');
+        const armors = filterEquipmentStocks('armor');
 
         // weapons
-        for (const weapon of weaponStocks) {
+        for (const weaponId of Object.keys(weapons)) {
+            const equipment = equipmentManager.getEquipmentById(+weaponId);
+            if (!equipment) {
+                continue;
+            }
+
             const value: EPotionIds = (() => {
-                if (weapon.tier === 10) {
+                if (equipment.tier === 10) {
                     return PotionGenerator.randomPot(3);
                 }
-                switch (weapon.className) {
+                switch (equipment.className) {
                     case 'sword':
                     case 'dagger':
                     case 'staff':
@@ -105,7 +97,7 @@ export class TrashGearMarketManager extends RegionalMarketManager {
             })();
 
             offers.push({
-                sellingItems: [ weapon.id ],
+                sellingItems: [ weaponId ],
                 sellingQuantities: [ 1 ],
                 buyingItems: [ value ],
                 buyingQuantities: [ 1 ],
@@ -115,9 +107,14 @@ export class TrashGearMarketManager extends RegionalMarketManager {
         }
 
         // abilities
-        for (const ability of abilities) {
+        for (const id of Object.keys(abilities)) {
+            const equipment = equipmentManager.getEquipmentById(id);
+            if (!equipment) {
+                continue;
+            }
+
             const value: EPotionIds = (() => {
-                switch (ability.className) {
+                switch (equipment.className) {
                     case 'shield':
                     case 'seal':
                     case 'spell':
@@ -132,7 +129,7 @@ export class TrashGearMarketManager extends RegionalMarketManager {
             })();
 
             offers.push({
-                sellingItems: [ ability.id ],
+                sellingItems: [ id ],
                 sellingQuantities: [ 1 ],
                 buyingItems: [ value ],
                 buyingQuantities: [ 1 ],
@@ -142,9 +139,14 @@ export class TrashGearMarketManager extends RegionalMarketManager {
         }
 
         // armors
-        for (const armor of armors) {
+        for (const id of Object.keys(armors)) {
+            const equipment = equipmentManager.getEquipmentById(id);
+            if (!equipment) {
+                continue;
+            }
+
             const value: EPotionIds = (() => {
-                switch (armor.tier) {
+                switch (equipment.tier) {
                     case 11:
                         return PotionGenerator.randomPot(3);
                     case 12:
@@ -155,7 +157,7 @@ export class TrashGearMarketManager extends RegionalMarketManager {
             })();
 
             offers.push({
-                sellingItems: [ armor.id ],
+                sellingItems: [ id ],
                 sellingQuantities: [ 1 ],
                 buyingItems: [ value ],
                 buyingQuantities: [ 1 ],

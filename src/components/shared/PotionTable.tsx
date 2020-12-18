@@ -6,7 +6,7 @@ import { EPotionIds } from '../../data/itemIds';
 import { appStore } from '../../AppStore';
 
 export const PotionTable = observer((props: IDefaultProps) => {
-    const { stockManager } = appStore;
+    const { potionMarketManager } = appStore.marketManager;
 
     const rowInfo: { type: string, src: string, id: EPotionIds }[] = [
         { type: 'atk', src: 'https://i.imgur.com/kiIMjr9.png', id: EPotionIds.atk },
@@ -25,8 +25,8 @@ export const PotionTable = observer((props: IDefaultProps) => {
             </Grid>
             <Grid item xs>
                 <TextField fullWidth size='small' variant='standard'
-                           onChange={ e => stockManager.changeStocksQuantity(i.id, e.target.value || '0') }
-                           value={ stockManager.getStockQuantity(i.id) }/>
+                           onChange={ e => potionMarketManager.changeStocksQuantity(i.id, e.target.value || '0') }
+                           value={ potionMarketManager.getStockQuantity(i.id) }/>
             </Grid>
         </Grid>) }
 

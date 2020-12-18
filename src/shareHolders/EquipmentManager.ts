@@ -1,106 +1,18 @@
-import {
-    EAbilitySlot,
-    EArmorSlot,
-    EEquipmentSlot,
-    EWeaponSlot,
-    IEquipment,
-    TEquipments,
-    TEquipmentTypes
-} from '../shareHolders';
+import { Equipment } from '../data/equipments';
 
-export class Equipment {
-    public id: number;
-    public tier: number;
-    public slotType: EEquipmentSlot;
-    public name: string;
-
-    static weaponSlotTypes: EWeaponSlot[] = [ EWeaponSlot.sword, EWeaponSlot.katana, EWeaponSlot.dagger, EWeaponSlot.bow, EWeaponSlot.staff, EWeaponSlot.wand ];
-    static abilitySlotTypes: EAbilitySlot[] = [
-        EAbilitySlot.cloak, EAbilitySlot.quiver, EAbilitySlot.spell, EAbilitySlot.tome,
-        EAbilitySlot.helmet, EAbilitySlot.shield, EAbilitySlot.seal, EAbilitySlot.poison,
-        EAbilitySlot.skull, EAbilitySlot.trap, EAbilitySlot.orb, EAbilitySlot.prism,
-        EAbilitySlot.scepter, EAbilitySlot.star, EAbilitySlot.wakizashi, EAbilitySlot.lute,
-    ];
-    static armorSlotTypes: EArmorSlot[] = [ EArmorSlot.robe, EArmorSlot.light, EArmorSlot.heavy, ];
-
-    constructor(info: IEquipment) {
-        this.id = info.id;
-        this.tier = info.tier;
-        this.slotType = info.slotType;
-        this.name = info.name;
+class EquipmentManager {
+    constructor(private equipments: Equipment[]) {
+        equipments.forEach(e => this.hashedEquipments[e.id] = e);
     }
 
-    public get type(): TEquipmentTypes{
-        if (Equipment.weaponSlotTypes.includes(+this.slotType)) {
-            return 'weapon';
-        } else if (Equipment.abilitySlotTypes.includes(+this.slotType)) {
-            return 'ability';
-        } else {
-            return 'armor';
-        }
-    }
+    private readonly hashedEquipments: Record<string, Equipment> = {};
 
-    public get className(): TEquipments {
-        switch (this.slotType) {
-            case EWeaponSlot.sword:
-                return 'sword';
-            case EWeaponSlot.katana:
-                return 'katana';
-            case EWeaponSlot.dagger:
-                return 'dagger';
-            case EWeaponSlot.bow:
-                return 'bow';
-            case EWeaponSlot.staff:
-                return 'staff';
-            case EWeaponSlot.wand:
-                return 'wand';
-            case EAbilitySlot.cloak:
-                return 'cloak';
-            case EAbilitySlot.quiver:
-                return 'quiver';
-            case EAbilitySlot.spell:
-                return 'spell';
-            case EAbilitySlot.tome:
-                return 'tome';
-            case EAbilitySlot.helmet:
-                return 'helmet';
-            case EAbilitySlot.shield:
-                return 'shield';
-            case EAbilitySlot.seal:
-                return 'seal';
-            case EAbilitySlot.poison:
-                return 'poison';
-            case EAbilitySlot.skull:
-                return 'skull';
-            case EAbilitySlot.trap:
-                return 'trap';
-            case EAbilitySlot.orb:
-                return 'orb';
-            case EAbilitySlot.prism:
-                return 'prism';
-            case EAbilitySlot.scepter:
-                return 'scepter';
-            case EAbilitySlot.star:
-                return 'star';
-            case EAbilitySlot.wakizashi:
-                return 'wakizashi';
-            case EAbilitySlot.lute:
-                return 'lute';
-            case EArmorSlot.robe:
-                return 'robe';
-            case EArmorSlot.light:
-                return 'light';
-            case EArmorSlot.heavy:
-                return 'heavy';
-            default:
-                return 'robe';
-        }
+    public getEquipmentById(id: number | string) {
+        return this.hashedEquipments[id];
     }
-
 }
 
-
-export const equipments: Array<Equipment> = [
+export const equipmentManager = new EquipmentManager([
     new Equipment({ 'id': 2692, 'tier': 10, 'slotType': 1, 'name': 'Archon Sword' }),
     new Equipment({ 'id': 2631, 'tier': 11, 'slotType': 1, 'name': 'Skysplitter Sword' }),
     new Equipment({ 'id': 2827, 'tier': 12, 'slotType': 1, 'name': 'Sword of Acclaim' }),
@@ -160,5 +72,4 @@ export const equipments: Array<Equipment> = [
     new Equipment({ 'id': 2706, 'tier': 11, 'slotType': 7, 'name': 'Vengeance Armor' }),
     new Equipment({ 'id': 2707, 'tier': 12, 'slotType': 7, 'name': 'Abyssal Armor' }),
     new Equipment({ 'id': 2812, 'tier': 13, 'slotType': 7, 'name': 'Acropolis Armor' }),
-];
-
+]);

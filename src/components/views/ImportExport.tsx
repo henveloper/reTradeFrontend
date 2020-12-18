@@ -6,7 +6,7 @@ import CopyToClipboard from 'react-copy-to-clipboard';
 import { observer } from 'mobx-react';
 
 export const ImportExport = observer((props: IDefaultProps) => {
-    const { stockManager } = appStore;
+    const { marketManager } = appStore;
     const [ importField, setImportField ] = useState('');
 
     return <Grid container direction='column' spacing={ 1 }>
@@ -14,7 +14,7 @@ export const ImportExport = observer((props: IDefaultProps) => {
         <Grid item container spacing={ 1 }>
 
             <Grid item>
-                <Button fullWidth variant='contained' onClick={ () => stockManager.importTradeString(importField) }>
+                <Button fullWidth variant='contained' onClick={ () => marketManager.importStocksString(importField) }>
                     Stocks Import
                 </Button>
             </Grid>
@@ -28,7 +28,7 @@ export const ImportExport = observer((props: IDefaultProps) => {
         <Grid item container spacing={ 1 }>
 
             <Grid item>
-                <CopyToClipboard text={ stockManager.exportString }>
+                <CopyToClipboard text={ marketManager.exportString }>
                     <Button fullWidth variant='contained' onClick={ () => appStore.successMessage = 'copied' }>
                         Copy Stocks Export
                     </Button>
@@ -36,7 +36,7 @@ export const ImportExport = observer((props: IDefaultProps) => {
             </Grid>
 
             <Grid item xs>
-                <TextField fullWidth multiline value={ stockManager.exportString }/>
+                <TextField fullWidth multiline value={ marketManager.exportString }/>
             </Grid>
 
         </Grid>
@@ -50,7 +50,7 @@ export const ImportExport = observer((props: IDefaultProps) => {
             </Grid>
 
             <Grid item>
-                <CopyToClipboard text={ stockManager.tradeString }>
+                <CopyToClipboard text={ marketManager.tradeString }>
                     <Button fullWidth variant='contained' onClick={ () => appStore.successMessage = 'copied' }>
                         Copy Trades String
                     </Button>
@@ -58,7 +58,7 @@ export const ImportExport = observer((props: IDefaultProps) => {
             </Grid>
 
             <Grid item xs>
-                < TextField fullWidth multiline value={ stockManager.tradeString }/>
+                < TextField fullWidth multiline value={ marketManager.tradeString }/>
             </Grid>
 
         </Grid>
