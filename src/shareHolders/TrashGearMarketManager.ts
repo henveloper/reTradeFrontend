@@ -1,12 +1,14 @@
 import { RegionalMarketManager } from './RegionalMarketManager';
 import { IOffer, IStocks } from './index';
 import { equipmentManager } from './EquipmentManager';
+import { computed } from 'mobx';
 
 export class TrashGearMarketManager extends RegionalMarketManager {
     constructor() {
         super();
     }
 
+    @computed
     get offers(): IOffer[] {
         const offers: IOffer[] = [];
 

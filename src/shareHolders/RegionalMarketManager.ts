@@ -1,13 +1,11 @@
 import { IOffer, IStocks } from './index';
-import { action, makeAutoObservable } from 'mobx';
+import { action, computed, makeAutoObservable, observable } from 'mobx';
 import Joi from 'joi';
 import { appStore } from '../AppStore';
 
 export abstract class RegionalMarketManager {
-    protected constructor() {
-        makeAutoObservable(this);
-    }
 
+    @observable
     public stocks: IStocks = {};
 
     public abstract get offers(): IOffer[];
@@ -20,8 +18,10 @@ export abstract class RegionalMarketManager {
     public addStocksQuantity(id: number) {
         const found = this.stocks[id];
         if (found) {
+            console.log(123);
             this.stocks[id] += 1;
         } else {
+            console.log(234);
             this.stocks[id] = 1;
         }
 

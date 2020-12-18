@@ -1,12 +1,10 @@
 import { RegionalMarketManager } from './RegionalMarketManager';
 import { IOffer } from './index';
 import { EPotionIds } from '../data/itemIds';
-import { makeAutoObservable } from 'mobx';
 
 export class PotionMarketManager extends RegionalMarketManager {
     constructor() {
         super();
-        makeAutoObservable(this);
     }
 
     public get offers(): IOffer[] {

@@ -2,12 +2,12 @@ import { PotionMarketManager } from './PotionMarketManager';
 import { TrashGearMarketManager } from './TrashGearMarketManager';
 import { action, computed, makeAutoObservable } from 'mobx';
 import { appStore } from '../AppStore';
-import { IStocks } from './index';
 import Joi from 'joi';
 
 export class MarketManager {
 
     constructor() {
+        makeAutoObservable(this);
     }
 
     public potionMarketManager = new PotionMarketManager();
