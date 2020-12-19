@@ -307,15 +307,11 @@ class EquipmentManager {
         })(this.valueOfSet(set));
 
         // compute potions
-        const potionRecord: Record<string, number> = {};
+        const potionRecord: Map<number, number> = new Map();
         let valueOfOffer = 0;
 
-        function pushPotion(id: string) {
-            if (potionRecord[id]) {
-                potionRecord[id] += 1;
-            } else {
-                potionRecord[id] = 1;
-            }
+        function pushPotion(id: number) {
+            potionRecord.set(id, potionRecord.get(id) ?? 0 + 1);
         }
 
         while (true) {
@@ -325,19 +321,19 @@ class EquipmentManager {
 
             // glifes
             if (difference + EPSILON >= 1) {
-                pushPotion(EPotionIds.glife.toString());
+                pushPotion(EPotionIds.glife);
                 valueOfOffer += 1;
             } else if (difference + EPSILON >= 1 / 2) {
-                pushPotion(EPotionIds.life.toString());
+                pushPotion(EPotionIds.life);
                 valueOfOffer += 1 / 2;
             } else if (difference + EPSILON >= 1 / 4) {
-                pushPotion(PotionGenerator.randomPot(1).toString());
+                pushPotion(PotionGenerator.randomPot(1));
                 valueOfOffer += 1 / 4;
             } else if (difference + EPSILON >= 1 / 6) {
-                pushPotion(PotionGenerator.randomPot(2).toString());
+                pushPotion(PotionGenerator.randomPot(2));
                 valueOfOffer += 1 / 6;
             } else if (difference + EPSILON >= 1 / 8) {
-                pushPotion(PotionGenerator.randomPot(3).toString());
+                pushPotion(PotionGenerator.randomPot(3));
                 valueOfOffer += 1 / 8;
             } else {
                 break;
@@ -351,9 +347,9 @@ class EquipmentManager {
         const equipments = [ set.weapon, set.ability, set.armor ].filter(x => x !== undefined) as Equipment[];
         return {
             sellingItems: equipments.map(e => e.id),
-            sellingQuantities: equipments.map(e => 1),
-            buyingItems: Object.keys(potionRecord),
-            buyingQuantities: Object.keys(potionRecord).map(e => 1),
+            sellingQuantities: equipments.map(_ => 1),
+            buyingItems: Array.from(potionRecord.keys()),
+            buyingQuantities: Array.from(potionRecord.keys()).map(e => 1),
             quantity: 1,
             suspended: false,
         };

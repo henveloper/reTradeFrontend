@@ -1,9 +1,9 @@
 export type IStocks = Map<number, number>;
 
 export type IOffer = {
-    sellingItems: (string | number)[],
+    sellingItems: number[],
     sellingQuantities: number[],
-    buyingItems: (string | number)[],
+    buyingItems: number[],
     buyingQuantities: number[],
     quantity: number,
     suspended: boolean,
