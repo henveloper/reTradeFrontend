@@ -266,7 +266,7 @@ class EquipmentManager {
         return ((weapon?.value ?? 0) + (ability?.value ?? 0) + (armor?.value ?? 0)) * factor;
     }
 
-    public generateSetOffer(set: ISet): IOffer | undefined {
+    public generateSetOffer = (set: ISet): IOffer | undefined => {
 
         if (set.weapon && set.ability
             || set.weapon && set.armor

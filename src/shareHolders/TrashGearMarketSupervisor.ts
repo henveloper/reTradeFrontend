@@ -1,7 +1,7 @@
 import { MarketSupervisor } from './MarketSupervisor';
-import { IOffer, TEquipmentTypes } from './index';
+import { IOffer, IStocks, TEquipmentTypes } from './index';
 import { Equipment, equipmentManager, ISet } from './EquipmentManager';
-import { computed } from 'mobx';
+import { computed, observable } from 'mobx';
 
 export class TrashGearMarketSupervisor extends MarketSupervisor {
     constructor() {

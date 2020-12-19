@@ -6,6 +6,7 @@ import { TEquipmentTypes } from '../../shareHolders';
 import { appStore } from '../../AppStore';
 import { observer } from 'mobx-react';
 import { equipmentManager } from '../../shareHolders/EquipmentManager';
+import { trace } from 'mobx';
 
 interface IItemTableProps extends IDefaultProps {
     variant: TEquipmentTypes;

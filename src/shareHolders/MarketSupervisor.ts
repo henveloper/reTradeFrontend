@@ -1,12 +1,11 @@
 import { IOffer, IStocks } from './index';
-import { action, computed, observable } from 'mobx';
+import { action, computed, makeAutoObservable, observable } from 'mobx';
 import Joi from 'joi';
 import { appStore } from '../AppStore';
 
 export abstract class MarketSupervisor {
 
-    @observable
-    public stocks: IStocks = new Map();
+    public stocks: IStocks = observable.map(new Map<number, number>());
 
     public abstract get offers(): IOffer[];
 
@@ -16,8 +15,10 @@ export abstract class MarketSupervisor {
 
     @action
     public incrementStock(id: number) {
+        console.log(id);
         const quantity = this.getStockQuantity(id);
         this.stocks.set(id, quantity + 1);
+        console.log(this.stocks);
     }
 
     @action
