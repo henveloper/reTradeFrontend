@@ -55,7 +55,7 @@ export class MarketManager {
         }
         this.potionMarketSupervisor.import(value.potionStocks);
         this.trashGearMarketSupervisor.import(value.trashGearStocks);
-        this.miscMarketSupervisor.import(value.trashGearStocks);
+        this.miscMarketSupervisor.import(value.miscItemStocks);
 
         appStore.successMessage = 'Trades imported.';
     }
