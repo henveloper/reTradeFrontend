@@ -13,8 +13,6 @@ export class MiscMarketSupervisor extends MarketSupervisor {
 
     @computed
     public get offers(): IOffer[] {
-        const potionIds = Object.values(EPotionIds);
-
         const offer: IOffer[] = [];
 
         // convert to glife
@@ -22,21 +20,21 @@ export class MiscMarketSupervisor extends MarketSupervisor {
             if ([
                 EMiscItem.paraDef,
                 EMiscItem.humanoidEgg,
-            ].includes(v)) {
+            ].includes(k)) {
                 offer.push({
                     sellingItems: [ k ],
                     sellingQuantities: [ 1 ],
                     ...PotionGenerator.getBuyingOffer('def'),
-                    quantity: k,
+                    quantity: v,
                     suspended: false,
                 });
-            } else if (v === EMiscItem.inc) {
+            } else if (k === EMiscItem.inc) {
                 offer.push({
-                    sellingItems: [ v ],
+                    sellingItems: [ k ],
                     sellingQuantities: [ 1 ],
                     buyingItems: [ EPotionIds.life ],
                     buyingQuantities: [ 1 ],
-                    quantity: k,
+                    quantity: v,
                     suspended: false,
                 });
             }
