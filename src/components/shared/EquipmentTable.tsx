@@ -10,6 +10,7 @@ import { trace } from 'mobx';
 
 interface IItemTableProps extends IDefaultProps {
     variant: TEquipmentTypes;
+    dense?: true;
 }
 
 export const EquipmentTable = observer((props: IItemTableProps) => {

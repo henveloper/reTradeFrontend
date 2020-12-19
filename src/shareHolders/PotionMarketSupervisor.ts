@@ -8,11 +8,11 @@ export class PotionMarketSupervisor extends MarketSupervisor {
         super();
     }
 
-    public readonly suspend: Map<EPotionIds, boolean> = observable.map(new Map<EPotionIds, boolean>());
+    public readonly checkout: Map<EPotionIds, boolean> = observable.map(new Map<EPotionIds, boolean>());
 
     @action
-    public toggleChecked(id: EPotionIds) {
-        this.suspend.set(id, !this.suspend.get(id));
+    public toggleUpgradeOnly(id: EPotionIds) {
+        this.checkout.set(id, !this.checkout.get(id));
     }
 
     @computed
@@ -20,12 +20,32 @@ export class PotionMarketSupervisor extends MarketSupervisor {
 
         const offer: IOffer[] = [];
 
-        // convert to glife
         this.stocks.forEach((v, k) => {
-            if (this.suspend.get(k)) {
+            // upgrades
+            const upgradeMap: Map<EPotionIds, EPotionIds[]> = new Map()
+                .set(EPotionIds.dex, [ EPotionIds.wis, EPotionIds.atk, EPotionIds.def, EPotionIds.vit ])
+                .set(EPotionIds.spd, [ EPotionIds.wis, EPotionIds.atk, EPotionIds.def, EPotionIds.vit ])
+                .set(EPotionIds.atk, [ EPotionIds.def, EPotionIds.vit ])
+                .set(EPotionIds.wis, [ EPotionIds.def, EPotionIds.vit ]);
+
+            if (upgradeMap.get(k)) {
+                upgradeMap.get(k)!.forEach(p => {
+                    offer.push({
+                        sellingItems: [ k ],
+                        sellingQuantities: [ v ],
+                        buyingItems: [ p ],
+                        buyingQuantities: [ v ],
+                        quantity: 1,
+                        suspended: false,
+                    });
+                });
+            }
+
+            if (!this.checkout.get(k)) {
                 return;
             }
 
+            // to glife
             const ratio = ((k: number) => {
                 switch (k) {
                     case EPotionIds.dex:
@@ -42,11 +62,11 @@ export class PotionMarketSupervisor extends MarketSupervisor {
                 }
             })(k);
             const batchCount = Math.floor(v / ratio);
+
             if (batchCount === 0) {
                 return;
             }
 
-            // to glife
             offer.push({
                 sellingItems: [ k ],
                 sellingQuantities: [ batchCount * ratio ],
@@ -56,24 +76,7 @@ export class PotionMarketSupervisor extends MarketSupervisor {
                 suspended: false,
             });
 
-            // to markups
-            [
-                { ratio: 8, upgrades: [ EPotionIds.atk, EPotionIds.wis ] },
-                { ratio: 6, upgrades: [ EPotionIds.vit, EPotionIds.def ] },
-            ].forEach(p => {
-                if (ratio === p.ratio) {
-                    p.upgrades.forEach(id => {
-                        offer.push({
-                            sellingItems: [ k ],
-                            sellingQuantities: [ v ],
-                            buyingItems: [ id ],
-                            buyingQuantities: [ v ],
-                            quantity: 1,
-                            suspended: false,
-                        });
-                    });
-                }
-            })
+
         });
 
         return offer;

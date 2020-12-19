@@ -71,6 +71,7 @@ export class MarketManager {
             ...this.equipmentMarketSupervisor.offers,
             ...this.miscMarketSupervisor.offers,
         ].filter(o => !MarketManager.offerSignificanceFilter(o));
+        allOffers.sort(_ => Math.random() - 0.5);
         return JSON.stringify(allOffers);
 
     }

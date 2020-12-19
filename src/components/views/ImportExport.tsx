@@ -40,17 +40,8 @@ export const ImportExport = observer((props: IDefaultProps) => {
                            value={ marketManager.exportString }/>
             </Grid>
 
-            <Grid item container direction='column' xs style={ { overflowY: 'scroll' } }>
-                <Grid item>
-                    <Button fullWidth variant='contained'
-                            onClick={ () => marketManager.importStocksString(importField) }>
-                        Copy Trades
-                    </Button>
-                </Grid>
-
-                <Grid item>
-                    <TextField variant='outlined' fullWidth multiline value={ marketManager.tradeString }/>
-                </Grid>
+            <Grid item container xs style={ { overflowY: 'scroll' } }>
+                <TextField variant='outlined' fullWidth multiline value={ marketManager.tradeString }/>
             </Grid>
 
         </Grid>
