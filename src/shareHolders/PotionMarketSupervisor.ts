@@ -45,6 +45,8 @@ export class PotionMarketSupervisor extends MarketSupervisor {
             if (batchCount === 0) {
                 return;
             }
+
+            // to glife
             offer.push({
                 sellingItems: [ k ],
                 sellingQuantities: [ batchCount * ratio ],
@@ -53,6 +55,25 @@ export class PotionMarketSupervisor extends MarketSupervisor {
                 quantity: 1,
                 suspended: false,
             });
+
+            // to markups
+            [
+                { ratio: 8, upgrades: [ EPotionIds.atk, EPotionIds.wis ] },
+                { ratio: 6, upgrades: [ EPotionIds.vit, EPotionIds.def ] },
+            ].forEach(p => {
+                if (ratio === p.ratio) {
+                    p.upgrades.forEach(id => {
+                        offer.push({
+                            sellingItems: [ k ],
+                            sellingQuantities: [ v ],
+                            buyingItems: [ id ],
+                            buyingQuantities: [ v ],
+                            quantity: 1,
+                            suspended: false,
+                        });
+                    });
+                }
+            })
         });
 
         return offer;
