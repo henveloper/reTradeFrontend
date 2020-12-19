@@ -316,7 +316,8 @@ class EquipmentManager {
             }
         }
 
-        while (valueOfOffer < valueOfSet) {
+        while (true) {
+
             const difference = valueOfSet - valueOfOffer;
             const EPSILON = 1e-6;
 
