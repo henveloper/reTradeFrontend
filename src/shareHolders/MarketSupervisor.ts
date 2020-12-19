@@ -44,7 +44,8 @@ export abstract class MarketSupervisor {
     }
 
     @action
-    public changeStocksQuantity(id: number, quantity: string) {
+    public changeStocksQuantity(id: number, q: string) {
+        const quantity = q || '0';
         const rule = Joi.number().integer().min(0).required();
         const { error, value } = rule.validate(quantity, { convert: true });
         if (error) {

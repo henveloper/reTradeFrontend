@@ -21,6 +21,7 @@ export class MarketManager {
         return JSON.stringify({
             potionStocks: this.potionMarketSupervisor.stocks,
             trashGearStocks: this.trashGearMarketSupervisor.stocks,
+            miscItemStocks: this.miscMarketSupervisor.stocks,
         })
     }
 
@@ -28,6 +29,7 @@ export class MarketManager {
         const allOffers = [
             ...this.potionMarketSupervisor.offers,
             ...this.trashGearMarketSupervisor.offers,
+            ...this.miscMarketSupervisor.offers,
         ];
         return JSON.stringify(allOffers);
     }
@@ -43,6 +45,7 @@ export class MarketManager {
         const schema = Joi.object().keys({
             potionStocks: stockSchema,
             trashGearStocks: stockSchema,
+            miscItemStocks: stockSchema,
         }).required();
 
         const { value, error } = schema.validate(obj);
@@ -52,6 +55,7 @@ export class MarketManager {
         }
         this.potionMarketSupervisor.import(value.potionStocks);
         this.trashGearMarketSupervisor.import(value.trashGearStocks);
+        this.miscMarketSupervisor.import(value.trashGearStocks);
 
         appStore.successMessage = 'Trades imported.';
     }
