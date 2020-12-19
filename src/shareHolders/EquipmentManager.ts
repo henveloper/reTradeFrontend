@@ -254,10 +254,10 @@ class EquipmentManager {
         const { weapon, ability, armor } = set;
         const factor = (() => {
             switch ([ weapon, ability, armor ].filter(x => x !== undefined).length) {
-                case 3:
-                    return 2 / 3;
-                case 2:
-                    return 4 / 5;
+                // case 3:
+                //     return 2 / 3;
+                // case 2:
+                //     return 4 / 5;
                 default:
                     return 1;
             }
@@ -300,7 +300,7 @@ class EquipmentManager {
 
         const valueOfSet = ((v: number) => {
             const remainder = v % 0.125;
-            const addValue: boolean = Math.random() < remainder * 8;
+            const addValue: boolean = Math.random() < (remainder * 8);
             return v - remainder + (addValue ? 0.125 : 0);
         })(this.valueOfSet(set));
 
@@ -332,10 +332,10 @@ class EquipmentManager {
                 valueOfOffer += 1 / 4;
             } else if (Math.abs(difference - 1 / 6) < EPSILON) {
                 pushPotion(PotionGenerator.randomPot(2).toString());
-                valueOfOffer += 1 / 4;
+                valueOfOffer += 1 / 6;
             } else if (Math.abs(difference - 1 / 8) < EPSILON) {
                 pushPotion(PotionGenerator.randomPot(3).toString());
-                valueOfOffer += 1 / 4;
+                valueOfOffer += 1 / 8;
             } else {
                 break;
             }

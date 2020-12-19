@@ -9,7 +9,7 @@ export class PotionGenerator {
             case 2:
                 return Math.random() < 0.5 ? EPotionIds.wis : EPotionIds.atk;
             case 3:
-                return Math.random() < 0.5 ? EPotionIds.vit : EPotionIds.def;
+                return Math.random() < 0.5 ? EPotionIds.dex : EPotionIds.spd;
             default:
                 throw new Error('Potion generator random pot tier error.');
         }
