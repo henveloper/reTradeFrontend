@@ -305,6 +305,7 @@ class EquipmentManager {
             const addValue: boolean = Math.random() < (remainder * 24);
             return v - remainder + (addValue ? 1 / 24 : 0);
         })(this.valueOfSet(set));
+        console.log(valueOfSet);
 
         // compute potions
         const potionRecord: Map<number, number> = new Map();
@@ -349,7 +350,7 @@ class EquipmentManager {
             sellingItems: equipments.map(e => e.id),
             sellingQuantities: equipments.map(_ => 1),
             buyingItems: Array.from(potionRecord.keys()),
-            buyingQuantities: Array.from(potionRecord.keys()).map(_ => 1),
+            buyingQuantities: Array.from(potionRecord.keys()).map(k => potionRecord.get(k) ?? 99),
             quantity: 1,
             suspended: false,
         };
