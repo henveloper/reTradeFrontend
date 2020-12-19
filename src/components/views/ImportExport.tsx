@@ -56,7 +56,7 @@ export const ImportExport = observer((props: IDefaultProps) => {
 
             <Grid item container direction='column' spacing={ 1 }
                   style={ { maxHeight: 400, overflowY: 'scroll', flexWrap: 'nowrap' } }>
-                { marketManager.trashGearMarketManager.offers.map(o => <Grid item container alignItems='center'>
+                { marketManager.trashGearMarketSupervisor.offers.map(o => <Grid item container alignItems='center'>
                     <Grid item container xs spacing={ 1 }>
                         { o.sellingItems.map(i => {
                             const equipment = equipmentManager.getEquipmentById(i);

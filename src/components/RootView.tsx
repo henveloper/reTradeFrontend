@@ -5,6 +5,7 @@ import { ItemStocks } from './shared/ItemStocks';
 import { ImportExport } from './views/ImportExport';
 import { EquipmentTable } from './shared/EquipmentTable';
 import { PotionTable } from './shared/PotionTable';
+import { MiscItemTable } from './shared/MiscItemTable';
 
 export function RootView(props: IDefaultProps) {
 	const { styles } = props;
@@ -20,6 +21,17 @@ export function RootView(props: IDefaultProps) {
 			<ImportExport styles={ styles }/>
 		</Grid>
 
+		<Grid item>
+			<ItemStocks styles={ styles } header='Potions'>
+				<PotionTable styles={ styles }/>
+			</ItemStocks>
+		</Grid>
+
+		<Grid item>
+			<ItemStocks styles={ styles } header='Misc'>
+				<MiscItemTable styles={ styles }/>
+			</ItemStocks>
+		</Grid>
 
 		<Grid item>
 			<ItemStocks styles={ styles } header='Weapon'>
@@ -39,11 +51,7 @@ export function RootView(props: IDefaultProps) {
 			</ItemStocks>
 		</Grid>
 
-		<Grid item>
-			<ItemStocks styles={ styles } header='Potions'>
-				<PotionTable styles={ styles }/>
-			</ItemStocks>
-		</Grid>
+
 
 
 	</Grid>;

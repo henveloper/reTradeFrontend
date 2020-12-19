@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React from 'react';
 import { IDefaultProps } from '../../styles/styles';
 import { Grid, TextField } from '@material-ui/core';
 import { observer } from 'mobx-react';
@@ -6,7 +6,7 @@ import { EPotionIds } from '../../data/itemIds';
 import { appStore } from '../../AppStore';
 
 export const PotionTable = observer((props: IDefaultProps) => {
-    const { potionMarketManager } = appStore.marketManager;
+    const { potionMarketSupervisor } = appStore.marketManager;
 
     const rowInfo: { type: string, src: string, id: EPotionIds }[] = [
         { type: 'atk', src: 'https://i.imgur.com/kiIMjr9.png', id: EPotionIds.atk },
@@ -25,8 +25,8 @@ export const PotionTable = observer((props: IDefaultProps) => {
             </Grid>
             <Grid item xs>
                 <TextField fullWidth size='small' variant='standard'
-                           onChange={ (e: ChangeEvent) => potionMarketManager.changeStocksQuantity(i.id, e.target.nodeValue ?? '0') }
-                           value={ potionMarketManager.getStockQuantity(i.id) }/>
+                           onChange={ e => potionMarketSupervisor.changeStocksQuantity(i.id, e.target.value) }
+                           value={ potionMarketSupervisor.getStockQuantity(i.id) }/>
             </Grid>
         </Grid>) }
 

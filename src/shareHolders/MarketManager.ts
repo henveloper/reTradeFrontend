@@ -3,6 +3,7 @@ import { TrashGearMarketSupervisor } from './TrashGearMarketSupervisor';
 import { action, makeAutoObservable } from 'mobx';
 import { appStore } from '../AppStore';
 import Joi from 'joi';
+import { MiscMarketSupervisor } from './MiscMarketSupervisor';
 
 export class MarketManager {
 
@@ -10,21 +11,23 @@ export class MarketManager {
         makeAutoObservable(this);
     }
 
-    public potionMarketManager = new PotionMarketSupervisor();
+    public potionMarketSupervisor = new PotionMarketSupervisor();
 
-    public trashGearMarketManager = new TrashGearMarketSupervisor();
+    public trashGearMarketSupervisor = new TrashGearMarketSupervisor();
+
+    public miscMarketSupervisor = new MiscMarketSupervisor();
 
     public get exportString() {
         return JSON.stringify({
-            potionStocks: this.potionMarketManager.stocks,
-            trashGearStocks: this.trashGearMarketManager.stocks,
+            potionStocks: this.potionMarketSupervisor.stocks,
+            trashGearStocks: this.trashGearMarketSupervisor.stocks,
         })
     }
 
     public get tradeString() {
         const allOffers = [
-            ...this.potionMarketManager.offers,
-            ...this.trashGearMarketManager.offers,
+            ...this.potionMarketSupervisor.offers,
+            ...this.trashGearMarketSupervisor.offers,
         ];
         return JSON.stringify(allOffers);
     }
@@ -47,8 +50,8 @@ export class MarketManager {
             appStore.setError(error.message);
             return;
         }
-        this.potionMarketManager.import(value.potionStocks);
-        this.trashGearMarketManager.import(value.trashGearStocks);
+        this.potionMarketSupervisor.import(value.potionStocks);
+        this.trashGearMarketSupervisor.import(value.trashGearStocks);
 
         appStore.successMessage = 'Trades imported.';
     }
