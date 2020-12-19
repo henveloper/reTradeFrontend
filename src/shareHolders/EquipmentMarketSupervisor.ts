@@ -3,7 +3,7 @@ import { IOffer, TEquipmentTypes } from './index';
 import { Equipment, equipmentManager, ISet } from './EquipmentManager';
 import { computed } from 'mobx';
 
-export class TrashGearMarketSupervisor extends MarketSupervisor {
+export class EquipmentMarketSupervisor extends MarketSupervisor {
     constructor() {
         super();
     }

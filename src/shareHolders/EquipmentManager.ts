@@ -196,16 +196,23 @@ export class Equipment {
             } else {
                 return (() => {
                     switch (this.className as EAbilityClasses) {
+                        case EAbilityClasses.shield:
                         case EAbilityClasses.helmet:
+                            return 4;
+                        case EAbilityClasses.seal:
                             return 3;
                         case EAbilityClasses.spell:
-                        case EAbilityClasses.shield:
-                        case EAbilityClasses.seal:
-                            return 2;
-                        case EAbilityClasses.quiver:
                         case EAbilityClasses.tome:
+                            return 2;
+                        case EAbilityClasses.cloak:
+                        case EAbilityClasses.quiver:
                         case EAbilityClasses.poison:
                         case EAbilityClasses.skull:
+                        case EAbilityClasses.trap:
+                        case EAbilityClasses.orb:
+                        case EAbilityClasses.prism:
+                        case EAbilityClasses.scepter:
+                        case EAbilityClasses.lute:
                             return 1;
                         default:
                             return 1 / 2;
@@ -219,6 +226,9 @@ export class Equipment {
             } else if (this.tier === 12) {
                 return 1 / 6;
             } else {
+                if (this.className === EArmorClasses.robe) {
+                    return 1;
+                }
                 return 1 / 2;
             }
         }
