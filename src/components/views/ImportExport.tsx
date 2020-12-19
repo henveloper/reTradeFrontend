@@ -19,7 +19,12 @@ export const ImportExport = observer((props: IDefaultProps) => {
             <Grid item container direction='column' xs style={ { overflowY: 'scroll', flexWrap: 'nowrap' } }>
                 <Grid item>
                     <Button fullWidth variant='contained'
-                            onClick={ () => marketManager.importStocksString(importField) }>
+                            onClick={ () => {
+                                const success = marketManager.importStocksString(importField);
+                                if (success) {
+                                    setImportField('');
+                                }
+                            } }>
                         Stocks Import
                     </Button>
                 </Grid>
@@ -60,12 +65,19 @@ export const ImportExport = observer((props: IDefaultProps) => {
                 </Link>
             </Grid>
 
-            <Grid item>
-                <CopyToClipboard text={ marketManager.tradeString }>
-                    <Button fullWidth variant='outlined' onClick={ () => appStore.successMessage = 'copied' }>
-                        Copy Offer (equipment preview)
+            <Grid item container >
+                <Grid item xs>
+                    <CopyToClipboard text={ marketManager.tradeString }>
+                        <Button fullWidth variant='text' onClick={ () => appStore.successMessage = 'copied' }>
+                            Copy Offer
+                        </Button>
+                    </CopyToClipboard>
+                </Grid>
+                <Grid item xs>
+                    <Button fullWidth variant='text' onClick={ marketManager.randomize }>
+                        Randomize
                     </Button>
-                </CopyToClipboard>
+                </Grid>
             </Grid>
 
             <Grid item container direction='column' spacing={ 1 }

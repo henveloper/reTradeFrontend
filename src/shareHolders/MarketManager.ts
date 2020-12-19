@@ -17,26 +17,11 @@ export class MarketManager {
 
     public miscMarketSupervisor = new MiscMarketSupervisor();
 
-    public get exportString() {
-        return JSON.stringify({
-            potionStocks: this.potionMarketSupervisor.stocks,
-            trashGearStocks: this.trashGearMarketSupervisor.stocks,
-            miscItemStocks: this.miscMarketSupervisor.stocks,
-        })
-    }
-
-    public get tradeString() {
-        const allOffers = [
-            ...this.potionMarketSupervisor.offers,
-            ...this.trashGearMarketSupervisor.offers,
-            ...this.miscMarketSupervisor.offers,
-        ];
-        return JSON.stringify(allOffers);
-    }
-
     @action
     public importStocksString(s: string) {
-        const obj = JSON.parse(s);
+        console.log(s);
+        const obj = JSON.parse(s || '{}');
+        console.log(obj);
         const stockSchema = Joi.array().items(
             Joi.array().items(
                 Joi.number().required()
@@ -51,12 +36,34 @@ export class MarketManager {
         const { value, error } = schema.validate(obj);
         if (error) {
             appStore.setError(error.message);
-            return;
+            return false;
         }
         this.potionMarketSupervisor.import(value.potionStocks);
         this.trashGearMarketSupervisor.import(value.trashGearStocks);
         this.miscMarketSupervisor.import(value.miscItemStocks);
 
-        appStore.successMessage = 'Trades imported.';
+        return true;
     }
+
+    public get exportString() {
+        return JSON.stringify({
+            potionStocks: this.potionMarketSupervisor.stocks,
+            trashGearStocks: this.trashGearMarketSupervisor.stocks,
+            miscItemStocks: this.miscMarketSupervisor.stocks,
+        });
+    }
+
+    public get tradeString() {
+        const allOffers = [
+            ...this.potionMarketSupervisor.offers,
+            ...this.trashGearMarketSupervisor.offers,
+            ...this.miscMarketSupervisor.offers,
+        ];
+        return JSON.stringify(allOffers);
+    }
+
+    @action
+    public randomize = () => {
+        this.importStocksString(this.exportString);
+    };
 }

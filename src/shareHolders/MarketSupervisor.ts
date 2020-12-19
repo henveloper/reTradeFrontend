@@ -11,12 +11,13 @@ export abstract class MarketSupervisor {
     @action
     public import(s: [number, number][]) {
         try {
-            Array.from(this.stocks.keys()).forEach(this.stocks.delete)
-            s.forEach(([id, q]) => {
+            Array.from(this.stocks.keys()).forEach(k => this.stocks.delete(k));
+            s.forEach(([ id, q ]) => {
+                console.log(id, q);
                 this.stocks.set(id, q);
-            })
+            });
         } catch (err) {
-            appStore.setError(`Import parse error: ${err.message}`);
+            appStore.setError(`Import parse error: ${ err.message }`);
         }
     }
 
