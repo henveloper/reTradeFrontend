@@ -27,15 +27,17 @@ export function RootView(props: IDefaultProps) {
 			</ItemStocks>
 		</Grid>
 
-		<Grid item>
-			<ItemStocks styles={ styles } header='Misc'>
-				<MiscItemTable styles={ styles }/>
-			</ItemStocks>
-		</Grid>
+
 
 		<Grid item>
 			<ItemStocks styles={ styles } header='Weapon'>
 				<EquipmentTable variant='weapon' styles={ styles }/>
+			</ItemStocks>
+		</Grid>
+
+		<Grid item>
+			<ItemStocks styles={ styles } header='Abilities'>
+				<EquipmentTable variant='ability' styles={ styles }/>
 			</ItemStocks>
 		</Grid>
 
@@ -46,13 +48,10 @@ export function RootView(props: IDefaultProps) {
 		</Grid>
 
 		<Grid item>
-			<ItemStocks styles={ styles } header='Abilities'>
-				<EquipmentTable variant='ability' styles={ styles }/>
+			<ItemStocks styles={ styles } header='Misc'>
+				<MiscItemTable styles={ styles }/>
 			</ItemStocks>
 		</Grid>
-
-
-
 
 	</Grid>;
 }
