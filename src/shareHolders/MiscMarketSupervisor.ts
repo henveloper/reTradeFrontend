@@ -2,7 +2,6 @@ import { MarketSupervisor } from './MarketSupervisor';
 import { IOffer } from './index';
 import { EPotionIds } from '../data/itemIds';
 import { computed } from 'mobx';
-import { PotionGenerator } from './PotionGenerator';
 
 export enum EMiscItem { paraDef = 2757, humanoidEgg = 3249, inc = 1826 }
 
@@ -21,13 +20,19 @@ export class MiscMarketSupervisor extends MarketSupervisor {
                 EMiscItem.paraDef,
                 EMiscItem.humanoidEgg,
             ].includes(k)) {
-                offer.push({
+                const formOffer = (id: EPotionIds, q: number): IOffer => ({
                     sellingItems: [ k ],
                     sellingQuantities: [ 1 ],
-                    ...PotionGenerator.getBuyingOffer('def'),
+                    buyingItems: [ id ],
+                    buyingQuantities: [ q ],
                     quantity: v,
                     suspended: false,
                 });
+                const offers: IOffer[] = [
+                    ...[ EPotionIds.dex, EPotionIds.spd ].map(i => formOffer(i, 3)),
+                    ...[ EPotionIds.atk, EPotionIds.wis ].map(i => formOffer(i, 2)),
+                ];
+                offers.forEach(o => offer.push(o));
             } else if (k === EMiscItem.inc) {
                 offer.push({
                     sellingItems: [ k ],

@@ -19,9 +19,7 @@ export class MarketManager {
 
     @action
     public importStocksString(s: string) {
-        console.log(s);
         const obj = JSON.parse(s || '{}');
-        console.log(obj);
         const stockSchema = Joi.array().items(
             Joi.array().items(
                 Joi.number().required()

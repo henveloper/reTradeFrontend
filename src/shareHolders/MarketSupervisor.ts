@@ -13,7 +13,6 @@ export abstract class MarketSupervisor {
         try {
             Array.from(this.stocks.keys()).forEach(k => this.stocks.delete(k));
             s.forEach(([ id, q ]) => {
-                console.log(id, q);
                 this.stocks.set(id, q);
             });
         } catch (err) {
