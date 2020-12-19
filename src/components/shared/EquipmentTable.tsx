@@ -14,7 +14,7 @@ interface IItemTableProps extends IDefaultProps {
 
 export const EquipmentTable = observer((props: IItemTableProps) => {
     const { variant } = props;
-    const { trashGearMarketSupervisor } = appStore.marketManager;
+    const { equipmentMarketSupervisor } = appStore.marketManager;
 
     // equipments
     const filteredEquipments = equipmentManager.equipments.filter(e => e.type === variant);
@@ -28,19 +28,19 @@ export const EquipmentTable = observer((props: IItemTableProps) => {
 
             <Grid item xs>
                 <IconButton size='small'
-                            onClick={ () => trashGearMarketSupervisor.deductStocksQuantity(e.id) }>
+                            onClick={ () => equipmentMarketSupervisor.deductStocksQuantity(e.id) }>
                     <Remove/>
                 </IconButton>
             </Grid>
 
             <Grid item xs>
                 <Typography variant='h6' align='center'>
-                    { trashGearMarketSupervisor.getStockQuantity(e.id) }
+                    { equipmentMarketSupervisor.getStockQuantity(e.id) }
                 </Typography>
             </Grid>
 
             <Grid item xs>
-                <IconButton size='small' onClick={ () => trashGearMarketSupervisor.incrementStock(e.id) }>
+                <IconButton size='small' onClick={ () => equipmentMarketSupervisor.incrementStock(e.id) }>
                     <Add/>
                 </IconButton>
             </Grid>

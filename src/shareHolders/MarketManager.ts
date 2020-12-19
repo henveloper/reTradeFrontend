@@ -4,6 +4,8 @@ import { action, makeAutoObservable } from 'mobx';
 import { appStore } from '../AppStore';
 import Joi from 'joi';
 import { MiscMarketSupervisor } from './MiscMarketSupervisor';
+import { IOffer } from './index';
+import { EPotionIds } from '../data/itemIds';
 
 export class MarketManager {
 
@@ -11,9 +13,15 @@ export class MarketManager {
         makeAutoObservable(this);
     }
 
+    public busy: boolean = false;
+    @action public toggleBusy = () => {
+        this.busy = !this.busy;
+        return this;
+    }
+
     public potionMarketSupervisor = new PotionMarketSupervisor();
 
-    public trashGearMarketSupervisor = new EquipmentMarketSupervisor();
+    public equipmentMarketSupervisor = new EquipmentMarketSupervisor();
 
     public miscMarketSupervisor = new MiscMarketSupervisor();
 
@@ -37,7 +45,7 @@ export class MarketManager {
             return false;
         }
         this.potionMarketSupervisor.import(value.potionStocks);
-        this.trashGearMarketSupervisor.import(value.trashGearStocks);
+        this.equipmentMarketSupervisor.import(value.trashGearStocks);
         this.miscMarketSupervisor.import(value.miscItemStocks);
 
         return true;
@@ -46,18 +54,25 @@ export class MarketManager {
     public get exportString() {
         return JSON.stringify({
             potionStocks: this.potionMarketSupervisor.stocks,
-            trashGearStocks: this.trashGearMarketSupervisor.stocks,
+            trashGearStocks: this.equipmentMarketSupervisor.stocks,
             miscItemStocks: this.miscMarketSupervisor.stocks,
         });
+    }
+
+    private static offerSignificanceFilter(offer: IOffer): boolean {
+        return offer.buyingItems.length === 1
+            && (offer.buyingItems[0] === EPotionIds.spd || offer.buyingItems[0] === EPotionIds.dex)
+            && offer.buyingQuantities[0] === 1;
     }
 
     public get tradeString() {
         const allOffers = [
             ...this.potionMarketSupervisor.offers,
-            ...this.trashGearMarketSupervisor.offers,
+            ...this.equipmentMarketSupervisor.offers,
             ...this.miscMarketSupervisor.offers,
-        ];
+        ].filter(o => !MarketManager.offerSignificanceFilter(o));
         return JSON.stringify(allOffers);
+
     }
 
     @action

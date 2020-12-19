@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { IDefaultProps } from '../../styles/styles';
-import { Button, Grid, Link, TextField, Typography } from '@material-ui/core';
+import { Button, FormControlLabel, Grid, Link, Switch, TextField, Typography } from '@material-ui/core';
 import { appStore } from '../../AppStore';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import { observer } from 'mobx-react';
@@ -59,13 +59,21 @@ export const ImportExport = observer((props: IDefaultProps) => {
               style={ { height: 480, overflowY: 'hidden', flexWrap: 'nowrap' } }
               spacing={ 1 }>
 
-            <Grid item>
-                <Link href='https://www.realmeye.com/edit-offers-by/SaintBen' variant='button'>
-                    RealmEye
-                </Link>
+            <Grid item container alignItems='center'>
+                <Grid item container xs justify='center'>
+                    <Link href='https://www.realmeye.com/edit-offers-by/SaintBen' variant='button'>
+                        RealmEye
+                    </Link>
+                </Grid>
+                <Grid item container xs justify='center'>
+                    <FormControlLabel
+                        control={ <Switch checked={ marketManager.busy }
+                                          onChange={ marketManager.toggleBusy }/> }
+                        label="Busy"/>
+                </Grid>
             </Grid>
 
-            <Grid item container >
+            <Grid item container>
                 <Grid item xs>
                     <CopyToClipboard text={ marketManager.tradeString }>
                         <Button fullWidth variant='text' onClick={ () => appStore.successMessage = 'copied' }>
@@ -82,7 +90,7 @@ export const ImportExport = observer((props: IDefaultProps) => {
 
             <Grid item container direction='column' spacing={ 1 }
                   style={ { maxHeight: 400, overflowY: 'scroll', flexWrap: 'nowrap' } }>
-                { marketManager.trashGearMarketSupervisor.offers.map(o => <Grid item container alignItems='center'>
+                { marketManager.equipmentMarketSupervisor.offers.map(o => <Grid item container alignItems='center'>
                     <Grid item container xs spacing={ 1 }>
                         { o.sellingItems.map(i => {
                             const equipment = equipmentManager.getEquipmentById(i);
@@ -98,8 +106,7 @@ export const ImportExport = observer((props: IDefaultProps) => {
                             { o.buyingItems
                                 .map(id => EPotionIds[+id])
                                 .map((name, i) => `${ o.buyingQuantities[i] } ${ name }`)
-                                .join(' + ')
-                            }
+                                .join(' + ') }
                         </Typography>
                     </Grid>
                 </Grid>) }
