@@ -38,8 +38,6 @@ export class TrashGearMarketSupervisor extends MarketSupervisor {
                 setBuilder(srcArr, variant, sets);
             });
 
-
-
         return sets;
     }
 

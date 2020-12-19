@@ -13,73 +13,56 @@ export const ImportExport = observer((props: IDefaultProps) => {
 
     return <Grid container spacing={ 1 }>
 
-        <Grid item container xs style={ { maxHeight: 480, overflowY: 'scroll' } }>
+        <Grid item container direction='column' alignItems='center' xs style={ { height: 480, overflowY: 'hidden' } }
+              spacing={ 1 }>
 
-            <Grid item container spacing={ 1 }>
 
-                <Grid item>
-                    <Button fullWidth variant='contained'
-                            onClick={ () => marketManager.importStocksString(importField) }>
-                        Stocks Import
+            <Grid item>
+                <Button fullWidth variant='contained'
+                        onClick={ () => marketManager.importStocksString(importField) }>
+                    Stocks Import
+                </Button>
+            </Grid>
+
+            <Grid item>
+                <TextField fullWidth multiline value={ importField }
+                           onChange={ (e: ChangeEvent) => setImportField(e.target.nodeValue ?? '') }/>
+            </Grid>
+
+
+            <Grid item>
+                <CopyToClipboard text={ marketManager.exportString }>
+                    <Button fullWidth variant='contained' onClick={ () => appStore.successMessage = 'copied' }>
+                        Copy Stocks Export
                     </Button>
-                </Grid>
-
-                <Grid item xs>
-                    <TextField fullWidth multiline value={ importField }
-                               onChange={ (e: ChangeEvent) => setImportField(e.target.nodeValue ?? '') }/>
-                </Grid>
-
+                </CopyToClipboard>
             </Grid>
 
-            <Grid item container spacing={ 1 }>
-
-                <Grid item>
-                    <CopyToClipboard text={ marketManager.exportString }>
-                        <Button fullWidth variant='contained' onClick={ () => appStore.successMessage = 'copied' }>
-                            Copy Stocks Export
-                        </Button>
-                    </CopyToClipboard>
-                </Grid>
-
-                <Grid item xs>
-                    <TextField fullWidth multiline value={ marketManager.exportString }/>
-                </Grid>
-
-            </Grid>
-
-            <Grid item container spacing={ 1 } alignItems='center'>
-
-                <Grid item>
-                    <Link href='https://www.realmeye.com/edit-offers-by/SaintBen' variant='button'>
-                        RealmEye
-                    </Link>
-                </Grid>
-
-                <Grid item>
-                    <CopyToClipboard text={ marketManager.tradeString }>
-                        <Button fullWidth variant='contained' onClick={ () => appStore.successMessage = 'copied' }>
-                            Copy Trades String
-                        </Button>
-                    </CopyToClipboard>
-                </Grid>
-
-                <Grid item xs>
-                    < TextField fullWidth multiline value={ marketManager.tradeString }/>
-                </Grid>
-
+            <Grid item>
+                <TextField fullWidth multiline value={ marketManager.exportString }/>
             </Grid>
 
         </Grid>
 
-        <Grid item container xs direction='column' alignItems='center'>
+        <Grid item container direction='column' alignItems='center' xs style={ { height: 480, overflowY: 'hidden' } }
+              spacing={ 1 }>
+
             <Grid item>
-                <Typography variant='h6'>
-                    Offers
-                </Typography>
+                <Link href='https://www.realmeye.com/edit-offers-by/SaintBen' variant='button'>
+                    RealmEye
+                </Link>
+            </Grid>
+
+            <Grid item>
+                <CopyToClipboard text={ marketManager.tradeString }>
+                    <Button fullWidth variant='outlined' onClick={ () => appStore.successMessage = 'copied' }>
+                        Copy Offer (equipment preview)
+                    </Button>
+                </CopyToClipboard>
             </Grid>
 
             <Grid item container direction='column' spacing={ 1 }
-                  style={ { maxHeight: 480, overflowY: 'scroll', flexWrap: 'nowrap' } }>
+                  style={ { maxHeight: 400, overflowY: 'scroll', flexWrap: 'nowrap' } }>
                 { marketManager.trashGearMarketManager.offers.map(o => <Grid item container alignItems='center'>
                     <Grid item container xs spacing={ 1 }>
                         { o.sellingItems.map(i => {
