@@ -6,7 +6,7 @@ import {
     IEquipment,
     IOffer,
     TEquipmentTypes
-} from '../shareHolders';
+} from './index';
 import { EPotionIds } from '../data/itemIds';
 import { PotionGenerator } from './PotionGenerator';
 
@@ -311,7 +311,7 @@ class EquipmentManager {
         let valueOfOffer = 0;
 
         function pushPotion(id: number) {
-            potionRecord.set(id, potionRecord.get(id) ?? 0 + 1);
+            potionRecord.set(id, (potionRecord.get(id) ?? 0) + 1);
         }
 
         while (true) {
@@ -349,7 +349,7 @@ class EquipmentManager {
             sellingItems: equipments.map(e => e.id),
             sellingQuantities: equipments.map(_ => 1),
             buyingItems: Array.from(potionRecord.keys()),
-            buyingQuantities: Array.from(potionRecord.keys()).map(e => 1),
+            buyingQuantities: Array.from(potionRecord.keys()).map(_ => 1),
             quantity: 1,
             suspended: false,
         };
