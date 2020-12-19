@@ -10,7 +10,6 @@ export abstract class MarketSupervisor {
 
     @action
     public import(s: [number, number][]) {
-        console.log(s);
         try {
             Array.from(this.stocks.keys()).forEach(this.stocks.delete)
             s.forEach(([id, q]) => {

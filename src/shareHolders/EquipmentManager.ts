@@ -157,10 +157,10 @@ export class Equipment {
                     switch (this.className as EWeaponClasses) {
                         case EWeaponClasses.sword:
                         case EWeaponClasses.staff:
-                            return 1 / 8;
+                            return 1 / 4;
                         case EWeaponClasses.dagger:
                         case EWeaponClasses.bow:
-                            return 1 / 8;
+                            return 1 / 6;
                         default:
                             return 1 / 8;
                     }
@@ -299,6 +299,9 @@ class EquipmentManager {
         }
 
         const valueOfSet = ((v: number) => {
+            if (Math.abs(v % 0.125) < 1e-6) {
+                return v;
+            }
             const remainder = v % 0.125;
             const addValue: boolean = Math.random() < (remainder * 8);
             return v - remainder + (addValue ? 0.125 : 0);
@@ -322,25 +325,27 @@ class EquipmentManager {
             const EPSILON = 1e-6;
 
             // glifes
-            if (Math.abs(difference - 1) < EPSILON) {
+            if (difference + EPSILON >= 1) {
                 pushPotion(EPotionIds.glife.toString());
                 valueOfOffer += 1;
-            } else if (Math.abs(difference - 1 / 2) < EPSILON) {
+            } else if (difference + EPSILON >= 1 / 2) {
                 pushPotion(EPotionIds.life.toString());
                 valueOfOffer += 1 / 2;
-            } else if (Math.abs(difference - 1 / 4) < EPSILON) {
+            } else if (difference + EPSILON >= 1 / 4) {
                 pushPotion(PotionGenerator.randomPot(1).toString());
                 valueOfOffer += 1 / 4;
-            } else if (Math.abs(difference - 1 / 6) < EPSILON) {
+            } else if (difference + EPSILON >= 1 / 6) {
                 pushPotion(PotionGenerator.randomPot(2).toString());
                 valueOfOffer += 1 / 6;
-            } else if (Math.abs(difference - 1 / 8) < EPSILON) {
+            } else if (difference + EPSILON >= 1 / 8) {
                 pushPotion(PotionGenerator.randomPot(3).toString());
                 valueOfOffer += 1 / 8;
             } else {
                 break;
             }
         }
+        console.log('valueofset', valueOfSet, set);
+        console.log(potionRecord);
 
         if (Object.keys(potionRecord).length === 0) {
             return undefined;

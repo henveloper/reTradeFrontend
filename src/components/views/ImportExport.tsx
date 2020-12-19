@@ -37,7 +37,8 @@ export const ImportExport = observer((props: IDefaultProps) => {
 
         </Grid>
 
-        <Grid item container direction='column' alignItems='center' xs style={ { height: 480, overflowY: 'hidden' } }
+        <Grid item container direction='column' alignItems='center' xs
+              style={ { height: 480, overflowY: 'hidden', flexWrap: 'nowrap' } }
               spacing={ 1 }>
 
             <Grid item>
