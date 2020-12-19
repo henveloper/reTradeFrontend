@@ -42,8 +42,6 @@ export class TrashGearMarketSupervisor extends MarketSupervisor {
 
     @computed
     get offers(): IOffer[] {
-        const offers: IOffer[] = [];
-
         const getEquipments = (variant: string, tiers: number[]): Equipment[] => {
             return Array.from(this.stocks.keys()).reduce<Equipment[]>((p, c) => {
                 const equipment = equipmentManager.getEquipmentById(c);

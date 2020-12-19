@@ -1,12 +1,14 @@
 import { MarketSupervisor } from './MarketSupervisor';
 import { IOffer } from './index';
 import { EPotionIds } from '../data/itemIds';
+import { computed } from 'mobx';
 
 export class PotionMarketSupervisor extends MarketSupervisor {
     constructor() {
         super();
     }
 
+    @computed
     public get offers(): IOffer[] {
         const potionIds = Object.values(EPotionIds);
 
