@@ -19,11 +19,6 @@ export const EquipmentTable = observer((props: IItemTableProps) => {
     // equipments
     const filteredEquipments = equipmentManager.equipments.filter(e => e.type === variant);
 
-    useEffect(() => {
-        filteredEquipments.sort((a, b) => a.className);
-    }, []);
-
-
     return <Grid container spacing={ 3 }>
         { filteredEquipments.map(e => <Grid item container xs={ 2 } alignItems='center'>
 
