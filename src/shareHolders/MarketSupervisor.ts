@@ -15,10 +15,8 @@ export abstract class MarketSupervisor {
 
     @action
     public incrementStock(id: number) {
-        console.log(id);
         const quantity = this.getStockQuantity(id);
         this.stocks.set(id, quantity + 1);
-        console.log(this.stocks);
     }
 
     @action

@@ -1,7 +1,7 @@
 import { MarketSupervisor } from './MarketSupervisor';
 import { IOffer, IStocks, TEquipmentTypes } from './index';
 import { Equipment, equipmentManager, ISet } from './EquipmentManager';
-import { computed, observable } from 'mobx';
+import { computed, observable, trace } from 'mobx';
 
 export class TrashGearMarketSupervisor extends MarketSupervisor {
     constructor() {
@@ -37,6 +37,9 @@ export class TrashGearMarketSupervisor extends MarketSupervisor {
             .forEach(([ srcArr, variant ], i) => {
                 setBuilder(srcArr, variant, sets);
             });
+
+
+
         return sets;
     }
 
@@ -51,6 +54,12 @@ export class TrashGearMarketSupervisor extends MarketSupervisor {
                 return p;
             }, []);
         };
+        console.log(this.stocks);
+        console.log( this.generateSets(
+            getEquipments('weapon', [ 10, 11 ]),
+            getEquipments('ability', [ 5 ]),
+            getEquipments('armor', [ 11, 12 ]),
+        ) )
 
         const allSets: ISet[] = [ ...this.generateSets(getEquipments('weapon', [ 12 ]), [], []),
             ...this.generateSets([], getEquipments('ability', [ 6 ]), []),
