@@ -60,8 +60,8 @@ export class Equipment {
 
         if (className === EWeaponClasses.sword) {
             return tier === 10 ? 'https://i.imgur.com/0fQEDum.png' :
-                tier === 11 ? 'https://i.imgur.com/doHDO0P.png' :
-                    'https://i.imgur.com/8PWmkCU.png';
+                tier === 11 ? 'https://i.imgur.com/qK9nqSz.png' :
+                    'https://i.imgur.com/QNbjO5z.png';
         } else if (className === EWeaponClasses.katana) {
             return tier === 10 ? 'https://i.imgur.com/M6jwTgW.png' :
                 tier === 11 ? 'https://i.imgur.com/3QfXSgt.png' :
@@ -140,8 +140,8 @@ export class Equipment {
                     'https://i.imgur.com/Wvu0LU7.png';
         } else if (className === EArmorClasses.heavy) {
             return tier === 11 ? 'https://i.imgur.com/lqywZKs.png' :
-                tier === 12 ? 'https://i.imgur.com/qK9nqSz.png' :
-                    'https://i.imgur.com/lqywZKs.png';
+                tier === 12 ? 'https://i.imgur.com/doHDO0P.png' :
+                    'https://i.imgur.com/8PWmkCU.png';
         }
 
         return '';
