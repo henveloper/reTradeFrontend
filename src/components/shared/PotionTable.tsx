@@ -1,6 +1,6 @@
 import React from 'react';
 import { IDefaultProps } from '../../styles/styles';
-import { Grid, TextField } from '@material-ui/core';
+import { Grid, Switch, TextField } from '@material-ui/core';
 import { observer } from 'mobx-react';
 import { EPotionIds } from '../../data/itemIds';
 import { appStore } from '../../AppStore';
@@ -22,6 +22,11 @@ export const PotionTable = observer((props: IDefaultProps) => {
         { rowInfo.map(i => <Grid item container xs alignItems='center'>
             <Grid item xs>
                 <img style={ { width: '100%' } } alt={ i.type } src={ i.src }/>
+            </Grid>
+            <Grid item xs>
+                <Switch checked={ !potionMarketSupervisor.suspend.get(i.id) }
+                        onChange={ () => potionMarketSupervisor.toggleChecked(i.id) }
+                        size='small'/>
             </Grid>
             <Grid item xs>
                 <TextField fullWidth size='small' variant='standard'

@@ -13,10 +13,10 @@ export const ImportExport = observer((props: IDefaultProps) => {
 
     return <Grid container spacing={ 1 }>
 
-        <Grid item container direction='column' alignItems='center' xs style={ { height: 480, overflowY: 'hidden' } }
-              spacing={ 1 }>
+        <Grid item container direction='column' alignItems='center' xs
+              style={ { height: 480, overflowY: 'hidden', flexWrap: 'nowrap' } } spacing={ 1 }>
 
-            <Grid item container direction='column' xs>
+            <Grid item container direction='column' xs style={ { overflowY: 'scroll', flexWrap: 'nowrap' } }>
                 <Grid item>
                     <Button fullWidth variant='contained'
                             onClick={ () => marketManager.importStocksString(importField) }>
@@ -30,9 +30,22 @@ export const ImportExport = observer((props: IDefaultProps) => {
                 </Grid>
             </Grid>
 
-            <Grid item container direction='column' xs>
+            <Grid item container direction='column' xs style={ { overflowY: 'scroll' } }>
                 <TextField helperText='export' variant='outlined' fullWidth multiline
                            value={ marketManager.exportString }/>
+            </Grid>
+
+            <Grid item container direction='column' xs style={ { overflowY: 'scroll' } }>
+                <Grid item>
+                    <Button fullWidth variant='contained'
+                            onClick={ () => marketManager.importStocksString(importField) }>
+                        Copy Trades
+                    </Button>
+                </Grid>
+
+                <Grid item>
+                    <TextField variant='outlined' fullWidth multiline value={ marketManager.tradeString }/>
+                </Grid>
             </Grid>
 
         </Grid>

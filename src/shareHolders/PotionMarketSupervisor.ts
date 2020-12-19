@@ -1,11 +1,18 @@
 import { MarketSupervisor } from './MarketSupervisor';
 import { IOffer } from './index';
 import { EPotionIds } from '../data/itemIds';
-import { computed } from 'mobx';
+import { action, computed, observable } from 'mobx';
 
 export class PotionMarketSupervisor extends MarketSupervisor {
     constructor() {
         super();
+    }
+
+    public readonly suspend: Map<EPotionIds, boolean> = observable.map(new Map<EPotionIds, boolean>());
+
+    @action
+    public toggleChecked(id: EPotionIds) {
+        this.suspend.set(id, !this.suspend.get(id));
     }
 
     @computed
@@ -16,6 +23,10 @@ export class PotionMarketSupervisor extends MarketSupervisor {
 
         // convert to glife
         this.stocks.forEach((v, k) => {
+            if (this.suspend.get(v)) {
+                return;
+            }
+
             const ratio = (() => {
                 switch (+potionIds) {
                     case EPotionIds.dex:

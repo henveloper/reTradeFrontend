@@ -299,12 +299,12 @@ class EquipmentManager {
         }
 
         const valueOfSet = ((v: number) => {
-            if (Math.abs(v % 0.125) < 1e-6) {
+            if (Math.abs(v % 1 / 12) < 1e-6) {
                 return v;
             }
-            const remainder = v % 0.125;
+            const remainder = v % 1 / 12;
             const addValue: boolean = Math.random() < (remainder * 8);
-            return v - remainder + (addValue ? 0.125 : 0);
+            return v - remainder + (addValue ? 1 / 12 : 0);
         })(this.valueOfSet(set));
 
         // compute potions
@@ -323,6 +323,7 @@ class EquipmentManager {
 
             const difference = valueOfSet - valueOfOffer;
             const EPSILON = 1e-6;
+            console.log(difference + EPSILON);
 
             // glifes
             if (difference + EPSILON >= 1) {
