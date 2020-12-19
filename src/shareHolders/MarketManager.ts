@@ -1,5 +1,5 @@
-import { PotionMarketManager } from './PotionMarketManager';
-import { TrashGearMarketManager } from './TrashGearMarketManager';
+import { PotionMarketSupervisor } from './PotionMarketSupervisor';
+import { TrashGearMarketSupervisor } from './TrashGearMarketSupervisor';
 import { action, computed, makeAutoObservable } from 'mobx';
 import { appStore } from '../AppStore';
 import Joi from 'joi';
@@ -10,9 +10,9 @@ export class MarketManager {
         makeAutoObservable(this);
     }
 
-    public potionMarketManager = new PotionMarketManager();
+    public potionMarketManager = new PotionMarketSupervisor();
 
-    public trashGearMarketManager = new TrashGearMarketManager();
+    public trashGearMarketManager = new TrashGearMarketSupervisor();
 
     public get exportString() {
         return JSON.stringify({

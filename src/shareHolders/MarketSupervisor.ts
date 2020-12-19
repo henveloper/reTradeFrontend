@@ -1,40 +1,32 @@
 import { IOffer, IStocks } from './index';
-import { action, computed, makeAutoObservable, observable } from 'mobx';
+import { action, computed, observable } from 'mobx';
 import Joi from 'joi';
 import { appStore } from '../AppStore';
 
-export abstract class RegionalMarketManager {
+export abstract class MarketSupervisor {
 
     @observable
-    public stocks: IStocks = {};
+    public stocks: IStocks = new Map();
 
     public abstract get offers(): IOffer[];
 
     public getStockQuantity(id: number): number {
-        return this.stocks[id] ?? 0;
+        return this.stocks.get(id) ?? 0;
     }
 
     @action
-    public addStocksQuantity(id: number) {
-        const found = this.stocks[id];
-        if (found) {
-            console.log(123);
-            this.stocks[id] += 1;
-        } else {
-            console.log(234);
-            this.stocks[id] = 1;
-        }
-
+    public incrementStock(id: number) {
+        const quantity = this.getStockQuantity(id);
+        this.stocks.set(id, quantity + 1);
     }
 
     @action
     public deductStocksQuantity(id: number) {
-        const found = this.stocks[id];
-        if (found) {
-            this.stocks[id] -= 1;
-            if (this.stocks[id] === 0) {
-                delete this.stocks[id];
-            }
+        const quantity = this.getStockQuantity(id);
+        if (quantity <= 1) {
+            this.stocks.delete(id);
+        } else {
+            this.stocks.set(id, quantity - 1);
         }
     }
 
@@ -47,6 +39,10 @@ export abstract class RegionalMarketManager {
             return;
         }
 
-        this.stocks[id] = value;
+        if (value === 0) {
+            this.stocks.delete(id);
+        } else {
+            this.stocks.set(id, value);
+        }
     }
 }

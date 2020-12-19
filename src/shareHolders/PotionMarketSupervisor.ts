@@ -1,8 +1,8 @@
-import { RegionalMarketManager } from './RegionalMarketManager';
+import { MarketSupervisor } from './MarketSupervisor';
 import { IOffer } from './index';
 import { EPotionIds } from '../data/itemIds';
 
-export class PotionMarketManager extends RegionalMarketManager {
+export class PotionMarketSupervisor extends MarketSupervisor {
     constructor() {
         super();
     }

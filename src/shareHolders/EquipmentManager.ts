@@ -10,7 +10,7 @@ import {
 import { EPotionIds } from '../data/itemIds';
 import { PotionGenerator } from './PotionGenerator';
 
-class Equipment {
+export class Equipment {
     public id: number;
     public tier: number;
     public className: EEquipmentClasses;
@@ -225,11 +225,7 @@ class Equipment {
     }
 }
 
-interface ISet {
-    weapon?: Equipment,
-    ability?: Equipment,
-    armor?: Equipment
-}
+export type ISet = Partial<Record<TEquipmentTypes, Equipment>>;
 
 class EquipmentManager {
     constructor(public readonly equipments: Equipment[]) {
@@ -242,7 +238,19 @@ class EquipmentManager {
         return this.hashedEquipments[id];
     }
 
-    private valueOfSet(set: ISet) {
+    public get weapons() {
+        return this.equipments.filter(e => e.type === 'weapon');
+    }
+
+    public get abilities() {
+        return this.equipments.filter(e => e.type === 'ability');
+    }
+
+    public get armors() {
+        return this.equipments.filter(e => e.type === 'armor');
+    }
+
+    public valueOfSet(set: ISet) {
         const { weapon, ability, armor } = set;
         const factor = (() => {
             switch ([ weapon, ability, armor ].filter(x => x !== undefined).length) {

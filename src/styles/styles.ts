@@ -1,6 +1,6 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core';
 
-export const useStyles = () => makeStyles<any, any, styleKeys>(theme => ({
+export const useStyles = () => makeStyles<any, any, styleKeys>((theme: Theme) => ({
     fullWidth: { width: '100%' },
 }));
 

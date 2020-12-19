@@ -44,7 +44,7 @@ export const EquipmentTable = observer((props: IItemTableProps) => {
             </Grid>
 
             <Grid item xs>
-                <IconButton size='small' onClick={ () => trashGearMarketManager.addStocksQuantity(e.id) }>
+                <IconButton size='small' onClick={ () => trashGearMarketManager.incrementStock(e.id) }>
                     <Add/>
                 </IconButton>
             </Grid>

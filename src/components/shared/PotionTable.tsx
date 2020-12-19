@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { IDefaultProps } from '../../styles/styles';
 import { Grid, TextField } from '@material-ui/core';
 import { observer } from 'mobx-react';
@@ -25,7 +25,7 @@ export const PotionTable = observer((props: IDefaultProps) => {
             </Grid>
             <Grid item xs>
                 <TextField fullWidth size='small' variant='standard'
-                           onChange={ e => potionMarketManager.changeStocksQuantity(i.id, e.target.value || '0') }
+                           onChange={ (e: ChangeEvent) => potionMarketManager.changeStocksQuantity(i.id, e.target.nodeValue ?? '0') }
                            value={ potionMarketManager.getStockQuantity(i.id) }/>
             </Grid>
         </Grid>) }

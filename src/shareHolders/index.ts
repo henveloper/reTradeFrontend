@@ -1,4 +1,4 @@
-export type IStocks = Record<string, number>;
+export type IStocks = Map<number, number>;
 
 export type IOffer = {
     sellingItems: (string | number)[],

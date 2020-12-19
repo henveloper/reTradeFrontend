@@ -1,14 +1,14 @@
 import { createMuiTheme, responsiveFontSizes } from '@material-ui/core';
-import { blueGrey, grey } from '@material-ui/core/colors';
+import { colors } from '@material-ui/core/';
 
 export const defaultTheme = responsiveFontSizes(
     createMuiTheme({
         palette: {
             primary: {
-                main: grey['800']
+                main: colors.grey['800']
             },
             secondary: {
-                main: blueGrey['800']
+                main: colors.blueGrey['800']
             },
         }
     })

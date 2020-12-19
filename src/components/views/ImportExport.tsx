@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { IDefaultProps } from '../../styles/styles';
 import { Button, Grid, Link, TextField } from '@material-ui/core';
 import { appStore } from '../../AppStore';
@@ -20,7 +20,8 @@ export const ImportExport = observer((props: IDefaultProps) => {
             </Grid>
 
             <Grid item xs>
-                <TextField fullWidth multiline value={ importField } onChange={ e => setImportField(e.target.value) }/>
+                <TextField fullWidth multiline value={ importField }
+                           onChange={ (e: ChangeEvent) => setImportField(e.target.nodeValue ?? '') }/>
             </Grid>
 
         </Grid>
