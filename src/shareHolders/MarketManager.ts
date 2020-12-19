@@ -1,5 +1,5 @@
 import { PotionMarketSupervisor } from './PotionMarketSupervisor';
-import { TrashGearMarketSupervisor } from './TrashGearMarketSupervisor';
+import { EquipmentMarketSupervisor } from './EquipmentMarketSupervisor';
 import { action, makeAutoObservable } from 'mobx';
 import { appStore } from '../AppStore';
 import Joi from 'joi';
@@ -13,7 +13,7 @@ export class MarketManager {
 
     public potionMarketSupervisor = new PotionMarketSupervisor();
 
-    public trashGearMarketSupervisor = new TrashGearMarketSupervisor();
+    public trashGearMarketSupervisor = new EquipmentMarketSupervisor();
 
     public miscMarketSupervisor = new MiscMarketSupervisor();
 
