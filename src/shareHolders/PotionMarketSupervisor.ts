@@ -15,7 +15,7 @@ export class PotionMarketSupervisor extends MarketSupervisor {
         const offer: IOffer[] = [];
 
         // convert to glife
-        for (const [ potionId, quantity ] of Object.entries(this.stocks)) {
+        this.stocks.forEach((v, k) => {
             const ratio = (() => {
                 switch (+potionIds) {
                     case EPotionIds.dex:
@@ -31,19 +31,19 @@ export class PotionMarketSupervisor extends MarketSupervisor {
                         return Number.MAX_SAFE_INTEGER;
                 }
             })();
-            const batchCount = Math.floor(quantity / ratio);
+            const batchCount = Math.floor(v / ratio);
             if (batchCount === 0) {
-                continue;
+                return;
             }
             offer.push({
-                sellingItems: [+potionId],
-                sellingQuantities: [batchCount * ratio],
-                buyingItems: [EPotionIds.glife],
-                buyingQuantities: [batchCount],
+                sellingItems: [ k ],
+                sellingQuantities: [ batchCount * ratio ],
+                buyingItems: [ EPotionIds.glife ],
+                buyingQuantities: [ batchCount ],
                 quantity: 1,
                 suspended: false,
             });
-        }
+        });
 
         return offer;
     }
