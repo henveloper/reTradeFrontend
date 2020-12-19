@@ -1,7 +1,7 @@
 import { MarketSupervisor } from './MarketSupervisor';
-import { IOffer, IStocks, TEquipmentTypes } from './index';
+import { IOffer, TEquipmentTypes } from './index';
 import { Equipment, equipmentManager, ISet } from './EquipmentManager';
-import { computed, observable, trace } from 'mobx';
+import { computed } from 'mobx';
 
 export class TrashGearMarketSupervisor extends MarketSupervisor {
     constructor() {
@@ -11,7 +11,7 @@ export class TrashGearMarketSupervisor extends MarketSupervisor {
     private generateSets(weapons: Equipment[], abilities: Equipment[], armors: Equipment[]): ISet[] {
         const setBuilder = (srcArr: Equipment[], variant: TEquipmentTypes, previousSets: ISet[]) => {
             srcArr.forEach(e => {
-                previousSets.filter(s => s[variant] !== undefined).forEach((v) => {
+                previousSets.filter(s => s[variant] === undefined).forEach((v) => {
                     previousSets.push({
                         weapon: variant === 'weapon' ? e : v.weapon,
                         ability: variant === 'ability' ? e : v.ability,
@@ -54,12 +54,6 @@ export class TrashGearMarketSupervisor extends MarketSupervisor {
                 return p;
             }, []);
         };
-        console.log(this.stocks);
-        console.log( this.generateSets(
-            getEquipments('weapon', [ 10, 11 ]),
-            getEquipments('ability', [ 5 ]),
-            getEquipments('armor', [ 11, 12 ]),
-        ) )
 
         const allSets: ISet[] = [ ...this.generateSets(getEquipments('weapon', [ 12 ]), [], []),
             ...this.generateSets([], getEquipments('ability', [ 6 ]), []),
@@ -67,9 +61,9 @@ export class TrashGearMarketSupervisor extends MarketSupervisor {
             ...this.generateSets(
                 getEquipments('weapon', [ 10, 11 ]),
                 getEquipments('ability', [ 5 ]),
-                getEquipments('armor', [ 6 ]),
+                getEquipments('armor', [ 11, 12 ]),
             ) ];
-
+        console.log(allSets);
         return allSets.map(equipmentManager.generateSetOffer).filter((o): o is IOffer => o !== undefined);
     }
 

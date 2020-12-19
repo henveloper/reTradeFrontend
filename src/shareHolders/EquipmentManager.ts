@@ -60,8 +60,8 @@ export class Equipment {
 
         if (className === EWeaponClasses.sword) {
             return tier === 10 ? 'https://i.imgur.com/0fQEDum.png' :
-                tier === 11 ? 'https://i.imgur.com/qK9nqSz.png' :
-                    'https://i.imgur.com/QNbjO5z.png';
+                tier === 11 ? 'https://i.imgur.com/doHDO0P.png' :
+                    'https://i.imgur.com/8PWmkCU.png';
         } else if (className === EWeaponClasses.katana) {
             return tier === 10 ? 'https://i.imgur.com/M6jwTgW.png' :
                 tier === 11 ? 'https://i.imgur.com/3QfXSgt.png' :
@@ -301,7 +301,7 @@ class EquipmentManager {
         const valueOfSet = ((v: number) => {
             const remainder = v % 0.125;
             const addValue: boolean = Math.random() < remainder * 8;
-            return v - remainder + (addValue ? 0.125 : 1);
+            return v - remainder + (addValue ? 0.125 : 0);
         })(this.valueOfSet(set));
 
         // compute potions
