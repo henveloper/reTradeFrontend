@@ -1,11 +1,25 @@
 import { IOffer, IStocks } from './index';
-import { action, computed, makeAutoObservable, observable } from 'mobx';
+import { action, observable } from 'mobx';
 import Joi from 'joi';
 import { appStore } from '../AppStore';
 
 export abstract class MarketSupervisor {
 
     public stocks: IStocks = observable.map(new Map<number, number>());
+
+
+    @action
+    public import(s: [number, number][]) {
+        console.log(s);
+        try {
+            Array.from(this.stocks.keys()).forEach(this.stocks.delete)
+            s.forEach(([id, q]) => {
+                this.stocks.set(id, q);
+            })
+        } catch (err) {
+            appStore.setError(`Import parse error: ${err.message}`);
+        }
+    }
 
     public abstract get offers(): IOffer[];
 

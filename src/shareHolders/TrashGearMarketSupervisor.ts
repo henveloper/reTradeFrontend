@@ -61,7 +61,6 @@ export class TrashGearMarketSupervisor extends MarketSupervisor {
                 getEquipments('ability', [ 5 ]),
                 getEquipments('armor', [ 11, 12 ]),
             ) ];
-        console.log(allSets);
         return allSets.map(equipmentManager.generateSetOffer).filter((o): o is IOffer => o !== undefined);
     }
 

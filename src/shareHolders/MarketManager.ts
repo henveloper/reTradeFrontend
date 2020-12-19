@@ -1,6 +1,6 @@
 import { PotionMarketSupervisor } from './PotionMarketSupervisor';
 import { TrashGearMarketSupervisor } from './TrashGearMarketSupervisor';
-import { action, computed, makeAutoObservable } from 'mobx';
+import { action, makeAutoObservable } from 'mobx';
 import { appStore } from '../AppStore';
 import Joi from 'joi';
 
@@ -31,18 +31,24 @@ export class MarketManager {
 
     @action
     public importStocksString(s: string) {
+        const obj = JSON.parse(s);
+        const stockSchema = Joi.array().items(
+            Joi.array().items(
+                Joi.number().required()
+            ).length(2)
+        );
         const schema = Joi.object().keys({
-            potionStocks: Joi.object().required(),
-            trashGearStocks: Joi.object().required(),
+            potionStocks: stockSchema,
+            trashGearStocks: stockSchema,
         }).required();
 
-        const {value, error} = schema.validate(s);
+        const { value, error } = schema.validate(obj);
         if (error) {
             appStore.setError(error.message);
             return;
         }
-        this.potionMarketManager.stocks = value.potionStocks;
-        this.trashGearMarketManager.stocks = value.trashGearStocks;
+        this.potionMarketManager.import(value.potionStocks);
+        this.trashGearMarketManager.import(value.trashGearStocks);
 
         appStore.successMessage = 'Trades imported.';
     }

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { useState } from 'react';
 import { IDefaultProps } from '../../styles/styles';
 import { Button, Grid, Link, TextField, Typography } from '@material-ui/core';
 import { appStore } from '../../AppStore';
@@ -16,30 +16,23 @@ export const ImportExport = observer((props: IDefaultProps) => {
         <Grid item container direction='column' alignItems='center' xs style={ { height: 480, overflowY: 'hidden' } }
               spacing={ 1 }>
 
-
-            <Grid item>
-                <Button fullWidth variant='contained'
-                        onClick={ () => marketManager.importStocksString(importField) }>
-                    Stocks Import
-                </Button>
-            </Grid>
-
-            <Grid item>
-                <TextField fullWidth multiline value={ importField }
-                           onChange={ (e: ChangeEvent) => setImportField(e.target.nodeValue ?? '') }/>
-            </Grid>
-
-
-            <Grid item>
-                <CopyToClipboard text={ marketManager.exportString }>
-                    <Button fullWidth variant='contained' onClick={ () => appStore.successMessage = 'copied' }>
-                        Copy Stocks Export
+            <Grid item container direction='column' xs>
+                <Grid item>
+                    <Button fullWidth variant='contained'
+                            onClick={ () => marketManager.importStocksString(importField) }>
+                        Stocks Import
                     </Button>
-                </CopyToClipboard>
+                </Grid>
+
+                <Grid item>
+                    <TextField variant='outlined' fullWidth multiline value={ importField }
+                               onChange={ e => setImportField(e.target.value) }/>
+                </Grid>
             </Grid>
 
-            <Grid item>
-                <TextField fullWidth multiline value={ marketManager.exportString }/>
+            <Grid item container direction='column' xs>
+                <TextField helperText='export' variant='outlined' fullWidth multiline
+                           value={ marketManager.exportString }/>
             </Grid>
 
         </Grid>
