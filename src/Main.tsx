@@ -7,7 +7,7 @@ import { SnackBars } from './components/Snackbars';
 
 export function Main() {
     const styles = useStyles()(defaultTheme);
-    return <Container maxWidth='md'>
+    return <Container maxWidth='xl'>
         <FrontendRouter styles={ styles }/>
 
         <SnackBars styles={ styles }/>
