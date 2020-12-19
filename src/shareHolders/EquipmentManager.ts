@@ -298,13 +298,17 @@ class EquipmentManager {
         }
 
         const valueOfSet = ((v: number) => {
+            console.log(v);
             if (Math.abs(v % (1 / 12)) < 1e-6) {
+                console.log('direct');
                 return v;
             }
-            const remainder = v % (1 / 12);
-            const addValue: boolean = Math.random() < (remainder * 12);
-            return v - remainder + (addValue ? 1 / 12 : 0);
+            console.log(Math.abs(v % (1 / 24)), 1e-6);
+            const remainder = v % (1 / 24);
+            const addValue: boolean = Math.random() < (remainder * 24);
+            return v - remainder + (addValue ? 1 / 24 : 0);
         })(this.valueOfSet(set));
+        console.log(valueOfSet);
 
         // compute potions
         const potionRecord: Record<string, number> = {};
@@ -345,6 +349,7 @@ class EquipmentManager {
         }
 
         if (Object.keys(potionRecord).length === 0) {
+            console.log(123);
             return undefined;
         }
 
