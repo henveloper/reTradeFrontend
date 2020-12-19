@@ -340,7 +340,7 @@ class EquipmentManager {
             }
         }
 
-        if (Object.keys(potionRecord).length === 0) {
+        if (Array.from(potionRecord.keys()).length === 0) {
             return undefined;
         }
 
