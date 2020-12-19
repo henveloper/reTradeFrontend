@@ -17,18 +17,17 @@ export class PotionMarketSupervisor extends MarketSupervisor {
 
     @computed
     public get offers(): IOffer[] {
-        const potionIds = Object.values(EPotionIds);
 
         const offer: IOffer[] = [];
 
         // convert to glife
         this.stocks.forEach((v, k) => {
-            if (this.suspend.get(v)) {
+            if (this.suspend.get(k)) {
                 return;
             }
 
-            const ratio = (() => {
-                switch (+potionIds) {
+            const ratio = ((k: number) => {
+                switch (k) {
                     case EPotionIds.dex:
                     case EPotionIds.spd:
                         return 8;
@@ -41,7 +40,7 @@ export class PotionMarketSupervisor extends MarketSupervisor {
                     default:
                         return Number.MAX_SAFE_INTEGER;
                 }
-            })();
+            })(k);
             const batchCount = Math.floor(v / ratio);
             if (batchCount === 0) {
                 return;
