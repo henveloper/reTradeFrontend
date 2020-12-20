@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { IDefaultProps } from '../../styles/styles';
-import { Button, FormControlLabel, Grid, Link, Switch, TextField, Typography } from '@material-ui/core';
+import { Button, FormControlLabel, Grid, IconButton, Link, Switch, TextField, Typography } from '@material-ui/core';
 import { appStore } from '../../AppStore';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import { observer } from 'mobx-react';
 import { equipmentManager } from '../../shareHolders/EquipmentManager';
 import { EPotionIds } from '../../data/itemIds';
+import { LocalGroceryStore } from '@material-ui/icons';
 
 export const ImportExport = observer((props: IDefaultProps) => {
     const { marketManager } = appStore;
@@ -99,6 +100,13 @@ export const ImportExport = observer((props: IDefaultProps) => {
                                 .map((name, i) => `${ o.buyingQuantities[i] } ${ name }`)
                                 .join(' + ') }
                         </Typography>
+                    </Grid>
+
+                    <Grid item container xs={ 2 }>
+                        <IconButton size='small'
+                                    onClick={ () => o.sellingItems.forEach(marketManager.equipmentMarketSupervisor.deductStocksQuantity) }>
+                            <LocalGroceryStore/>
+                        </IconButton>
                     </Grid>
                 </Grid>) }
             </Grid>

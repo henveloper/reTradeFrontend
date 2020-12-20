@@ -33,7 +33,7 @@ export abstract class MarketSupervisor {
     }
 
     @action
-    public deductStocksQuantity(id: number) {
+    public deductStocksQuantity = (id: number) => {
         const quantity = this.getStockQuantity(id);
         if (quantity <= 1) {
             this.stocks.delete(id);
