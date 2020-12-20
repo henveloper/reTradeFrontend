@@ -23,10 +23,14 @@ export class PotionMarketSupervisor extends MarketSupervisor {
         this.stocks.forEach((v, k) => {
             // upgrades
             const upgradeMap: Map<EPotionIds, EPotionIds[]> = new Map()
-                .set(EPotionIds.dex, [ EPotionIds.wis, EPotionIds.atk, EPotionIds.def, EPotionIds.vit ])
-                .set(EPotionIds.spd, [ EPotionIds.wis, EPotionIds.atk, EPotionIds.def, EPotionIds.vit ])
-                .set(EPotionIds.atk, [ EPotionIds.def, EPotionIds.vit ])
-                .set(EPotionIds.wis, [ EPotionIds.def, EPotionIds.vit ]);
+                // .set(EPotionIds.dex, [ EPotionIds.wis, EPotionIds.atk, EPotionIds.def, EPotionIds.vit ])
+                // .set(EPotionIds.spd, [ EPotionIds.wis, EPotionIds.atk, EPotionIds.def, EPotionIds.vit ])
+                // .set(EPotionIds.atk, [ EPotionIds.def, EPotionIds.vit ])
+                // .set(EPotionIds.wis, [ EPotionIds.def, EPotionIds.vit ])
+                .set(EPotionIds.dex, [ EPotionIds.wis, EPotionIds.atk, EPotionIds.vit ])
+                .set(EPotionIds.spd, [ EPotionIds.wis, EPotionIds.atk, EPotionIds.vit ])
+                .set(EPotionIds.atk, [ EPotionIds.vit ])
+                .set(EPotionIds.wis, [ EPotionIds.vit ]);
 
             if (upgradeMap.get(k)) {
                 upgradeMap.get(k)!.forEach(p => {
@@ -35,6 +39,44 @@ export class PotionMarketSupervisor extends MarketSupervisor {
                         sellingQuantities: [ v ],
                         buyingItems: [ p ],
                         buyingQuantities: [ v ],
+                        quantity: 1,
+                        suspended: false,
+                    });
+                });
+            }
+
+            // temp: def to else
+            if (k === EPotionIds.def) {
+                [
+                    EPotionIds.dex,
+                    EPotionIds.spd,
+                    EPotionIds.wis,
+                    EPotionIds.atk,
+                    EPotionIds.vit,
+                    EPotionIds.mana,
+                ].forEach(pid => {
+                    const defRatio = (() => {
+                        switch (pid) {
+                            case EPotionIds.dex:
+                            case EPotionIds.spd:
+                                return 2;
+                            case EPotionIds.wis:
+                            case EPotionIds.atk:
+                            case EPotionIds.vit:
+                                return 1;
+                            case EPotionIds.mana:
+                                return 0.5;
+                            default:
+                                return Number.MAX_SAFE_INTEGER;
+                        }
+                    })();
+                    const defBuyCount = Math.floor(v * defRatio);
+
+                    offer.push({
+                        sellingItems: [ k ],
+                        sellingQuantities: [ defBuyCount * defRatio ],
+                        buyingItems: [ pid ],
+                        buyingQuantities: [ defBuyCount ],
                         quantity: 1,
                         suspended: false,
                     });
@@ -55,6 +97,7 @@ export class PotionMarketSupervisor extends MarketSupervisor {
                     case EPotionIds.atk:
                         return 6;
                     case EPotionIds.def:
+                        return 5;
                     case EPotionIds.vit:
                         return 4;
                     default:
