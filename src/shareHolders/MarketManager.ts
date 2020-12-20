@@ -71,6 +71,7 @@ export class MarketManager {
             ...this.equipmentMarketSupervisor.offers,
             ...this.miscMarketSupervisor.offers,
         ].filter(o => !this.busy || !MarketManager.offerSignificanceFilter(o));
+        allOffers.reverse();
         return JSON.stringify(allOffers);
 
     }
