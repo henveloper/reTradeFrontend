@@ -315,7 +315,6 @@ class EquipmentManager {
             const addValue: boolean = Math.random() < (remainder * 24);
             return v - remainder + (addValue ? 1 / 24 : 0);
         })(this.valueOfSet(set));
-        console.log(valueOfSet);
 
         // compute potions
         const potionRecord: Map<number, number> = new Map();

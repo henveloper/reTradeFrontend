@@ -30,13 +30,17 @@ export class EquipmentMarketSupervisor extends MarketSupervisor {
         const sets: ISet[] = [];
 
         ([
-            [ weapons, 'weapon' ],
-            [ abilities, 'ability' ],
             [ armors, 'armor' ],
+            [ abilities, 'ability' ],
+            [ weapons, 'weapon' ],
         ] as [ Equipment[], TEquipmentTypes ][])
             .forEach(([ srcArr, variant ], i) => {
                 setBuilder(srcArr, variant, sets);
             });
+
+        const equipmentCount = (s: ISet): number => (s.weapon ? 1 : 0) + (!!s.ability ? 1 : 0) + (!!s.armor ? 1 : 0);
+        const sortingValueOfTwo = (s: ISet): number => (s.weapon && s.ability ? 3 : s.weapon ? 2 : 1);
+        sets.sort((a, b) => (equipmentCount(a) - equipmentCount(b)) || sortingValueOfTwo(b) - sortingValueOfTwo(a));
 
         return sets;
     }
@@ -61,6 +65,11 @@ export class EquipmentMarketSupervisor extends MarketSupervisor {
                 getEquipments('ability', [ 5 ]),
                 getEquipments('armor', [ 11, 12 ]),
             ) ];
+        console.log(this.generateSets(
+            getEquipments('weapon', [ 10, 11 ]),
+            getEquipments('ability', [ 5 ]),
+            getEquipments('armor', [ 11, 12 ]),
+        ));
         return allSets.map(equipmentManager.generateSetOffer).filter((o): o is IOffer => o !== undefined);
     }
 
