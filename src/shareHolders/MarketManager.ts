@@ -70,8 +70,7 @@ export class MarketManager {
             ...this.potionMarketSupervisor.offers,
             ...this.equipmentMarketSupervisor.offers,
             ...this.miscMarketSupervisor.offers,
-        ].filter(o => !MarketManager.offerSignificanceFilter(o));
-        allOffers.sort(_ => Math.random() - 0.5);
+        ].filter(o => !this.busy || !MarketManager.offerSignificanceFilter(o));
         return JSON.stringify(allOffers);
 
     }
