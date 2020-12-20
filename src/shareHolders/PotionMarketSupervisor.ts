@@ -70,11 +70,11 @@ export class PotionMarketSupervisor extends MarketSupervisor {
                                 return Number.MAX_SAFE_INTEGER;
                         }
                     })();
-                    const defBuyCount = Math.floor(v * defRatio);
+                    const defBuyCount = Math.max(Math.floor(v * defRatio), 200);
 
                     offer.push({
                         sellingItems: [ k ],
-                        sellingQuantities: [ defBuyCount * defRatio ],
+                        sellingQuantities: [ defBuyCount / defRatio ],
                         buyingItems: [ pid ],
                         buyingQuantities: [ defBuyCount ],
                         quantity: 1,
