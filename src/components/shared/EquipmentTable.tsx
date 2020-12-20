@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { IDefaultProps } from '../../styles/styles';
 import { Grid, IconButton, Typography } from '@material-ui/core';
 import { Add, Remove } from '@material-ui/icons';
@@ -6,7 +6,6 @@ import { TEquipmentTypes } from '../../shareHolders';
 import { appStore } from '../../AppStore';
 import { observer } from 'mobx-react';
 import { equipmentManager } from '../../shareHolders/EquipmentManager';
-import { trace } from 'mobx';
 
 interface IItemTableProps extends IDefaultProps {
     variant: TEquipmentTypes;
@@ -21,7 +20,8 @@ export const EquipmentTable = observer((props: IItemTableProps) => {
     const filteredEquipments = equipmentManager.equipments.filter(e => e.type === variant);
 
     return <Grid container spacing={ 3 }>
-        { filteredEquipments.map(e => <Grid item container xs={ 2 } alignItems='center'>
+        { filteredEquipments.map(e => <Grid item container xs={ 2 } alignItems='center'
+                                            style={ { outline: `${ equipmentMarketSupervisor.getStockQuantity(e.id) }px #000 solid` } }>
 
             <Grid item xs>
                 <img alt='item' src={ e.image }/>
