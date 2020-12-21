@@ -59,7 +59,7 @@ export class PotionMarketSupervisor extends MarketSupervisor {
                         switch (pid) {
                             case EPotionIds.dex:
                             case EPotionIds.spd:
-                                return 2;
+                                return 1.5;
                             case EPotionIds.wis:
                             case EPotionIds.atk:
                             case EPotionIds.vit:
@@ -70,7 +70,7 @@ export class PotionMarketSupervisor extends MarketSupervisor {
                                 return Number.MAX_SAFE_INTEGER;
                         }
                     })();
-                    const defBuyCount = Math.max(Math.floor(v * defRatio), 200);
+                    const defBuyCount = Math.min(Math.floor(v * defRatio), 100);
 
                     offer.push({
                         sellingItems: [ k ],
@@ -95,9 +95,8 @@ export class PotionMarketSupervisor extends MarketSupervisor {
                         return 8;
                     case EPotionIds.wis:
                     case EPotionIds.atk:
-                        return 6;
                     case EPotionIds.def:
-                        return 5;
+                        return 6;
                     case EPotionIds.vit:
                         return 4;
                     default:

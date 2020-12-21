@@ -5,7 +5,8 @@ export class PotionGenerator {
     static randomPot(tier: 1 | 2 | 3) {
         switch (tier) {
             case 1:
-                return Math.random() < 0.5 ? EPotionIds.vit : EPotionIds.def;
+                // return Math.random() < 0.5 ? EPotionIds.vit : EPotionIds.def;
+                return Math.random() < 3 ? EPotionIds.vit : EPotionIds.def;
             case 2:
                 return Math.random() < 0.5 ? EPotionIds.wis : EPotionIds.atk;
             default:
