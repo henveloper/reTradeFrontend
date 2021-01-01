@@ -88,7 +88,7 @@ export const ImportExport = observer((props: IDefaultProps) => {
                             const equipment = equipmentManager.getEquipmentById(i);
                             return <Grid item container xs={ 3 }>
                                 <img alt={ equipment?.name ?? i.toString() }
-                                     src={ equipmentManager.getEquipmentById(i)?.image }/>
+                                     src={ equipmentManager.getEquipmentById(i)?.imageUrl }/>
                             </Grid>;
                         }) }
                     </Grid>
@@ -104,7 +104,7 @@ export const ImportExport = observer((props: IDefaultProps) => {
 
                     <Grid item container xs={ 2 }>
                         <IconButton size='small'
-                                    onClick={ () => o.sellingItems.forEach(marketManager.equipmentMarketSupervisor.deductStocksQuantity) }>
+                                    onClick={ () => o.sellingItems.forEach(marketManager.equipmentMarketSupervisor.decrementStock) }>
                             <LocalGroceryStore/>
                         </IconButton>
                     </Grid>

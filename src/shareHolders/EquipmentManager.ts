@@ -55,116 +55,11 @@ export class Equipment {
         }
     }
 
-    public get image() {
-        const { className, tier } = this;
-
-        if (className === EWeaponClasses.sword) {
-            return tier === 10 ? 'https://i.imgur.com/0fQEDum.png' :
-                tier === 11 ? 'https://i.imgur.com/qK9nqSz.png' :
-                    'https://i.imgur.com/QNbjO5z.png';
-        } else if (className === EWeaponClasses.katana) {
-            return tier === 10 ? 'https://i.imgur.com/M6jwTgW.png' :
-                tier === 11 ? 'https://i.imgur.com/3QfXSgt.png' :
-                    'https://i.imgur.com/Km8Rg1Z.png';
-        } else if (className === EWeaponClasses.dagger) {
-            return tier === 10 ? 'https://i.imgur.com/XqxfYSJ.png' :
-                tier === 11 ? 'https://i.imgur.com/ds9wJeI.png' :
-                    'https://i.imgur.com/BaLWiQC.png';
-        } else if (className === EWeaponClasses.bow) {
-            return tier === 10 ? 'https://i.imgur.com/Z4GssoO.png' :
-                tier === 11 ? 'https://i.imgur.com/4FEOoNA.png' :
-                    'https://i.imgur.com/rWc6UAy.png';
-        } else if (className === EWeaponClasses.staff) {
-            return tier === 10 ? 'https://i.imgur.com/nHBniQs.png' :
-                tier === 11 ? 'https://i.imgur.com/uVcGAae.png' :
-                    'https://i.imgur.com/cnKvKxT.png';
-        } else if (className === EWeaponClasses.wand) {
-            return tier === 10 ? 'https://i.imgur.com/ViSiggA.png' :
-                tier === 11 ? 'https://i.imgur.com/2idkCvn.png' :
-                    'https://i.imgur.com/YdwFDes.png';
-        } else if (className === EAbilityClasses.cloak) {
-            return tier === 5 ? 'https://i.imgur.com/tfSIkBb.png' :
-                'https://i.imgur.com/vvDokyq.png';
-        } else if (className === EAbilityClasses.quiver) {
-            return tier === 5 ? 'https://i.imgur.com/XFgqCV5.png' :
-                'https://i.imgur.com/JVpRuPl.png';
-        } else if (className === EAbilityClasses.spell) {
-            return tier === 5 ? 'https://i.imgur.com/gmLqrBK.png' :
-                'https://i.imgur.com/gGXWCi9.png';
-        } else if (className === EAbilityClasses.tome) {
-            return tier === 5 ? 'https://i.imgur.com/i9077AE.png' :
-                'https://i.imgur.com/63EtuBe.png';
-        } else if (className === EAbilityClasses.helmet) {
-            return tier === 5 ? 'https://i.imgur.com/vyWyX1b.png' :
-                'https://i.imgur.com/vzrYC5J.png';
-        } else if (className === EAbilityClasses.shield) {
-            return tier === 5 ? 'https://i.imgur.com/G5DefCI.png' :
-                'https://i.imgur.com/vzrYC5J.png';
-        } else if (className === EAbilityClasses.seal) {
-            return tier === 5 ? 'https://i.imgur.com/zD4KcQ8.png' :
-                'https://i.imgur.com/xRGtewS.png';
-        } else if (className === EAbilityClasses.poison) {
-            return tier === 5 ? 'https://i.imgur.com/dFYPpvy.png' :
-                'https://i.imgur.com/GnMp8Q9.png';
-        } else if (className === EAbilityClasses.skull) {
-            return tier === 5 ? 'https://i.imgur.com/5RBuR5y.png' :
-                'https://i.imgur.com/WvCtWYR.png';
-        } else if (className === EAbilityClasses.trap) {
-            return tier === 5 ? 'https://i.imgur.com/9c7MZYN.png' :
-                'https://i.imgur.com/Vs5zLp8.png';
-        } else if (className === EAbilityClasses.orb) {
-            return tier === 5 ? 'https://i.imgur.com/U1vsiyc.png' :
-                'https://i.imgur.com/FDRA6b5.png';
-        } else if (className === EAbilityClasses.prism) {
-            return tier === 5 ? 'https://i.imgur.com/zwyLyiC.png' :
-                'https://i.imgur.com/JePn0fw.png';
-        } else if (className === EAbilityClasses.scepter) {
-            return tier === 5 ? 'https://i.imgur.com/gslGqoL.png' :
-                'https://i.imgur.com/DIRbsr6.png';
-        } else if (className === EAbilityClasses.star) {
-            return tier === 5 ? 'https://i.imgur.com/AWDqcVz.png' :
-                'https://i.imgur.com/kXK5B0o.png';
-        } else if (className === EAbilityClasses.wakizashi) {
-            return tier === 5 ? 'https://i.imgur.com/YittzJR.png' :
-                'https://i.imgur.com/ycLPRDX.png';
-        } else if (className === EAbilityClasses.lute) {
-            return tier === 5 ? 'https://i.imgur.com/xKXYSaD.png' :
-                'https://i.imgur.com/7QhzvyK.png';
-        } else if (className === EArmorClasses.robe) {
-            return tier === 11 ? 'https://i.imgur.com/pKZpj6a.png' :
-                tier === 12 ? 'https://i.imgur.com/qvD85dq.png' :
-                    'https://i.imgur.com/Oup28jC.png';
-        } else if (className === EArmorClasses.light) {
-            return tier === 11 ? 'https://i.imgur.com/yFHXsnA.png' :
-                tier === 12 ? 'https://i.imgur.com/5lKzW3e.png' :
-                    'https://i.imgur.com/Wvu0LU7.png';
-        } else if (className === EArmorClasses.heavy) {
-            return tier === 11 ? 'https://i.imgur.com/lqywZKs.png' :
-                tier === 12 ? 'https://i.imgur.com/doHDO0P.png' :
-                    'https://i.imgur.com/8PWmkCU.png';
-        }
-
-        return '';
-    }
-
     // in glife unit
     public get value() {
         if (this.type === 'weapon') {
-            if (this.tier <= 10) {
-                return 1 / 8;
-            } else if (this.tier === 11) {
-                return (() => {
-                    switch (this.className as EWeaponClasses) {
-                        case EWeaponClasses.sword:
-                        case EWeaponClasses.staff:
-                            return 1 / 4;
-                        case EWeaponClasses.dagger:
-                        case EWeaponClasses.bow:
-                            return 1 / 6;
-                        default:
-                            return 1 / 8;
-                    }
-                })();
+            if (this.tier === 11) {
+                return 1 / 6;
             } else {
                 return (() => {
                     switch (this.className as EWeaponClasses) {
@@ -233,6 +128,67 @@ export class Equipment {
             }
         }
     }
+
+    public get imageUrl(): string | undefined {
+        const urls: Record<EEquipmentClasses, Record<number, string>> = {
+            [EWeaponClasses.sword]: {
+                11: 'https://i.imgur.com/qK9nqSz.png',
+                12: 'https://i.imgur.com/QNbjO5z.png',
+            },
+            [EWeaponClasses.katana]: {
+                11: 'https://i.imgur.com/3QfXSgt.png',
+                12: 'https://i.imgur.com/Km8Rg1Z.png',
+            },
+            [EWeaponClasses.dagger]: {
+                11: 'https://i.imgur.com/ds9wJeI.png',
+                12: 'https://i.imgur.com/BaLWiQC.png',
+            },
+            [EWeaponClasses.bow]: {
+                11: 'https://i.imgur.com/4FEOoNA.png',
+                12: 'https://i.imgur.com/rWc6UAy.png',
+            },
+            [EWeaponClasses.staff]: {
+                11: 'https://i.imgur.com/uVcGAae.png',
+                12: 'https://i.imgur.com/cnKvKxT.png',
+            },
+            [EWeaponClasses.wand]: {
+                11: 'https://i.imgur.com/2idkCvn.png',
+                12: 'https://i.imgur.com/YdwFDes.png',
+            },
+
+            [EAbilityClasses.cloak]: { 6: 'https://i.imgur.com/vvDokyq.png' },
+            [EAbilityClasses.quiver]: { 6: 'https://i.imgur.com/JVpRuPl.png' },
+            [EAbilityClasses.spell]: { 6: 'https://i.imgur.com/gGXWCi9.png' },
+            [EAbilityClasses.tome]: { 6: 'https://i.imgur.com/63EtuBe.png' },
+            [EAbilityClasses.helmet]: { 6: 'https://i.imgur.com/vzrYC5J.png' },
+            [EAbilityClasses.shield]: { 6: 'https://i.imgur.com/vzrYC5J.png' },
+            [EAbilityClasses.seal]: { 6: 'https://i.imgur.com/xRGtewS.png' },
+            [EAbilityClasses.poison]: { 6: 'https://i.imgur.com/GnMp8Q9.png' },
+            [EAbilityClasses.skull]: { 6: 'https://i.imgur.com/WvCtWYR.png' },
+            [EAbilityClasses.trap]: { 6: 'https://i.imgur.com/Vs5zLp8.png' },
+            [EAbilityClasses.orb]: { 6: 'https://i.imgur.com/FDRA6b5.png' },
+            [EAbilityClasses.prism]: { 6: 'https://i.imgur.com/JePn0fw.png' },
+            [EAbilityClasses.scepter]: { 6: 'https://i.imgur.com/DIRbsr6.png' },
+            [EAbilityClasses.star]: { 6: 'https://i.imgur.com/kXK5B0o.png' },
+            [EAbilityClasses.wakizashi]: { 6: 'https://i.imgur.com/ycLPRDX.png' },
+            [EAbilityClasses.lute]: { 6: 'https://i.imgur.com/7QhzvyK.png' },
+
+            [EArmorClasses.robe]: {
+                12: 'https://i.imgur.com/qvD85dq.png',
+                13: 'https://i.imgur.com/Oup28jC.png'
+            },
+            [EArmorClasses.light]: {
+                12: 'https://i.imgur.com/5lKzW3e.png',
+                13: 'https://i.imgur.com/Wvu0LU7.png'
+            },
+            [EArmorClasses.heavy]: {
+                12: 'https://i.imgur.com/doHDO0P.png',
+                13: 'https://i.imgur.com/8PWmkCU.png'
+            },
+        };
+
+        return urls[this.className][this.tier];
+    }
 }
 
 export type ISet = Partial<Record<TEquipmentTypes, Equipment>>;
@@ -248,14 +204,27 @@ class EquipmentManager {
         return this.hashedEquipments[id];
     }
 
+    public findEquipment(equipmentClass: EEquipmentClasses, tier: number) {
+        return this.equipments.find(e => e.className === equipmentClass && e.tier === tier);
+    }
+
+    /**
+     * @deprecated
+     */
     public get weapons() {
         return this.equipments.filter(e => e.type === 'weapon');
     }
 
+    /**
+     * @deprecated
+     */
     public get abilities() {
         return this.equipments.filter(e => e.type === 'ability');
     }
 
+    /**
+     * @deprecated
+     */
     public get armors() {
         return this.equipments.filter(e => e.type === 'armor');
     }

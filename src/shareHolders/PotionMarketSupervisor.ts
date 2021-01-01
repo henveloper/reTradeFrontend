@@ -1,127 +1,54 @@
 import { MarketSupervisor } from './MarketSupervisor';
 import { IOffer } from './index';
 import { EPotionIds } from '../data/itemIds';
-import { action, computed, observable } from 'mobx';
+import { computed } from 'mobx';
+import { equipmentManager } from './EquipmentManager';
 
 export class PotionMarketSupervisor extends MarketSupervisor {
     constructor() {
         super();
     }
 
-    public readonly checkout: Map<EPotionIds, boolean> = observable.map(new Map<EPotionIds, boolean>());
+    static fpItemsInterested: [ number, string ][] = [
+        // fp equipments
+        ...equipmentManager.weapons.filter(e => e.tier === 11)
+            .map<[ number, string ]>(e => [ e.id, e.name ]),
+        ...equipmentManager.armors.filter(e => e.tier === 12)
+            .map<[ number, string ]>(e => [ e.id, e.name ]),
+        // realmeye fp
+        [ -102, 'realmeye fp300' ],
+        [ -103, 'realmeye fp400' ],
+        [ -104, 'realmeye fp450' ],
+        // seasonal: 2020 oyrxmas t11 reskins
+        [ 9085, 'An Icicle' ],
+        [ 9610, 'Bow of Eternal Frost' ],
+        [ 9086, 'Staff of Yuletide Carols' ],
+        [ 9084, 'Present Dispensing Wand' ],
+        [ 9612, 'Frostbite' ],
+        [ 9087, 'Salju' ],
+    ];
 
-    @action
-    public toggleUpgradeOnly(id: EPotionIds) {
-        this.checkout.set(id, !this.checkout.get(id));
+    @computed
+    private get fpOffers(): IOffer[] {
+        const defPotCount = this.stocks.get(EPotionIds.def) ?? 0;
+        if (this.stocks.get(EPotionIds.atk)) {
+            return PotionMarketSupervisor.fpItemsInterested.map(([ fpId ]) => ({
+                sellingItems: [ EPotionIds.atk ],
+                sellingQuantities: [ 1 ],
+                buyingItems: [ fpId ],
+                buyingQuantities: [ 1 ],
+                quantity: defPotCount,
+                suspended: false,
+            }));
+        }
+        return [];
     }
 
     @computed
     public get offers(): IOffer[] {
-
-        const offer: IOffer[] = [];
-
-        this.stocks.forEach((v, k) => {
-            // upgrades
-            const upgradeMap: Map<EPotionIds, EPotionIds[]> = new Map()
-                // .set(EPotionIds.dex, [ EPotionIds.wis, EPotionIds.atk, EPotionIds.def, EPotionIds.vit ])
-                // .set(EPotionIds.spd, [ EPotionIds.wis, EPotionIds.atk, EPotionIds.def, EPotionIds.vit ])
-                // .set(EPotionIds.atk, [ EPotionIds.def, EPotionIds.vit ])
-                // .set(EPotionIds.wis, [ EPotionIds.def, EPotionIds.vit ])
-                .set(EPotionIds.dex, [ EPotionIds.wis, EPotionIds.atk, EPotionIds.vit ])
-                .set(EPotionIds.spd, [ EPotionIds.wis, EPotionIds.atk, EPotionIds.vit ])
-                .set(EPotionIds.atk, [ EPotionIds.vit ])
-                .set(EPotionIds.wis, [ EPotionIds.vit ]);
-
-            if (upgradeMap.get(k)) {
-                upgradeMap.get(k)!.forEach(p => {
-                    offer.push({
-                        sellingItems: [ k ],
-                        sellingQuantities: [ v ],
-                        buyingItems: [ p ],
-                        buyingQuantities: [ v ],
-                        quantity: 1,
-                        suspended: false,
-                    });
-                });
-            }
-
-            // temp: def to else
-            if (k === EPotionIds.def) {
-                [
-                    EPotionIds.dex,
-                    EPotionIds.spd,
-                    EPotionIds.wis,
-                    EPotionIds.atk,
-                    EPotionIds.vit,
-                    EPotionIds.mana,
-                ].forEach(pid => {
-                    const defRatio = (() => {
-                        switch (pid) {
-                            case EPotionIds.dex:
-                            case EPotionIds.spd:
-                                return 1.5;
-                            case EPotionIds.wis:
-                            case EPotionIds.atk:
-                            case EPotionIds.vit:
-                                return 1;
-                            case EPotionIds.mana:
-                                return 0.5;
-                            default:
-                                return Number.MAX_SAFE_INTEGER;
-                        }
-                    })();
-                    const defBuyCount = Math.min(Math.floor(v * defRatio), 100);
-
-                    offer.push({
-                        sellingItems: [ k ],
-                        sellingQuantities: [ defBuyCount / defRatio ],
-                        buyingItems: [ pid ],
-                        buyingQuantities: [ defBuyCount ],
-                        quantity: 1,
-                        suspended: false,
-                    });
-                });
-            }
-
-            if (!this.checkout.get(k)) {
-                return;
-            }
-
-            // to glife
-            const ratio = ((k: number) => {
-                switch (k) {
-                    case EPotionIds.dex:
-                    case EPotionIds.spd:
-                        return 8;
-                    case EPotionIds.wis:
-                    case EPotionIds.atk:
-                    case EPotionIds.def:
-                        return 6;
-                    case EPotionIds.vit:
-                        return 4;
-                    default:
-                        return Number.MAX_SAFE_INTEGER;
-                }
-            })(k);
-            const batchCount = Math.floor(v / ratio);
-
-            if (batchCount === 0) {
-                return;
-            }
-
-            offer.push({
-                sellingItems: [ k ],
-                sellingQuantities: [ batchCount * ratio ],
-                buyingItems: [ EPotionIds.glife ],
-                buyingQuantities: [ batchCount ],
-                quantity: 1,
-                suspended: false,
-            });
-
-
-        });
-
-        return offer;
+        return [
+            ...this.fpOffers,
+        ];
     }
 }
 

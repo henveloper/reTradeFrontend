@@ -61,16 +61,11 @@ export class EquipmentMarketSupervisor extends MarketSupervisor {
             ...this.generateSets([], getEquipments('ability', [ 6 ]), []),
             ...this.generateSets([], [], getEquipments('armor', [ 13 ])),
             ...this.generateSets(
-                getEquipments('weapon', [ 10, 11 ]),
+                getEquipments('weapon', [ 10 ]),
                 getEquipments('ability', [ 5 ]),
-                getEquipments('armor', [ 11, 12 ]),
+                getEquipments('armor', [ 11 ]),
             ) ];
-        console.log(this.generateSets(
-            getEquipments('weapon', [ 10, 11 ]),
-            getEquipments('ability', [ 5 ]),
-            getEquipments('armor', [ 11, 12 ]),
-        ));
-        return allSets.map(equipmentManager.generateSetOffer).filter((o): o is IOffer => o !== undefined);
+       return allSets.map(equipmentManager.generateSetOffer).filter((o): o is IOffer => o !== undefined);
     }
 
 }

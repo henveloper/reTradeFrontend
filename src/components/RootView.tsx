@@ -11,10 +11,8 @@ export function RootView(props: IDefaultProps) {
 	const { styles } = props;
 
 	return <Grid container direction='column' spacing={ 3 }>
-
-
-		<Grid item>
-			<img src='https://i.ytimg.com/vi/if-2M3K1tqk/maxresdefault.jpg' style={ { width: '100%' } }/>
+		<Grid item container justify='center'>
+			<img src='https://i1.wp.com/doublesama.com/wp-content/uploads/2020/07/Lolis-in-Anime-1.jpg?fit=640%2C360'/>
 		</Grid>
 
 		<Grid item>
@@ -30,20 +28,8 @@ export function RootView(props: IDefaultProps) {
 
 
 		<Grid item>
-			<ItemStocks styles={ styles } header='Weapon'>
-				<EquipmentTable variant='weapon' styles={ styles }/>
-			</ItemStocks>
-		</Grid>
-
-		<Grid item>
-			<ItemStocks styles={ styles } header='Abilities'>
-				<EquipmentTable variant='ability' styles={ styles }/>
-			</ItemStocks>
-		</Grid>
-
-		<Grid item>
-			<ItemStocks styles={ styles } header='Armor'>
-				<EquipmentTable variant='armor' styles={ styles }/>
+			<ItemStocks styles={ styles } header='Equipments'>
+				<EquipmentTable styles={ styles }/>
 			</ItemStocks>
 		</Grid>
 

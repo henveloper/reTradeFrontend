@@ -24,11 +24,6 @@ export const PotionTable = observer((props: IDefaultProps) => {
                 <img style={ { width: '100%' } } alt={ i.type } src={ i.src }/>
             </Grid>
             <Grid item xs>
-                <Switch checked={ potionMarketSupervisor.checkout.get(i.id) }
-                        onChange={ () => potionMarketSupervisor.toggleUpgradeOnly(i.id) }
-                        size='small'/>
-            </Grid>
-            <Grid item xs>
                 <TextField fullWidth size='small' variant='standard'
                            onChange={ e => potionMarketSupervisor.changeStocksQuantity(i.id, e.target.value) }
                            value={ potionMarketSupervisor.getStockQuantity(i.id) }/>

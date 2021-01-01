@@ -9,6 +9,13 @@ export type IOffer = {
     suspended: boolean,
 }
 
+export enum EClasses {
+    rogue, archer, wizard, priest,
+    warrior, knight, paladin, assassin,
+    necromancer, huntress, mystic, trickster,
+    sorcerer, ninja, samurai, bard,
+}
+
 export enum EWeaponClasses {
     dagger = 2, bow = 3, staff = 17, wand = 8, sword = 1, katana = 24,
 }
