@@ -19,6 +19,6 @@ const sellingRates: Map<EPotionIds, number> = new Map()
 ;
 
 export const potionRates = {
-    buyingRates,
-    sellingRates,
+    potBuyingRates: buyingRates,
+    potSellingRates: sellingRates,
 };
