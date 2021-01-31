@@ -3,7 +3,7 @@ import { appStore } from '../AppStore';
 import React from 'react';
 import { IDefaultProps } from '../styles/styles';
 import { observer } from 'mobx-react';
-import { RootView } from './RootView';
+import { HomeView } from './HomeView';
 
 export const FrontendRouter = observer((props: IDefaultProps) => {
     const { styles } = props;
@@ -11,7 +11,7 @@ export const FrontendRouter = observer((props: IDefaultProps) => {
     return <Router history={ appStore.history }>
         <Switch>
             <Route>
-                <RootView styles={ styles }/>
+                <HomeView styles={ styles }/>
             </Route>
         </Switch>
     </Router>;

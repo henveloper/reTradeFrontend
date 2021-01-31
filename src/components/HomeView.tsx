@@ -3,11 +3,10 @@ import { IDefaultProps } from '../styles/styles';
 import { Grid } from '@material-ui/core';
 import { ItemStocks } from './shared/ItemStocks';
 import { ImportExport } from './views/ImportExport';
-import { EquipmentTable } from './shared/EquipmentTable';
 import { PotionTable } from './shared/PotionTable';
 import { MiscItemTable } from './shared/MiscItemTable';
 
-export function RootView(props: IDefaultProps) {
+export function HomeView(props: IDefaultProps) {
 	const { styles } = props;
 
 	return <Grid container direction='column' spacing={ 3 }>
@@ -19,17 +18,9 @@ export function RootView(props: IDefaultProps) {
 			<ImportExport styles={ styles }/>
 		</Grid>
 
-		<Grid item>
-			<ItemStocks styles={ styles } header='Potions'>
+		<Grid item container>
+			<ItemStocks styles={ styles } header='Potion'>
 				<PotionTable styles={ styles }/>
-			</ItemStocks>
-		</Grid>
-
-
-
-		<Grid item>
-			<ItemStocks styles={ styles } header='Equipments'>
-				<EquipmentTable styles={ styles }/>
 			</ItemStocks>
 		</Grid>
 
