@@ -1,5 +1,4 @@
 import { PotionMarketSupervisor } from './PotionMarketSupervisor';
-import { EquipmentMarketSupervisor } from './EquipmentMarketSupervisor';
 import { action, makeAutoObservable } from 'mobx';
 import { appStore } from '../AppStore';
 import Joi from 'joi';
@@ -21,8 +20,6 @@ export class MarketManager {
 
     public potionMarketSupervisor = new PotionMarketSupervisor();
 
-    public equipmentMarketSupervisor = new EquipmentMarketSupervisor();
-
     public miscMarketSupervisor = new MiscMarketSupervisor();
 
     @action
@@ -35,7 +32,6 @@ export class MarketManager {
         );
         const schema = Joi.object().keys({
             potionStocks: stockSchema,
-            trashGearStocks: stockSchema,
             miscItemStocks: stockSchema,
         }).required();
 
@@ -45,7 +41,6 @@ export class MarketManager {
             return false;
         }
         this.potionMarketSupervisor.import(value.potionStocks);
-        this.equipmentMarketSupervisor.import(value.trashGearStocks);
         this.miscMarketSupervisor.import(value.miscItemStocks);
 
         return true;
@@ -54,7 +49,6 @@ export class MarketManager {
     public get exportString() {
         return JSON.stringify({
             potionStocks: this.potionMarketSupervisor.stocks,
-            trashGearStocks: this.equipmentMarketSupervisor.stocks,
             miscItemStocks: this.miscMarketSupervisor.stocks,
         });
     }
@@ -68,7 +62,6 @@ export class MarketManager {
     public get tradeString() {
         const allOffers = [
             ...this.potionMarketSupervisor.offers,
-            ...this.equipmentMarketSupervisor.offers,
             ...this.miscMarketSupervisor.offers,
         ].filter(o => !this.busy || !MarketManager.offerSignificanceFilter(o));
         allOffers.reverse();

@@ -79,37 +79,6 @@ export const ImportExport = observer((props: IDefaultProps) => {
                     </Button>
                 </Grid>
             </Grid>
-
-            <Grid item container direction='column' spacing={ 1 }
-                  style={ { maxHeight: 400, overflowY: 'scroll', flexWrap: 'nowrap' } }>
-                { marketManager.equipmentMarketSupervisor.offers.map(o => <Grid item container alignItems='center'>
-                    <Grid item container xs spacing={ 1 }>
-                        { o.sellingItems.map(i => {
-                            const equipment = equipmentManager.getEquipmentById(i);
-                            return <Grid item container xs={ 3 }>
-                                <img alt={ equipment?.name ?? i.toString() }
-                                     src={ equipmentManager.getEquipmentById(i)?.imageUrl }/>
-                            </Grid>;
-                        }) }
-                    </Grid>
-
-                    <Grid item container xs>
-                        <Typography>
-                            { o.buyingItems
-                                .map(id => EPotionIds[+id])
-                                .map((name, i) => `${ o.buyingQuantities[i] } ${ name }`)
-                                .join(' + ') }
-                        </Typography>
-                    </Grid>
-
-                    <Grid item container xs={ 2 }>
-                        <IconButton size='small'
-                                    onClick={ () => o.sellingItems.forEach(marketManager.equipmentMarketSupervisor.decrementStock) }>
-                            <LocalGroceryStore/>
-                        </IconButton>
-                    </Grid>
-                </Grid>) }
-            </Grid>
         </Grid>
     </Grid>;
 });

@@ -5,9 +5,11 @@ import { ItemStocks } from './shared/ItemStocks';
 import { ImportExport } from './views/ImportExport';
 import { PotionTable } from './shared/PotionTable';
 import { MiscItemTable } from './shared/MiscItemTable';
+import { appStore } from '../AppStore';
 
 export function HomeView(props: IDefaultProps) {
 	const { styles } = props;
+	const { marketManager: { miscMarketSupervisor } } = appStore;
 
 	return <Grid container direction='column' spacing={ 3 }>
 		<Grid item container justify='center'>
@@ -19,7 +21,7 @@ export function HomeView(props: IDefaultProps) {
 		</Grid>
 
 		<Grid item container>
-			<ItemStocks styles={ styles } header='Potion'>
+			<ItemStocks styles={ styles } header='Potions'>
 				<PotionTable styles={ styles }/>
 			</ItemStocks>
 		</Grid>

@@ -22,7 +22,7 @@ export const MiscItemTable = observer((props: IDefaultProps) => {
             </Grid>
             <Grid item xs>
                 <TextField fullWidth size='small' variant='standard'
-                           onChange={ e => miscMarketSupervisor.changeStocksQuantity(i.id, e.target.value) }
+                           onChange={ e => miscMarketSupervisor.changeStocksQuantity(i.id, +e.target.value) }
                            value={ miscMarketSupervisor.getStockQuantity(i.id) }/>
             </Grid>
         </Grid>) }
