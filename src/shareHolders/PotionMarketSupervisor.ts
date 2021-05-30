@@ -1,94 +1,150 @@
 import { MarketSupervisor } from './MarketSupervisor';
 import { IOffer } from './index';
 import { EPotionIds } from '../data/itemIds';
-import { computed } from 'mobx';
-import { equipmentManager } from './EquipmentManager';
-import { potionRates } from '../configs/potionRates';
+import { action, computed, makeAutoObservable, observable } from 'mobx';
+import { potionTradingRates } from '../configs/potionTradingRates';
 
 export class PotionMarketSupervisor extends MarketSupervisor {
     constructor() {
         super();
     }
 
-    static fpItemsInterested: [ number, string ][] = [
-        // fp equipments
-        ...equipmentManager.weapons.filter(e => e.tier === 11)
-            .map<[ number, string ]>(e => [ e.id, e.name ]),
-        ...equipmentManager.armors.filter(e => e.tier === 12)
-            .map<[ number, string ]>(e => [ e.id, e.name ]),
-        // realmeye fp
-        [ -102, 'realmeye fp300' ],
-        [ -103, 'realmeye fp400' ],
-        [ -104, 'realmeye fp450' ],
-    ];
+    @observable public lifeToRainbowSource: EPotionIds.glife | EPotionIds.life | null = null;
+    @observable public manaToRainbowSource: EPotionIds.gmana | EPotionIds.mana | null = null;
 
-    @computed
-    private get fpOffers(): IOffer[] {
-        const defPotCount = this.stocks.get(EPotionIds.def) ?? 0;
-        if (this.stocks.get(EPotionIds.atk)) {
-            return PotionMarketSupervisor.fpItemsInterested.map(([ fpId ]) => ({
-                sellingItems: [ EPotionIds.atk ],
-                sellingQuantities: [ 1 ],
-                buyingItems: [ fpId ],
-                buyingQuantities: [ 1 ],
-                quantity: defPotCount,
-                suspended: false,
-            }));
+    @action
+    public changeLifeToRainbowSource(variant: number) {
+        console.log(variant);
+        switch (variant) {
+            case 1:
+                this.lifeToRainbowSource = EPotionIds.life;
+                break;
+            case 2:
+                this.lifeToRainbowSource = EPotionIds.glife;
+                break;
+            default:
+                this.lifeToRainbowSource = null;
         }
-        return [];
+        console.log(this.lifeToRainbowSource)
+    }
+
+    @action
+    public changeManaToRainbowSource(variant: number) {
+        switch (variant) {
+            case 1:
+                this.manaToRainbowSource = EPotionIds.mana;
+                break;
+            case 2:
+                this.manaToRainbowSource = EPotionIds.gmana;
+                break;
+            default:
+                this.manaToRainbowSource = null;
+        }
+    }
+
+    @computed public get lifeToRainbowSliderValue() {
+        if (this.lifeToRainbowSource === null) {
+            return 0;
+        }
+        if (this.lifeToRainbowSource === EPotionIds.life) {
+            return 1;
+        }
+        return 2;
+    }
+
+    @computed public get manaToRainbowSliderValue() {
+        if (this.manaToRainbowSource === null) {
+            return 0;
+        }
+        if (this.manaToRainbowSource === EPotionIds.mana) {
+            return 1;
+        }
+        return 2;
     }
 
     @computed
-    private get gl2potOffers(): IOffer[] {
-        const { glife } = EPotionIds;
+    private get lifeToRainbowOffers(): IOffer[] {
         const offers: IOffer[] = [];
+        const { lifeToRainbowSource, manaToRainbowSource } = this;
 
-        const glifeStockQuantity = this.getStockQuantity(glife);
-        if (glifeStockQuantity === 0) {
-            return [];
+        if (lifeToRainbowSource !== null) {
+            potionTradingRates.rainbowToLifeRates.forEach((rate, potionId) => {
+                offers.push({
+                    sellingItems: [ lifeToRainbowSource ],
+                    sellingQuantities: [ lifeToRainbowSource === EPotionIds.glife ? 1 : 2 ],
+                    buyingItems: [ potionId ],
+                    buyingQuantities: [ rate ],
+                    quantity: 4,
+                    suspended: false,
+                });
+            });
         }
 
-        potionRates.potBuyingRates.forEach((rate, potionId) => {
-            offers.push({
-                sellingItems: [ glife ],
-                sellingQuantities: [ 1 ],
-                buyingItems: [ potionId ],
-                buyingQuantities: [ rate ],
-                quantity: glifeStockQuantity,
-                suspended: false,
+        if (manaToRainbowSource !== null) {
+            potionTradingRates.rainbowToLifeRates.forEach((rate, potionId) => {
+                offers.push({
+                    sellingItems: [ manaToRainbowSource ],
+                    sellingQuantities: [ manaToRainbowSource === EPotionIds.gmana ? 1 : 2 ],
+                    buyingItems: [ potionId ],
+                    buyingQuantities: [ rate ],
+                    quantity: 4,
+                    suspended: false,
+                });
             });
-        });
+        }
+
         return offers;
     }
 
     @computed
-    private get pot2glOffers(): IOffer[] {
+    private get rainbowToLifeOffers(): IOffer[] {
         const offers: IOffer[] = [];
-        potionRates.potSellingRates.forEach((rate, potionId) => {
-            const sellingQuantity = Math.floor(this.getStockQuantity(potionId) / rate);
-            if (sellingQuantity === 0) {
+
+        potionTradingRates.rainbowToLifeRates.forEach((rate, potionId) => {
+            const batchCount = this.getStockQuantity(potionId);
+            if (batchCount === 0) {
                 return;
             }
 
             offers.push({
                 sellingItems: [ potionId ],
-                sellingQuantities: [ sellingQuantity * rate ],
+                sellingQuantities: [ 16 * batchCount ],
                 buyingItems: [ EPotionIds.glife ],
-                buyingQuantities: [ sellingQuantity ],
-                quantity: 1,
+                buyingQuantities: [ rate * batchCount ],
+                quantity: batchCount,
                 suspended: false,
             });
         });
         return offers;
     }
 
+    @computed
+    private get rainbowUpgradeOffer(): IOffer[] {
+        const offers: IOffer[] = [];
+
+        potionTradingRates.rainbowToLifeRates.forEach((rate, potionId) => {
+            const batchCount = this.getStockQuantity(potionId);
+            if (batchCount === 0) {
+                return;
+            }
+
+            offers.push({
+                sellingItems: [ potionId ],
+                sellingQuantities: [ 16 * batchCount ],
+                buyingItems: [ EPotionIds.glife ],
+                buyingQuantities: [ rate * batchCount ],
+                quantity: batchCount,
+                suspended: false,
+            });
+        });
+        return offers;
+    }
 
     @computed
     public get offers(): IOffer[] {
         return [
-            // ...this.fpOffers,
-            ...this.gl2potOffers,
-            ...this.pot2glOffers,
+            ...this.lifeToRainbowOffers,
+            ...this.rainbowToLifeOffers,
         ];
     }
 }
